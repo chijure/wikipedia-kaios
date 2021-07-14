@@ -7,7 +7,7 @@ const KEY = 'article-textsize'
 const DEFAULT_SIZE = 2
 const [MIN_SIZE, MAX_SIZE] = [0, 6]
 
-const get = () => {
+const get = (): number => {
   const fontSize = localStorage.getItem(KEY)
   if (fontSize === null) {
     return DEFAULT_SIZE
@@ -15,7 +15,7 @@ const get = () => {
   return parseInt(fontSize, 10)
 }
 
-const set = (size: string) => {
+const set = (size: string): void => {
   localStorage.setItem(KEY, size)
 }
 

@@ -17,7 +17,6 @@ export const useSearchArticleLanguage = (lang: string, title: string) => {
   useEffect(() => {
     const [promise, abort] = getLanglinks(lang, title)
     promise.then((languages: LangLink[]) => {
-      console.log(languages);
       setAllLanguages(languages)
       setItems(getInitialLangList(languages))
     })
