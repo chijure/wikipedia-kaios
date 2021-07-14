@@ -1,6 +1,6 @@
 import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl } from 'utils'
 
-export const getArticleMediaInfo = (lang, title, fromCommon) => {
+export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boolean) => {
   const params = {
     action: 'query',
     prop: 'imageinfo',
@@ -12,7 +12,7 @@ export const getArticleMediaInfo = (lang, title, fromCommon) => {
   }
 
   const url = fromCommon ? buildCommonsApiUrl(params) : buildMwApiUrl(lang, params)
-  return cachedFetch(url, data => {
+  return cachedFetch(url, (data: any) => {
     const pages = data.query.pages
     const imageInfo = pages[0].imageinfo
 
@@ -36,11 +36,11 @@ export const getArticleMediaInfo = (lang, title, fromCommon) => {
   })
 }
 
-const convertUrlToMobile = url => {
+const convertUrlToMobile = (url: string) => {
   return url.replace(/https:\/\/(.*?)\./, subDomain => subDomain + 'm.')
 }
 
-const strip = html => {
+const strip = (html: string) => {
   const doc = new DOMParser().parseFromString(html, 'text/html')
   return doc.body.textContent || ''
 }

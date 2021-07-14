@@ -1,6 +1,6 @@
 import { buildMwApiUrl, cachedFetch } from 'utils'
 
-export const getSuggestedArticles = (lang, title) => {
+export const getSuggestedArticles = (lang: string, title: string) => {
   const params = {
     action: 'query',
     prop: 'pageimages|description',
@@ -16,5 +16,5 @@ export const getSuggestedArticles = (lang, title) => {
   }
 
   const url = buildMwApiUrl(lang, params)
-  return cachedFetch(url, data => data.query && data.query.pages)
+  return cachedFetch(url, (data: any) => data.query && data.query.pages)
 }

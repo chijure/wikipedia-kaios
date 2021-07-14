@@ -11,7 +11,7 @@ export const getExperimentConfig = () => {
   }
 
   const url = buildMwOrgApiUrl(params)
-  return cachedFetch(url, data => {
+  return cachedFetch(url, (data: any) => {
     const page = data.query.pages[0]
     if (page.missing) {
       return {}

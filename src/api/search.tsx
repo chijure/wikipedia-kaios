@@ -1,6 +1,6 @@
 import { cachedFetch, buildMwApiUrl } from 'utils'
 
-export const search = (lang, term) => {
+export const search = (lang: string, term: string) => {
   // fulltext search
   const params = {
     action: 'query',
@@ -22,14 +22,14 @@ export const search = (lang, term) => {
   }
 
   const url = buildMwApiUrl(lang, params)
-  return cachedFetch(url, data => {
+  return cachedFetch(url, (data: any) => {
     if (!data.query || !data.query.search) {
       return []
     }
 
     const { search, pages } = data.query
-    return Object.values(search).map(item => {
-      const page = pages && pages.find(page => page.pageid === item.pageid)
+    return Object.values(search).map((item: any) => {
+      const page = pages && pages.find((page: any) => page.pageid === item.pageid)
       return {
         title: item.title,
         description: item.snippet,

@@ -1,6 +1,6 @@
 import { buildMwOrgApiUrl, cachedFetch, sendErrorLog } from 'utils'
 
-export const getTrendingArticles = (lang, country) => {
+export const getTrendingArticles = (lang: string, country: string) => {
   const title = `Wikipedia_for_KaiOS/engagement1/trending/${lang}/${country.toLowerCase()}`
   const params = {
     action: 'query',
@@ -10,7 +10,7 @@ export const getTrendingArticles = (lang, country) => {
     rvprop: 'content'
   }
   const url = buildMwOrgApiUrl(params)
-  return cachedFetch(url, data => {
+  return cachedFetch(url, (data: any) => {
     const page = data.query.pages[0]
     if (page.missing) {
       sendErrorLog({ message: `There was an issue fetching '${page.title}', the full API response is: ${JSON.stringify(data)}`, url })

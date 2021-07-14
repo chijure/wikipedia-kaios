@@ -4,14 +4,14 @@ import {
   isPrioritized
 } from 'utils'
 
-const getLangFromUrl = url => {
+const getLangFromUrl = (url: string) => {
   // Get the lang code from the site URL since it may differ from
   // the official code used in configuration.
   const prefixLength = 'https://'.length
   return url.substr(prefixLength, url.indexOf('.') - prefixLength)
 }
 
-export const getLanglinks = (lang, title) => {
+export const getLanglinks = (lang: string, title: string) => {
   const params = {
     action: 'query',
     titles: title,
@@ -20,11 +20,11 @@ export const getLanglinks = (lang, title) => {
     llprop: 'langname|autonym|url'
   }
   const url = buildMwApiUrl(lang, params)
-  return cachedFetch(url, response => {
+  return cachedFetch(url, (response: any) => {
     const { pages } = response.query
     const langlinks = pages[0].langlinks
     const allLanguages = langlinks
-      .map(item => {
+      .map((item: any) => {
         return {
           title: item.autonym,
           langname: item.langname,
@@ -33,12 +33,12 @@ export const getLanglinks = (lang, title) => {
           dir: getDirection(item.lang)
         }
       })
-      .filter(item => isSupportedForReading(item.lang))
+      .filter((item: any) => isSupportedForReading(item.lang))
 
     // Sort languages prioritized first, and then
     // in alphabetical order within the prioritized
     // and non-prioritized groups.
-    allLanguages.sort((a, b) => {
+    allLanguages.sort((a: any, b: any) => {
       const aPrio = isPrioritized(a.lang)
       const bPrio = isPrioritized(b.lang)
       if (aPrio && !bPrio) {

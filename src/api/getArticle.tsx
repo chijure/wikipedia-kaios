@@ -1,10 +1,10 @@
 import { cachedFetch, buildPcsUrl, canonicalizeTitle, getDirection } from 'utils'
 
-export const getArticle = (lang, title, { moreInformationText }) => {
+export const getArticle = (lang: string, title: string, { moreInformationText }: any) => {
   const url = buildPcsUrl(lang, title, 'mobile-sections')
   const dir = getDirection(lang)
 
-  return cachedFetch(url, data => {
+  return cachedFetch(url, (data: any) => {
     const parser = new DOMParser()
     const imageUrl = data.lead.image && data.lead.image.urls['320']
     const toc = []
@@ -17,7 +17,7 @@ export const getArticle = (lang, title, { moreInformationText }) => {
     const preview = extractPreview(doc)
 
     // parse lead as the first section
-    const sections = []
+    const sections: any[] = []
     sections.push({
       imageUrl,
       title: data.lead.displaytitle,
@@ -84,7 +84,7 @@ export const getArticle = (lang, title, { moreInformationText }) => {
   })
 }
 
-const fixImageUrl = (htmlString, lang) => {
+const fixImageUrl = (htmlString: string, lang: string) => {
   // The app is served from the app:// protocol so protocol-relative
   // image sources don't work.
   return htmlString
@@ -92,7 +92,7 @@ const fixImageUrl = (htmlString, lang) => {
     .replace(/src="\/w\/extensions\//gi, `src="https://${lang}.wikipedia.org/w/extensions/`)
 }
 
-const fixTableCaption = (htmlString, moreInformationText) => {
+const fixTableCaption = (htmlString: string, moreInformationText) => {
   const hiddenClassName = 'hidden-in-table'
   const parser = new DOMParser()
   const node = parser.parseFromString(htmlString, 'text/html')
@@ -118,9 +118,9 @@ const modifyHtmlText = (text, moreInformationText, lang) => {
   return fixTableCaption(fixedImageUrlText, moreInformationText)
 }
 
-const convertPlainText = string => {
-  var dom = document.createElement('div')
-  dom.innerHTML = string
+const convertPlainText = (str: string) => {
+  const dom = document.createElement('div')
+  dom.innerHTML = str
   return dom.textContent
 }
 
