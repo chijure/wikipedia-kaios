@@ -4,12 +4,47 @@ const webpack = require('webpack')
 const StylelintPlugin = require('stylelint-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
+const babelOptions =
+  {
+    plugins: [
+      [
+        '@babel/plugin-transform-react-jsx',
+        {
+          pragma: 'h', // default pragma is React.createElement
+          pragmaFrag: 'Fragment', // default is React.Fragment
+          throwIfNamespace: false // defaults to true
+        }
+      ],
+      [
+        'module-resolver',
+        {
+          root: ['./src'],
+          alias: {
+            components: './src/components',
+            hooks: './src/hooks',
+            api: './src/api',
+            contexts: './src/contexts',
+            i18n: './i18n'
+          }
+        }
+      ]
+    ],
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          targets: 'firefox 37'
+        }
+      ]
+    ]
+  }
+
 module.exports = {
   devtool: 'source-map',
   entry: './src/index.js',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
   optimization: {
     minimizer: [
@@ -49,6 +84,13 @@ module.exports = {
     }),
     new webpack.EnvironmentPlugin()
   ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      react: 'preact/compat',
+      'react-dom': 'preact/compat'
+    }
+  },
   module: {
     rules: [
       {
@@ -61,43 +103,29 @@ module.exports = {
         }
       },
       {
+        test: /\.tsx?$/,
+        exclude: /(node_modules)/,
+        use:
+          [
+            {
+              loader: 'babel-loader',
+              options: babelOptions
+            },
+            {
+              loader: 'ts-loader',
+              options: {
+                transpileOnly: true,
+                configFile: 'tsconfig.json'
+              }
+            }
+          ]
+      },
+      {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
         use: {
           loader: 'babel-loader',
-          options: {
-            plugins: [
-              [
-                "@babel/plugin-transform-react-jsx",
-                {
-                  pragma: "h", // default pragma is React.createElement
-                  pragmaFrag: "Fragment", // default is React.Fragment
-                  throwIfNamespace: false // defaults to true
-                }
-              ],
-              [
-                "module-resolver",
-                {
-                  root: ["./src"],
-                  alias: {
-                    components: './src/components',
-                    hooks: './src/hooks',
-                    api: './src/api',
-                    contexts: './src/contexts',
-                    i18n: './i18n'
-                  }
-                }
-              ]
-            ],
-            presets: [
-                [
-                  "@babel/preset-env",
-                  {
-                    targets: "firefox 37"
-                  }
-                ]
-              ]
-          }
+          options: babelOptions
         }
       },
       {
@@ -105,9 +133,12 @@ module.exports = {
         use: [
           'style-loader',
           'css-loader',
-          { loader: 'less-loader', options: { sourceMap: true } },
+          {
+            loader: 'less-loader',
+            options: { sourceMap: true }
+          }
         ]
       }
     ]
   }
-};
+}
