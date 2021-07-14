@@ -6,7 +6,7 @@ export const appInstallId = () => {
   let id = localStorage.getItem(APP_INSTALL_ID_KEY)
   if (!id) {
     id = generateRandomId()
-    localStorage.setItem(APP_INSTALL_ID_KEY, id)
+    localStorage.setItem(APP_INSTALL_ID_KEY, String(id))
   }
   return id
 }

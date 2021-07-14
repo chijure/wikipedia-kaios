@@ -2,7 +2,7 @@ import { isProd } from 'utils'
 
 const intakeUrl = 'https://intake-analytics.wikimedia.org/v1/events' + (isProd() ? '?hasty=true' : '')
 
-export const sendEvent = ($schema, stream, legacySchemaName, lang, event) => {
+export const sendEvent = ($schema, stream, legacySchemaName, lang: string, event) => {
   const body = JSON.stringify({
     $schema,
     schema: legacySchemaName,

@@ -1,6 +1,6 @@
 import { appVersion, sendEvent, getDeviceLanguage } from 'utils'
 
-export const sendFeedback = feedback => {
+export const sendFeedback = (feedback: any) => {
   sendEvent(
     '/analytics/legacy/kaiosappfeedback/1.0.0',
     'eventlogging_KaiOSAppFeedback',

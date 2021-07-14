@@ -6,7 +6,7 @@ const defautParams = {
   origin: '*'
 }
 
-export const buildMwApiUrl = (lang, params) => {
+export const buildMwApiUrl = (lang: string, params: any): string => {
   params = Object.assign({}, defautParams, params)
   const baseUrl = `https://${lang}.wikipedia.org/w/api.php`
   return baseUrl + '?' + Object.keys(params).map(p => {
@@ -14,7 +14,7 @@ export const buildMwApiUrl = (lang, params) => {
   }).join('&')
 }
 
-export const buildMwOrgApiUrl = params => {
+export const buildMwOrgApiUrl = (params: any): string => {
   params = Object.assign({}, defautParams, params)
   const baseUrl = 'https://www.mediawiki.org/w/api.php'
   return baseUrl + '?' + Object.keys(params).map(p => {
@@ -22,7 +22,7 @@ export const buildMwOrgApiUrl = params => {
   }).join('&')
 }
 
-export const buildCommonsApiUrl = params => {
+export const buildCommonsApiUrl = (params: any): string => {
   params = Object.assign({}, defautParams, params)
   const baseUrl = 'https://commons.wikimedia.org/w/api.php'
   return baseUrl + '?' + Object.keys(params).map(p => {
@@ -30,12 +30,12 @@ export const buildCommonsApiUrl = params => {
   }).join('&')
 }
 
-export const buildWpMobileWebUrl = (lang, title) => {
+export const buildWpMobileWebUrl = (lang: string, title: string): string => {
   const page = encodeURIComponent(canonicalizeTitle(title))
   return `https://${lang}.m.wikipedia.org/w/index.php?title=${page}`
 }
 
-export const buildPcsUrl = (lang, title, endpoint) => {
+export const buildPcsUrl = (lang: string, title: string, endpoint: string): string => {
   const base = `https://${lang}.wikipedia.org`
   const path = `api/rest_v1/page/${endpoint}`
   const page = encodeURIComponent(canonicalizeTitle(title))

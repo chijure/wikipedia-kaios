@@ -1499,7 +1499,7 @@ const rtl = [
   'lrc'
 ]
 
-const prioritizedLists = {
+const prioritizedLists: any = {
   default: ['en', 'nl', 'de', 'sv', 'fr', 'it', 'ru', 'es', 'pl', 'war'],
   jio: ['en', 'hi', 'ji', 'as', 'bn', 'gu', 'kn', 'ks', 'ml', 'mr', 'ne', 'or', 'pa', 'sa', 'sd', 'ta', 'te', 'und', 'mai', 'kok', 'mni', 'doi', 'ur']
 }
@@ -1507,13 +1507,13 @@ const prioritizedLists = {
 const prioritizedList = prioritizedLists[prioritizedLanguageListName] ||
       prioritizedLists.default
 
-export const isPrioritized = lang => prioritizedList.indexOf(lang) > -1
+export const isPrioritized = (lang: string) => prioritizedList.indexOf(lang) > -1
 
-export const getDirection = langCode => {
+export const getDirection = (langCode: string) => {
   return rtl.includes(langCode) ? 'rtl' : 'ltr'
 }
 
-export const isSupportedForReading = langCode => {
+export const isSupportedForReading = (langCode: string) => {
   if (!languages.find(language => language.code === langCode)) {
     return false
   }
@@ -1549,7 +1549,7 @@ export const allLanguages = prioritizedLanguages.concat(
 )
 
 export const loadAllLanguagesMessages = () => {
-  const messages = {}
+  const messages: any = {}
   allLanguages.forEach(language => {
     try {
       messages[language.lang] = require(`../../i18n/${language.lang}.json`)
@@ -1561,7 +1561,7 @@ export const loadAllLanguagesMessages = () => {
   return messages
 }
 
-export const setAppLanguage = lang => {
+export const setAppLanguage = (lang: string) => {
   localStorage.setItem('language-app', lang)
 }
 
@@ -1574,16 +1574,16 @@ export const setDeviceLanguage = () => {
 }
 
 export const getDeviceLanguage = () => {
-  return localStorage.getItem('language-device')
+  return (localStorage.getItem('language-device')) || 'en'
 }
 
 export const checkHasDeviceLanguageChanged = () => {
   return getCurrentDeviceLanguage() !== localStorage.getItem('language-device')
 }
 
-const getAlias = lang => {
+const getAlias = (lang: string) => {
   // Jio uses `kok-IN` for Konkani but Wikipedia uses `gom`
-  const aliases = {
+  const aliases: any = {
     'kok-IN': 'gom'
   }
 

@@ -1,9 +1,9 @@
 import { normalizeTitle } from 'utils'
 
 const MAX = 100
-const list = []
+const list: any[] = []
 
-const add = (lang, title) => {
+const add = (lang: string, title: string) => {
   const normalizedTitle = normalizeTitle(title)
   list.push({ lang, title: normalizedTitle })
   if (list.length > MAX) {

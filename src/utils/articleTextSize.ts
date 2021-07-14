@@ -15,7 +15,7 @@ const get = () => {
   return parseInt(fontSize, 10)
 }
 
-const set = size => {
+const set = (size: string) => {
   localStorage.setItem(KEY, size)
 }
 

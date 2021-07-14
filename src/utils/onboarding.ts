@@ -5,7 +5,7 @@ const isDone = () => {
 }
 
 const markAsDone = () => {
-  localStorage.setItem(KEY, true)
+  localStorage.setItem(KEY, String(true))
 }
 
 export const onboarding = { isDone, markAsDone }

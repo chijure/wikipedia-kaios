@@ -6,14 +6,15 @@ import {
 // todo: Implement a real cache that keeps
 // the last N requests to keep memory usage
 // under control.
-const requestCache = {}
+const requestCache: any = {}
 const noopAbort = () => {}
 
-export const cachedFetch = (url, transformFn, cache = true) => {
+export const cachedFetch = (url: string, transformFn: any, cache = true) => {
   if (cache && requestCache[url]) {
     return [Promise.resolve(requestCache[url]), noopAbort]
   }
 
+  // @ts-ignore
   const xhr = new XMLHttpRequest({ mozSystem: true })
   const promise = new Promise((resolve, reject) => {
     xhr.responseType = 'json'
@@ -60,7 +61,7 @@ export const cachedFetch = (url, transformFn, cache = true) => {
   return [promise, abort]
 }
 
-const sendLogWhenError = ({ status, response }, url) => {
+const sendLogWhenError = ({ status, response }: any, url: string) => {
   if (!isProd()) {
     return
   }

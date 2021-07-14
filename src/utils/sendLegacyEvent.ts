@@ -1,14 +1,14 @@
 const BASE_URL = 'https://en.wikipedia.org/beacon/event'
 const MAX_URL_LENGTH = 2000
 
-const isUrlValid = url => url.length <= MAX_URL_LENGTH
+const isUrlValid = (url: string) => url.length <= MAX_URL_LENGTH
 
-const buildBeaconUrl = event => {
+const buildBeaconUrl = (event: any) => {
   const queryString = encodeURIComponent(JSON.stringify(event))
   return `${BASE_URL}?${queryString}`
 }
 
-export const sendLegacyEvent = (schema, revision, language, event) => {
+export const sendLegacyEvent = (schema: string, revision: number, language: string, event: any) => {
   const url = buildBeaconUrl({
     schema,
     revision,
