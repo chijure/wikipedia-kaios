@@ -19,7 +19,7 @@
  *    Deregister the softkey item when the component being unmounted.
  *    It use the counter to determine whether the item is completely unmounted
  */
-export const SoftkeyReducer = (state, action) => {
+export const SoftkeyReducer = (state: any, action: any) => {
   let stack,
     current
   switch (action.type) {

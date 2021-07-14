@@ -2,8 +2,7 @@ import { appVersion, gitHash, isProd } from 'utils'
 
 const intakeUrl = 'https://intake-logging.wikimedia.org/v1/events' + (isProd() ? '?hasty=true' : '')
 
-export const sendErrorLog = ({ message, stack = '', url = '' }) => {
-  debugger
+export const sendErrorLog = ({ message, stack = '', url = '' }) =>
   navigator.sendBeacon(intakeUrl, JSON.stringify({
     $schema: '/mediawiki/client/error/1.0.0',
     meta: {
@@ -15,4 +14,3 @@ export const sendErrorLog = ({ message, stack = '', url = '' }) => {
     tags: { app_version: appVersion(), git_hash: gitHash() }
   })
   )
-}
