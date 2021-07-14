@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
 
-export const useOnlineStatus = (onChange) => {
+export const useOnlineStatus = (onChange: (online: boolean) => void) => {
   const [isOnline, setOnline] = useState(navigator.onLine)
 
   const onOnlineChange = () => {

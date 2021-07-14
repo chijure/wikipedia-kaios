@@ -3,9 +3,9 @@ import { useSoftkey, useRange } from 'hooks'
 import { viewport, isAnchorIntroSkip } from 'utils'
 
 export const useArticlePagination = (
-  elementRef,
-  article,
-  anchor
+  elementRef: any,
+  article: any,
+  anchor: string
 ) => {
   const [currentSection, showPrevSection, showNextSection, setCurrentSection] = useRange(findSection(article.toc, anchor), article.sections.length - 1)
   const [isLastPage, setIsLastPage] = useState(0)
@@ -80,9 +80,9 @@ export const useArticlePagination = (
   return [currentSection, setCurrentSection, currentPage]
 }
 
-const findSection = (toc, anchor) => {
+const findSection = (toc: any[], anchor: string): number => {
   if (!anchor || isAnchorIntroSkip(anchor)) {
     return 0
   }
-  return toc.find(item => item.anchor === anchor).sectionIndex
+  return toc.find((item: any) => item.anchor === anchor).sectionIndex
 }

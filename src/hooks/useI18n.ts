@@ -5,7 +5,7 @@ import { getAppLanguage, sendErrorLog } from 'utils'
 export const useI18n = (lang = getAppLanguage()) => {
   const banana = useContext(I18nContext)
 
-  const i18n = (lang, key, ...args) => {
+  const i18n = (lang: string, key: string, ...args) => {
     if (lang !== banana.locale) {
       banana.setLocale(lang)
     }

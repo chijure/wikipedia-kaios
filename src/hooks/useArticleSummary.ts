@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import { getArticleSummary } from 'api'
 
-export const useArticleSummary = (lang, title) => {
+export const useArticleSummary = (lang: string, title: string) => {
   const [summary, setSummary] = useState()
 
   useEffect(() => {

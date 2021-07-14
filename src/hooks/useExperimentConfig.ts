@@ -4,7 +4,7 @@ import { isConsentGranted, isTrendingArticlesGroup, getUserCountry } from 'utils
 
 const STORAGE_KEY = '2021-KaiOS-app-engagement-config'
 
-const formatDate = date => {
+const formatDate = (date: number) => {
   const d = new Date(date)
   const year = d.getFullYear()
   let month = '' + (d.getMonth() + 1)
@@ -34,7 +34,7 @@ const isUserUnderExperimentGroup = (startDate, endDate, countries, languages, ap
   }
 }
 
-const isSameDay = (ts1, ts2) => {
+const isSameDay = (ts1: number, ts2: number) => {
   return formatDate(ts1) === formatDate(ts2)
 }
 

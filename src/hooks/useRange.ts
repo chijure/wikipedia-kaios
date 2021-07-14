@@ -1,10 +1,10 @@
 import { useState } from 'preact/hooks'
 
-export const useRange = (initialValue, range) => {
+export const useRange = (initialValue: number, range: number) => {
   const [value, setValue] = useState(initialValue)
 
   const [min, max] = Array.isArray(range) ? range : [0, range]
-  const setRangeValue = newValue => {
+  const setRangeValue = (newValue: number) => {
     if (newValue < min) {
       setValue(min)
     } else if (newValue > max) {

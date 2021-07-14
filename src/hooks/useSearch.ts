@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import { search } from 'api'
 
-export const useSearch = (lang, initialQuery) => {
+export const useSearch = (lang: string, initialQuery: string) => {
   const [query, setQuery] = useState(initialQuery)
 
   const [searchResults, setSearchResults] = useState()
@@ -11,14 +11,14 @@ export const useSearch = (lang, initialQuery) => {
     if (query && query.trim()) {
       setLoading(true)
       const [request, abort] = search(lang, query.trim())
-      request.then(data => {
+      request.then((data: any) => {
         setLoading(false)
         setSearchResults(data)
       })
       return abort
     } else {
       setLoading(false)
-      setSearchResults(null)
+      setSearchResults(undefined)
     }
   }, [lang, query])
 

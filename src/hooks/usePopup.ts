@@ -1,7 +1,7 @@
 import { useContext } from 'preact/hooks'
 import { PopupContext } from 'contexts'
 
-export const usePopup = (component, options = {}) => {
+export const usePopup = (component: any, options = {}) => {
   const { setPopupState } = useContext(PopupContext)
 
   const close = () => {

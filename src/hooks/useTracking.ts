@@ -13,7 +13,7 @@ const ONE_HOUR = 3600 * 1000
 const getSessionId = () => {
   const now = Date.now()
   let changed = false
-  let { id, ts } = JSON.parse(localStorage.getItem(SESSION_ID_KEY)) || {}
+  let { id, ts } = JSON.parse(<string>localStorage.getItem(SESSION_ID_KEY)) || {}
   if (!id || (now - ts) > ONE_HOUR) {
     // Never existed or is expired
     id = generateRandomId()
@@ -25,8 +25,8 @@ const getSessionId = () => {
 }
 
 export const useTracking = (
-  pageName,
-  language,
+  pageName: string,
+  language: string,
   namespace = -1,
   sectionCount = 0,
   openedSections = {}
@@ -37,15 +37,15 @@ export const useTracking = (
   const userId = appInstallId()
   const isSearch = pageName === 'Search'
 
-  const trackingRef = useRef()
+  const trackingRef: any = useRef()
   useEffect(() => {
     trackingRef.openedSectionCount = Object.keys(openedSections).length
   }, [openedSections])
 
-  let start
-  let pageviewToken
-  let msPaused
-  let pausedTime
+  let start: any
+  let pageviewToken: any
+  let msPaused: any
+  let pausedTime: any
 
   const initEvent = () => {
     start = Date.now()

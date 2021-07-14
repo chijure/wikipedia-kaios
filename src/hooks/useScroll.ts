@@ -1,9 +1,9 @@
 import { useState } from 'preact/hooks'
 
 export const useScroll = (
-  elementRef,
-  step,
-  axis
+  elementRef: any,
+  step: number,
+  axis: string
 ) => {
   const [position, setPosition] = useState(0)
   const prop = axis === 'x' ? 'scrollLeft' : 'scrollTop'

@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'preact/hooks'
 import { allLanguages, prioritizedLanguages } from 'utils'
 
-export const useSearchLanguage = (lang) => {
+export const useSearchLanguage = (lang: string) => {
   const [items, setItems] = useState(prioritizedLanguages)
   const [query, setQuery] = useState()
 

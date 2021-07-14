@@ -5,7 +5,7 @@ const SCHEMA_NAME = 'VirtualPageView'
 const SCHEMA_REV = 19883675
 
 export const useArticlePreviewTracking = (
-  page, source, language
+  page: any, source: any, language: string
 ) => {
   if (!isInstrumentationEnabled()) {
     return

@@ -1,14 +1,23 @@
 import { useState, useEffect, useLayoutEffect } from 'preact/hooks'
 import { getLanglinks } from 'api'
 
-export const useSearchArticleLanguage = (lang, title) => {
+export interface LangLink {
+  lang: string;
+  url: string;
+  langname: string;
+  autonym: string;
+  title: string;
+}
+
+export const useSearchArticleLanguage = (lang: string, title: string) => {
   const [items, setItems] = useState([])
   const [query, setQuery] = useState()
-  const [allLanguages, setAllLanguages] = useState([])
+  const [allLanguages, setAllLanguages] = useState<LangLink[]>([])
 
   useEffect(() => {
     const [promise, abort] = getLanglinks(lang, title)
-    promise.then(languages => {
+    promise.then((languages: LangLink[]) => {
+      console.log(languages);
       setAllLanguages(languages)
       setItems(getInitialLangList(languages))
     })
@@ -17,7 +26,7 @@ export const useSearchArticleLanguage = (lang, title) => {
 
   useLayoutEffect(() => {
     const filteredList = query ? filterFirst10Language(allLanguages, query) : getInitialLangList(allLanguages)
-    setItems(filteredList.map(item => {
+    setItems(filteredList.map((item: any) => {
       item.isSelected = item.lang === lang
       return item
     }))
@@ -49,6 +58,6 @@ const filterFirst10Language = (languages, text) => {
   return foundList
 }
 
-const getInitialLangList = languages => {
+const getInitialLangList = (languages: LangLink[]) => {
   return languages.slice(0, 10)
 }
