@@ -1,4 +1,4 @@
-import { appVersion, sendEvent, getDeviceLanguage } from 'utils'
+import { appVersion, sendEvent, getDeviceLanguage } from '../utils/index'
 
 export const sendFeedback = (feedback: any) => {
   sendEvent(

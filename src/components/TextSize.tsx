@@ -1,12 +1,14 @@
 import {FunctionalComponent, h} from 'preact'
 import { useState, useContext } from 'preact/hooks'
-import { useI18n, useSoftkey } from 'hooks'
-import { articleTextSize } from 'utils'
-import { FontContext, DirectionContext } from 'contexts'
+import { useI18n, useSoftkey } from '../hooks/index'
+import { articleTextSize } from '../utils/index'
+import { FontContext, DirectionContext } from '../contexts/index'
 
 export const TextSize: FunctionalComponent = ({ close, closeAll }: any) => {
   const i18n = useI18n()
+  // @ts-ignore
   const { dirState } = useContext(DirectionContext)
+  // @ts-ignore
   const { textSize, setTextSize } = useContext(FontContext)
   const [localTextSize] = useState(textSize)
   const { MAX_SIZE, MIN_SIZE } = articleTextSize

@@ -1,4 +1,4 @@
-import { normalizeTitle } from 'utils'
+import { normalizeTitle } from './index'
 
 const MAX = 100
 const list: any[] = []

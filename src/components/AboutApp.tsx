@@ -1,9 +1,9 @@
-import {FunctionalComponent, h} from 'preact'
-import { useI18n, useSoftkey } from 'hooks'
-import { appVersion, appInstallId } from 'utils'
+import { FunctionalComponent, h } from 'preact'
+import { useI18n, useSoftkey } from '../hooks/index'
+import { appVersion, appInstallId } from '../utils/index'
 
 interface AboutAppProps {
-  close: () => void;
+  close: any;
 }
 
 export const AboutApp: FunctionalComponent<AboutAppProps> = ({ close }: AboutAppProps) => {
@@ -22,10 +22,10 @@ export const AboutApp: FunctionalComponent<AboutAppProps> = ({ close }: AboutApp
       <div class='header'>{i18n('about-header')}</div>
       <div class='body'>
         <div class='image'>
-          <img src='images/onboarding-0.png' alt="onBoarding" />
+          <img src='images/onboarding-0.png' alt='onBoarding' />
         </div>
         <div class='image'>
-          <img src='images/wikipedia-wordmark-en.png' alt="wikipedia-wordmark" />
+          <img src='images/wikipedia-wordmark-en.png' alt='wikipedia-wordmark' />
         </div>
         <div class='version'>
           <p>{appVersion()} ({appInstallId()})</p>

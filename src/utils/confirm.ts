@@ -1,5 +1,5 @@
-import { usePopup } from 'hooks'
-import { ConfirmDialog } from 'components'
+import { usePopup } from '../hooks/index'
+import { ConfirmDialog } from '../components/index'
 
 export const confirmDialog = ({
   title, message, onDiscardText, onDiscard = () => {},

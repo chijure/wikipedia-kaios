@@ -1,6 +1,6 @@
 import {FunctionalComponent, h} from 'preact'
 
-export const RadioListView: FunctionalComponent = ({ items = [], header, containerRef, empty }: any) => {
+export const RadioListView: FunctionalComponent<any> = ({ items = [], header, containerRef, empty }: any) => {
   return (
     <div class='radiolistview'>
       { header && <div class='header'>{header}</div> }

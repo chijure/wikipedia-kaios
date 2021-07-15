@@ -2,14 +2,14 @@ import {FunctionalComponent, h} from 'preact'
 import {
   useArticleSummary, useI18n, useSoftkey,
   useArticlePreviewTracking
-} from 'hooks'
-import {goto} from 'utils'
+} from '../hooks/index'
+import {goto} from '../utils/goto'
 
 interface ArticlePreviewProps {
   lang: string;
   title: string;
   source: string;
-  dir: string;
+  dir: "auto" | "rtl" | "ltr";
   close: () => void;
   closeAll: () => void;
 }
@@ -53,7 +53,7 @@ export const ArticlePreview: FunctionalComponent<ArticlePreviewProps> = ({
 
 interface LoadingPreviewProps {
   title: string;
-  dir: string;
+  dir: "auto" | "rtl" | "ltr";
 }
 
 const LoadingPreview: FunctionalComponent<LoadingPreviewProps> = ({title, dir}: LoadingPreviewProps) => (

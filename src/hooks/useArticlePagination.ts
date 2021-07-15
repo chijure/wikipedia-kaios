@@ -1,6 +1,6 @@
 import { useState, useLayoutEffect } from 'preact/hooks'
-import { useSoftkey, useRange } from 'hooks'
-import { viewport, isAnchorIntroSkip } from 'utils'
+import { useSoftkey, useRange } from '../hooks/index'
+import { viewport, isAnchorIntroSkip } from '../utils/index'
 
 export const useArticlePagination = (
   elementRef: any,
@@ -33,7 +33,7 @@ export const useArticlePagination = (
       if (previous === after) {
         showPrevSection()
         if (currentSection > 0) {
-          setIsLastPage(true)
+          setIsLastPage(1)
         }
       } else {
         setCurrentPage(p => p - 1)
@@ -47,7 +47,7 @@ export const useArticlePagination = (
       const offset = viewport().width
       elementRef.current.scrollLeft = scrollWidth - offset
       setCurrentPage(elementRef.current.scrollLeft / viewport().width)
-      setIsLastPage(false)
+      setIsLastPage(0)
     } else {
       elementRef.current.scrollLeft = 0
       setCurrentPage(0)
@@ -56,9 +56,9 @@ export const useArticlePagination = (
 
   useLayoutEffect(() => {
     if (anchor) {
-      const anchorElement = Array
+      const anchorElement: any = Array
         .from(elementRef.current.querySelectorAll('.title, h3, h4'))
-        .find(e => e.getAttribute('data-anchor') === anchor)
+        .find((e: any) => e.getAttribute('data-anchor') === anchor)
 
       if (anchorElement) {
         const offset = Math.floor(

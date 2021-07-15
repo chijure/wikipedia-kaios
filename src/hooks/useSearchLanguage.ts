@@ -1,9 +1,9 @@
-import { useState, useLayoutEffect } from 'preact/hooks'
-import { allLanguages, prioritizedLanguages } from 'utils'
+import {useState, useLayoutEffect} from 'preact/hooks'
+import {allLanguages, Languaje, prioritizedLanguages} from '../utils/index'
 
-export const useSearchLanguage = (lang: string) => {
+export const useSearchLanguage: (lang: string) => [Languaje[], string, (value: (((prevState: string) => string) | string)) => void] = (lang: string) => {
   const [items, setItems] = useState(prioritizedLanguages)
-  const [query, setQuery] = useState()
+  const [query, setQuery] = useState<string>('')
 
   useLayoutEffect(() => {
     const filteredList = query ? filterFirst10Language(query) : prioritizedLanguages
@@ -14,7 +14,7 @@ export const useSearchLanguage = (lang: string) => {
   }, [query])
 
   useLayoutEffect(() => {
-    setItems(items.map(item => {
+    setItems(items.map((item: any) => {
       item.isSelected = item.lang === lang
       return item
     }))
@@ -23,7 +23,7 @@ export const useSearchLanguage = (lang: string) => {
   return [items, query, setQuery]
 }
 
-const filterFirst10Language = text => {
+const filterFirst10Language= text => {
   const lowerCaseText = text.toLowerCase().trim()
   const foundList = []
   for (let i = 0; foundList.length < 10 && i < allLanguages.length; i++) {

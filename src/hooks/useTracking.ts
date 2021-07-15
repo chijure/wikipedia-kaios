@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'preact/hooks'
 import {
   appVersion, appInstallId, generateRandomId, sendEvent,
   isInstrumentationEnabled, isConsentGranted, isProd, getExperiment
-} from 'utils'
+} from '../utils/index'
 
 const SCHEMA_URI = '/analytics/legacy/inukapageview/1.0.0'
 const STREAM_NAME = 'eventlogging_InukaPageView'

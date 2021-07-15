@@ -1,4 +1,4 @@
-export const generateRandomId = () => {
+export const generateRandomId = (): string => {
   const rnds = new Uint16Array(5)
   crypto.getRandomValues(rnds)
   return (rnds[0] + 0x10000).toString(16).slice(1) +

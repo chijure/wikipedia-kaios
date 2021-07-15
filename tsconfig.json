@@ -1,25 +1,30 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "ES6",
     "allowJs": true,
+    "checkJs": false,
     "jsx": "react",
     "jsxFactory": "h",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noEmit": true,
+    "types": ["node"],
+    "typeRoots": ["./typings"],
     "baseUrl": ".",
     "paths": {
       "@i18n/*": ["i18n/*"],
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@reducers/*": ["src/reducers/*"],
       "@api/*": ["src/api/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@utils/*": ["src/utils/*"],
+      "@utils/*": ["./src/utils/*"],
     }
   },
-  "include": ["./src/**/*"]
+  "include": [
+    "./src/**/*",
+    "typings/define-plugin-variables.d.ts"
+  ]
 }

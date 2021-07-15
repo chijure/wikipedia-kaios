@@ -1,20 +1,20 @@
-import { h, Fragment } from 'preact'
+import { h, Fragment, FunctionalComponent } from 'preact'
 import { memo } from 'preact/compat'
 import { useState, useRef, useEffect, useLayoutEffect, useContext } from 'preact/hooks'
 import {
   ReferencePreview, ArticleToc, ArticleLanguage,
   ArticleMenu, ArticleFooter, ArticleLoading, QuickFacts,
   Error, Gallery, Table
-} from 'components'
+} from './index'
 import {
   useArticle, useI18n, useSoftkey,
   useArticlePagination, useArticleLinksNavigation,
   usePopup, useTracking
-} from 'hooks'
-import { articleHistory, confirmDialog, goto, viewport, buildWpMobileWebUrl } from 'utils'
-import { FontContext } from 'contexts'
+} from '../hooks/index'
+import { articleHistory, confirmDialog, goto, viewport, buildWpMobileWebUrl } from '../utils/index'
+import { FontContext } from '../contexts/index'
 
-const ArticleBody = memo(({ content }) => {
+const ArticleBody = memo(({ content }: any) => {
   return (
     <div
       class='article-content'
@@ -43,11 +43,11 @@ const ArticleSection = ({
   articleTitle, suggestedArticles, showGallery,
   galleryItems, namespace, id
 }) => {
-  const contentRef = useRef()
+  const contentRef: any = useRef()
   const i18n = useI18n()
   const [showReferencePreview] = usePopup(ReferencePreview)
   const [showTable] = usePopup(Table, { mode: 'fullscreen' })
-  const { textSize } = useContext(FontContext)
+  const { textSize } = useContext<any>(FontContext)
   const linkHandlers = {
     action: ({ action }) => {
       const targetAction = actions.find(a => a.name === action)
@@ -129,7 +129,7 @@ const ArticleSection = ({
 
 const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   const i18n = useI18n()
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const [article, loadArticle] = useArticle(lang, articleTitle)
 
   if (!article) {
@@ -151,9 +151,12 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   const [showMenuPopup] = usePopup(ArticleMenu)
   const [showGalleryPopup] = usePopup(Gallery, { mode: 'fullscreen', stack: true })
   const [currentSection, setCurrentSection, currentPage] = useArticlePagination(containerRef, article, anchor)
+  // @ts-ignore
   const section = article.sections[currentSection]
+  // @ts-ignore
   const sharedEnabled = !!window.MozActivity // disabled on browsers (not supported)
   const goToArticleSubpage = ({ sectionIndex, anchor }) => {
+    // @ts-ignore
     setCurrentSection(
       sectionIndex !== undefined
         ? sectionIndex
@@ -181,6 +184,8 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   }
 
   const shareArticleUrl = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     // eslint-disable-next-line no-new
     new window.MozActivity({
       name: 'share',
@@ -228,6 +233,7 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
 
   useEffect(() => {
     if (currentSection !== 0) { // lead section doesn't count
+      // @ts-ignore
       const anchor = article.sections[currentSection].anchor
       setOpenedSections({ ...openedSections, [anchor]: true })
     }
@@ -262,7 +268,7 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   )
 }
 
-export const Article = ({ lang, title: articleTitle, anchor: initialAnchor }) => {
+export const Article: FunctionalComponent<any> = ({ lang, title: articleTitle, anchor: initialAnchor }) => {
   return (
     <ArticleInner lang={lang} articleTitle={articleTitle} initialAnchor={initialAnchor} key={lang + articleTitle} />
   )
@@ -271,7 +277,7 @@ export const Article = ({ lang, title: articleTitle, anchor: initialAnchor }) =>
 const findCurrentLocatedAnchor = ref => {
   let element
   Array.from(ref.current.querySelectorAll('.title, h3, h4'))
-    .find(ref => {
+    .find((ref: any) => {
       if (ref.getBoundingClientRect().left < viewport().width) {
         element = ref
       }

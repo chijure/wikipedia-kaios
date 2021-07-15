@@ -1,24 +1,28 @@
 import {FunctionalComponent, h} from 'preact'
 import { useEffect, useState } from 'preact/hooks'
-import { ListView } from 'components'
-import { useI18n } from 'hooks'
-import { getTrendingArticles } from 'api'
-import { getUserCountry } from 'utils'
+import { ListView } from './index'
+import { useI18n } from '../hooks/index'
+import { getTrendingArticles } from '../api/index'
+import { getUserCountry } from '../utils/index'
 
-export const Feed: FunctionalComponent = ({ lang, isExpanded, setIsExpanded, lastIndex, setNavigation, containerRef }: any) => {
+export const Feed: FunctionalComponent<any> = ({ lang, isExpanded, setIsExpanded, lastIndex, setNavigation, containerRef }: any) => {
   const [trendingArticles, setTrendingArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const i18n = useI18n()
   const userCountry = getUserCountry()
 
+  // @ts-ignore
   useEffect(() => {
     setLoading(true)
     const [request, abort] = getTrendingArticles(lang, userCountry)
-    request.then(articles => {
-      setLoading(false)
-      setTrendingArticles(articles)
-    })
-    return abort
+
+    if (request instanceof Promise) {
+      request.then(articles => {
+        setLoading(false)
+        setTrendingArticles(articles)
+      })
+      return abort
+    }
   }, [lang, userCountry])
 
   useEffect(() => {
@@ -43,7 +47,11 @@ export const Feed: FunctionalComponent = ({ lang, isExpanded, setIsExpanded, las
   )
 }
 
-const Loading: FunctionalComponent = ({ isExpanded }: any) => {
+interface LoadingProps {
+  isExpanded: boolean;
+}
+
+const Loading: FunctionalComponent<LoadingProps> = ({ isExpanded }: LoadingProps) => {
   const i18n = useI18n()
   const loadingExpanded = () => {
     const loadingItem = (selectable = false) => {

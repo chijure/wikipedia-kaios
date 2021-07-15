@@ -1,5 +1,5 @@
 import {FunctionalComponent, h} from 'preact'
-import { useI18n } from 'hooks'
+import { useI18n } from '../hooks/index'
 
 export const OfflinePanel: FunctionalComponent = () => {
   const i18n = useI18n()

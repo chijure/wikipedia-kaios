@@ -1,8 +1,8 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef, useEffect } from 'preact/hooks'
-import { useNavigation, useI18n, useSoftkey, usePopup } from 'hooks'
-import { articleHistory, goto } from 'utils'
-import { ListView, TextSize } from 'components'
+import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks/index'
+import { articleHistory, goto } from '../utils/index'
+import { ListView, TextSize } from './index'
 
 interface ArticleMenuProps {
   close: () => void;
@@ -24,10 +24,11 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   hasLanguages, hasInfobox, hasGallery,
   isShareEnabled
 }: ArticleMenuProps) => {
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const listRef = useRef()
   const i18n = useI18n()
   const onKeyCenter = () => {
+    // @ts-ignore
     const { index } = getCurrent()
     const enabledItems = items.filter(item => item.enabled)
     const item = enabledItems[index]
@@ -54,6 +55,7 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
 
   const onTextsizeSelected = () => {
     const [showTextSize] = usePopup(TextSize, { stack: true, hideOthers: true })
+    // @ts-ignore
     showTextSize()
   }
 
@@ -64,6 +66,7 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   }
 
   useEffect(() => {
+    // @ts-ignore
     setNavigation(0)
   }, [])
 

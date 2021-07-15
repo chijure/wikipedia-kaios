@@ -1,6 +1,6 @@
 import {FunctionalComponent, h} from 'preact'
-import { useSoftkey, useI18n } from 'hooks'
-import { onboarding, goto } from 'utils'
+import { useSoftkey, useI18n } from '../hooks/index'
+import { onboarding, goto } from '../utils/index'
 
 export const Onboarding: FunctionalComponent = () => {
   const i18n = useI18n()

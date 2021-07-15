@@ -1,4 +1,4 @@
-import { buildMwOrgApiUrl, cachedFetch } from 'utils'
+import { buildMwOrgApiUrl, cachedFetch } from '../utils/index'
 
 export const getExperimentConfig = () => {
   const titles = 'Wikipedia_for_KaiOS/engagement1'

@@ -1,12 +1,12 @@
 import {FunctionalComponent, h} from 'preact'
-import {useI18n} from 'hooks'
-import {buildWpMobileWebUrl, canonicalizeTitle} from 'utils'
+import {useI18n} from '../hooks/index'
+import {buildWpMobileWebUrl, canonicalizeTitle} from '../utils/index'
 
 interface ArticleFooterProps {
   lang: string;
   title: string;
   items: any[];
-  dir: string;
+  dir: "auto" | "rtl" | "ltr";
 }
 
 export const ArticleFooter: FunctionalComponent<ArticleFooterProps> = ({
@@ -36,7 +36,7 @@ export const ArticleFooter: FunctionalComponent<ArticleFooterProps> = ({
           })}
         </div>
         <h2 class='img'>
-          <img src='images/wikipedia-wordmark-en.png' height='18' width='116' alt='wikipedia-wordmark' />
+          <img src='images/wikipedia-wordmark-en.png' height='18' width='116' alt='wikipedia-wordmark'/>
         </h2>
         <p class='license' dangerouslySetInnerHTML={{__html: contentI18n('content-license')}}/>
         <p class='browser'>

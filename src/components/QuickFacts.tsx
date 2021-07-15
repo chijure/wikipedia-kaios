@@ -1,15 +1,15 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef } from 'preact/hooks'
-import { ReferencePreview, Gallery } from 'components'
+import { ReferencePreview, Gallery } from './index'
 import {
   useScroll, usePopup,
   useI18n, useSoftkey, useArticleLinksNavigation
-} from 'hooks'
-import { confirmDialog } from 'utils'
+} from '../hooks/index'
+import { confirmDialog } from '../utils/index'
 
-export const QuickFacts: FunctionalComponent = ({ article, goToArticleSubpage, dir, close, closeAll }) => {
+export const QuickFacts: FunctionalComponent<any> = ({ article, goToArticleSubpage, dir, close, closeAll }) => {
   const i18n = useI18n()
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const [scrollDown, scrollUp, scrollPosition] = useScroll(containerRef, 20, 'y')
   const [showReferencePreview] = usePopup(ReferencePreview, { stack: true })
   const [showGalleryPopup] = usePopup(Gallery, { mode: 'fullscreen', stack: true })

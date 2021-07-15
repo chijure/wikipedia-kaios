@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useI18n } from 'hooks'
-import { getArticle, getArticleMediaList, getSuggestedArticles } from 'api'
-import { canonicalizeTitle } from 'utils'
+import { useI18n } from './index'
+import { getArticle, getArticleMediaList, getSuggestedArticles } from '../api/index'
+import { canonicalizeTitle } from '../utils/index'
 
 export const useArticle = (lang: string, title: string) => {
   const [article, setArticle] = useState(null)

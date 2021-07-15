@@ -1,16 +1,16 @@
 import {FunctionalComponent, h} from 'preact'
 import { useState, useRef, useEffect } from 'preact/hooks'
-import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from 'hooks'
-import { sendFeedback, confirmDialog } from 'utils'
-import { OfflinePanel } from 'components'
+import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from '../hooks/index'
+import { sendFeedback, confirmDialog } from '../utils/index'
+import { OfflinePanel } from './index'
 
 export const Feedback: FunctionalComponent = ({ close }: any) => {
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const i18n = useI18n()
-  const [message, setMessage] = useState()
+  const [message, setMessage] = useState(undefined)
   const [showSuccessConfirmation] = usePopup(SuccessConfirmationPopup, { stack: true })
   const [current, setNavigation, getCurrent] = useNavigation('Feedback', containerRef, containerRef, 'y')
-  const isOnline = useOnlineStatus()
+  const isOnline = useOnlineStatus(undefined)
 
   const items = [
     { text: `<a data-selectable>${i18n('feedback-privacy-policy')}</a>`, link: 'https://foundation.m.wikimedia.org/wiki/Privacy_policy' },
@@ -22,9 +22,11 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
     const userMessage = message.trim()
     if (isOnline && userMessage) {
       sendFeedback(userMessage)
+      // @ts-ignore
       if (getCurrent().type === 'TEXTAREA') {
         blurTextarea()
       }
+      // @ts-ignore
       showSuccessConfirmation()
     }
   }
@@ -47,6 +49,7 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
   }
 
   const onKeyCenter = () => {
+    // @ts-ignore
     const { index } = getCurrent()
     if (index > 0) {
       const item = items[index - 1]
@@ -56,6 +59,7 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
 
   const onKeyLeft = () => {
     if (message) {
+      // @ts-ignore
       if (isOnline && getCurrent().type === 'TEXTAREA') {
         blurTextarea()
       }
@@ -66,19 +70,25 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
   }
 
   const onKeyArrowRightHandler = () => {
+    // @ts-ignore
     const { index } = getCurrent()
     if (items[index]) {
+      // @ts-ignore
       setNavigation(index + 1)
     } else {
+      // @ts-ignore
       setNavigation(1)
     }
   }
 
   const onKeyArrowLeftHandler = () => {
+    // @ts-ignore
     const { index } = getCurrent()
     if (items[index - 2]) {
+      // @ts-ignore
       setNavigation(index - 1)
     } else {
+      // @ts-ignore
       setNavigation(items.length)
     }
   }
@@ -95,13 +105,17 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
     onKeyRight,
     left: i18n('softkey-cancel'),
     onKeyLeft,
+    // @ts-ignore
     onKeyBackspace: !(message && current.type === 'TEXTAREA') && (() => onKeyBackspaceHandler()),
     onKeyCenter,
+    // @ts-ignore
     onKeyArrowRight: !(current.type === 'TEXTAREA') && (() => onKeyArrowRightHandler()),
+    // @ts-ignore
     onKeyArrowLeft: !(current.type === 'TEXTAREA') && (() => onKeyArrowLeftHandler())
   }, [message, isOnline, current])
 
   useEffect(() => {
+    // @ts-ignore
     setNavigation(0)
   }, [isOnline])
 
@@ -115,7 +129,7 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
           ? <div>
             <div class='textarea-box'>
               <form>
-                <textarea value={message} placeholder={i18n('feedback-placeholder')} onChange={e => setMessage(e.target.value)} data-selectable />
+                <textarea value={message} placeholder={i18n('feedback-placeholder')} onChange={(e: any) => setMessage(e.target.value)} data-selectable />
               </form>
             </div>
             <div class='explanation-box'>

@@ -1,4 +1,4 @@
-import { buildPcsUrl, cachedFetch } from 'utils'
+import { buildPcsUrl, cachedFetch } from '../utils/index'
 
 export const getRandomArticleTitle = (lang: string) => {
   const url = buildPcsUrl(lang, 'title', 'random')

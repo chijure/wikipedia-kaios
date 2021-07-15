@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useSoftkey } from 'hooks'
+import { useSoftkey } from './index'
 
-export const useNavigation = (origin, containerRef, listRef, axis, elementsSelector = '[data-selectable]') => {
+export const useNavigation = (origin: string, containerRef: any, listRef: any, axis: string, elementsSelector = '[data-selectable]') => {
   const [current, setCurrent] = useState({ type: null, index: 0, key: null })
 
   const getAllElements = () => containerRef.current.querySelectorAll(elementsSelector)
@@ -35,7 +35,7 @@ export const useNavigation = (origin, containerRef, listRef, axis, elementsSelec
     if (selectElement) {
       [].forEach.call(getAllElements(), (element, index) => {
         const selectThisElement = element === selectElement
-        element.setAttribute('nav-selected', selectThisElement)
+        element.setAttribute('nav-selected', String(selectThisElement))
         element.setAttribute('nav-index', index)
         if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
           if (selectThisElement) {

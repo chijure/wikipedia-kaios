@@ -1,4 +1,4 @@
-import { appVersion, appInstallId, sendEvent, getDeviceLanguage } from 'utils'
+import { appVersion, appInstallId, sendEvent, getDeviceLanguage } from './index'
 
 const KEY = 'usage-data-consent'
 

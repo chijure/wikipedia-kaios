@@ -6,7 +6,7 @@ const SoftkeyButton = memo(({ className, text, handler }: any) => {
   return <label class={className} onClick={handler}>{text}</label>
 })
 
-export const Softkey: FunctionalComponent = ({
+export const Softkey: FunctionalComponent<any> = ({
   left,
   center,
   right,

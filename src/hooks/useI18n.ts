@@ -1,9 +1,9 @@
 import { useContext } from 'preact/hooks'
-import { I18nContext } from 'contexts'
-import { getAppLanguage, sendErrorLog } from 'utils'
+import { I18nContext } from '../contexts/index'
+import { getAppLanguage, sendErrorLog } from '../utils/index'
 
 export const useI18n = (lang = getAppLanguage()) => {
-  const banana = useContext(I18nContext)
+  const banana: any = useContext(I18nContext)
 
   const i18n = (lang: string, key: string, ...args) => {
     if (lang !== banana.locale) {

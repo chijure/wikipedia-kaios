@@ -1,4 +1,11 @@
-import { prioritizedLanguageListName } from 'utils'
+import { prioritizedLanguageListName } from './index'
+
+export interface Languaje {
+  lang: string;
+  title: string;
+  canonicalName: string;
+  dir: string;
+}
 
 // json language file given by iOS team
 const languages = [
@@ -1520,7 +1527,7 @@ export const isSupportedForReading = (langCode: string) => {
   return missingFont.indexOf(langCode) === -1
 }
 
-export const prioritizedLanguages = languages
+export const prioritizedLanguages: Languaje[] = languages
   .filter(language => {
     return prioritizedList.indexOf(language.code) !== -1 && isSupportedForReading(language.code)
   })
@@ -1533,7 +1540,7 @@ export const prioritizedLanguages = languages
     }
   })
 
-export const allLanguages = prioritizedLanguages.concat(
+export const allLanguages: Languaje[] = prioritizedLanguages.concat(
   languages
     .filter(language => {
       return isSupportedForReading(language.code) && prioritizedList.indexOf(language.code) === -1
@@ -1561,19 +1568,19 @@ export const loadAllLanguagesMessages = () => {
   return messages
 }
 
-export const setAppLanguage = (lang: string) => {
+export const setAppLanguage = (lang: string): void => {
   localStorage.setItem('language-app', lang)
 }
 
-export const getAppLanguage = () => {
-  return localStorage.getItem('language-app')
+export const getAppLanguage = (): string => {
+  return localStorage.getItem('language-app') || 'en'
 }
 
-export const setDeviceLanguage = () => {
+export const setDeviceLanguage = (): void => {
   localStorage.setItem('language-device', getCurrentDeviceLanguage())
 }
 
-export const getDeviceLanguage = () => {
+export const getDeviceLanguage = (): string => {
   return (localStorage.getItem('language-device')) || 'en'
 }
 

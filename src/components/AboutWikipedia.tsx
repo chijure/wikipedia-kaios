@@ -1,8 +1,8 @@
 import {FunctionalComponent, h} from 'preact'
-import {useSoftkey, useI18n, useRange} from 'hooks'
+import {useSoftkey, useI18n, useRange} from '../hooks/index'
 
 interface AboutWikipediaProps {
-  close: () => void;
+  close: any;
 }
 
 export const AboutWikipedia: FunctionalComponent<AboutWikipediaProps> = ({close}: AboutWikipediaProps) => {
@@ -47,7 +47,7 @@ export const AboutWikipedia: FunctionalComponent<AboutWikipediaProps> = ({close}
     <div class='about-wikipedia'>
       <div class='header'>{i18n('about-wikipedia-header')}</div>
       <div class='body'>
-        <div class='image' style={getImageBackgroundStyle(currentIndex)}>
+        <div class='image' style={getImageBackgroundStyle(currentIndex) }>
           <img src={`images/onboarding-${currentIndex}.png`} alt={`OnBoarding-${currentIndex}`}/>
         </div>
         <div class='title'>

@@ -1,4 +1,4 @@
-import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl } from 'utils'
+import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl } from '../utils/index'
 
 export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boolean) => {
   const params = {

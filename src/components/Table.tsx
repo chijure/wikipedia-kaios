@@ -1,9 +1,9 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef } from 'preact/hooks'
-import { useI18n, useSoftkey, useScroll } from 'hooks'
+import { useI18n, useSoftkey, useScroll } from '../hooks/index'
 
 export const Table: FunctionalComponent = ({ dir, close, content }: any) => {
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const i18n = useI18n()
   const [scrollDown, scrollUp] = useScroll(containerRef, 20, 'y')
   const [scrollRight, scrollLeft] = useScroll(containerRef, 20, 'x')

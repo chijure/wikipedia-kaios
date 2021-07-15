@@ -1,17 +1,17 @@
-import {FunctionalComponent, h} from 'preact'
-import {useReducer, useState, useEffect, useLayoutEffect} from 'preact/hooks'
-import {Routes, Softkey, PopupContainer, OfflineIndicator} from 'components'
-import {DirectionContext, I18nContext, SoftkeyContext, PopupContext, FontContext} from 'contexts'
-import {SoftkeyReducer} from 'reducers'
-import {articleTextSize} from 'utils'
-import {useErrorLogging} from 'hooks'
+import { FunctionalComponent, h } from 'preact'
+import { useReducer, useState, useEffect, useLayoutEffect } from 'preact/hooks'
+import { Routes, Softkey, PopupContainer, OfflineIndicator } from './index'
+import { DirectionContext, I18nContext, SoftkeyContext, PopupContext, FontContext } from '../contexts/index'
+import { SoftkeyReducer } from '../reducers/index'
+import { articleTextSize } from '../utils/index'
+import { useErrorLogging } from '../hooks/index'
 
-interface AppProps {
+export interface AppProps {
   i18n: any;
-  dir: string;
+  dir: 'rtl' | 'ltr';
 }
 
-export const App: FunctionalComponent<AppProps> = ({i18n, dir}: AppProps) => {
+const App: FunctionalComponent<AppProps> = ({ i18n, dir }: AppProps) => {
   // @todo making it used by the global state management
   const [state, dispatch] = useReducer(SoftkeyReducer, {})
   const [popupState, setPopupState] = useState([])
@@ -35,14 +35,14 @@ export const App: FunctionalComponent<AppProps> = ({i18n, dir}: AppProps) => {
 
   return (
     <I18nContext.Provider value={i18n}>
-      <SoftkeyContext.Provider value={{state, dispatch}}>
-        <PopupContext.Provider value={{popupState, setPopupState}}>
-          <DirectionContext.Provider value={{dirState, setDirState}}>
-            <FontContext.Provider value={{textSize, setTextSize}}>
-              <OfflineIndicator routeUrl={url}/>
-              <Routes onRouteChange={({url}) => setUrl(url)}/>
+      <SoftkeyContext.Provider value={{ state, dispatch }}>
+        <PopupContext.Provider value={{ popupState, setPopupState }}>
+          <DirectionContext.Provider value={{ dirState, setDirState }}>
+            <FontContext.Provider value={{ textSize, setTextSize }}>
+              <OfflineIndicator routeUrl={url} />
+              <Routes onRouteChange={(url) => setUrl(url)} />
               <Softkey dir={dirState} {...state.current} />
-              <PopupContainer popups={popupState}/>
+              <PopupContainer popups={popupState} />
             </FontContext.Provider>
           </DirectionContext.Provider>
         </PopupContext.Provider>
@@ -50,3 +50,5 @@ export const App: FunctionalComponent<AppProps> = ({i18n, dir}: AppProps) => {
     </I18nContext.Provider>
   )
 }
+
+export default App

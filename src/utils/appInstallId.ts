@@ -1,4 +1,4 @@
-import { generateRandomId } from 'utils'
+import { generateRandomId } from './index'
 
 const APP_INSTALL_ID_KEY = 'app-install-id'
 

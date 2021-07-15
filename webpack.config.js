@@ -41,7 +41,7 @@ const babelOptions =
 
 module.exports = {
   devtool: 'source-map',
-  entry: './src/index.js',
+  entry: './src/index.ts',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')
@@ -84,13 +84,6 @@ module.exports = {
     }),
     new webpack.EnvironmentPlugin()
   ],
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js'],
-    alias: {
-      react: 'preact/compat',
-      'react-dom': 'preact/compat'
-    }
-  },
   module: {
     rules: [
       {
@@ -104,29 +97,8 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        exclude: /(node_modules)/,
-        use:
-          [
-            {
-              loader: 'babel-loader',
-              options: babelOptions
-            },
-            {
-              loader: 'ts-loader',
-              options: {
-                transpileOnly: true,
-                configFile: 'tsconfig.json'
-              }
-            }
-          ]
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: babelOptions
-        }
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.less$/,
@@ -140,5 +112,12 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      react: 'preact/compat',
+      'react-dom': 'preact/compat'
+    }
   }
 }

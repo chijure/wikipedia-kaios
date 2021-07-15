@@ -1,4 +1,4 @@
-import { cachedFetch, buildMwApiUrl } from 'utils'
+import { cachedFetch, buildMwApiUrl } from '../utils/index'
 
 export const search = (lang: string, term: string) => {
   // fulltext search

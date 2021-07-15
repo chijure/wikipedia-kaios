@@ -1,15 +1,16 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
-import { useNavigation, useI18n, useSoftkey } from 'hooks'
-import { ListView } from 'components'
+import { useNavigation, useI18n, useSoftkey } from '../hooks/index'
+import { ListView } from './index'
 
 export const ArticleToc: FunctionalComponent = ({ items, currentAnchor, onSelectItem, close, closeAll }: any) => {
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const listRef = useRef()
   const i18n = useI18n()
   const listItems = parseTocItems(items)
   const [, setNavigation, getCurrent] = useNavigation('ArticleToc', containerRef, listRef, 'y')
   const onKeyCenter = () => {
+    // @ts-ignore
     const { index } = getCurrent()
     const item = listItems[index]
 
@@ -27,6 +28,7 @@ export const ArticleToc: FunctionalComponent = ({ items, currentAnchor, onSelect
   })
 
   useLayoutEffect(() => {
+    // @ts-ignore
     setNavigation(listItems.findIndex(item => item.anchor === currentAnchor))
   }, [])
 

@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'preact/hooks'
-import { sendLegacyEvent, isInstrumentationEnabled } from 'utils'
+import { sendLegacyEvent, isInstrumentationEnabled } from '../utils/index'
 
 const SCHEMA_NAME = 'VirtualPageView'
 const SCHEMA_REV = 19883675

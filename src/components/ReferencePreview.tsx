@@ -1,10 +1,10 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef } from 'preact/hooks'
-import { useI18n, useSoftkey, useArticleLinksNavigation } from 'hooks'
+import { useI18n, useSoftkey, useArticleLinksNavigation } from '../hooks/index'
 
 export const ReferencePreview: FunctionalComponent = ({ reference, lang, dir, close }: any) => {
   const i18n = useI18n()
-  const contentRef = useRef()
+  const contentRef = useRef<HTMLDivElement>(undefined)
   useArticleLinksNavigation('ReferencePreview', lang, contentRef)
   useSoftkey('ReferencePreview', {
     left: i18n('softkey-close'),

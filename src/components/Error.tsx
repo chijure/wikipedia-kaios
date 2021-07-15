@@ -1,8 +1,13 @@
 import {FunctionalComponent, h} from 'preact'
-import { useSoftkey, useI18n } from 'hooks'
-import { goto } from 'utils'
+import { useSoftkey, useI18n } from '../hooks/index'
+import { goto } from '../utils/goto'
 
-export const Error: FunctionalComponent = ({ message, onRefresh }: any) => {
+interface ErrorProps {
+  message: string;
+  onRefresh: any;
+}
+
+export const Error: FunctionalComponent<ErrorProps> = ({ message, onRefresh }: ErrorProps) => {
   const i18n = useI18n()
 
   useSoftkey('Error', {

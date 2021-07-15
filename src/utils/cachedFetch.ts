@@ -1,7 +1,7 @@
 import {
   isProd, appVersion, sendErrorLog,
   isRequestHeaderDisabled, setUserCountry
-} from 'utils'
+} from './index'
 
 // todo: Implement a real cache that keeps
 // the last N requests to keep memory usage

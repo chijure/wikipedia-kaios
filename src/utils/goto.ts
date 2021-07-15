@@ -1,5 +1,5 @@
 import { route } from 'preact-router'
-import { canonicalizeTitle, getAppLanguage } from 'utils'
+import { canonicalizeTitle, getAppLanguage } from './index'
 
 const article = (lang: string, title: string | string[], replace = false) => {
   if (!Array.isArray(title)) {

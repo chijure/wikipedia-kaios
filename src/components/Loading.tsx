@@ -2,6 +2,7 @@ import {FunctionalComponent, h} from 'preact'
 
 interface LoadingProps {
   message: string;
+  onClose?: () => void
 }
 
 export const Loading: FunctionalComponent<LoadingProps> = ({ message }: LoadingProps) => {

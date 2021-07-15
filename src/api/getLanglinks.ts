@@ -2,7 +2,7 @@ import {
   buildMwApiUrl, cachedFetch,
   isSupportedForReading, getDirection,
   isPrioritized
-} from 'utils'
+} from '../utils/index'
 
 const getLangFromUrl = (url: string) => {
   // Get the lang code from the site URL since it may differ from

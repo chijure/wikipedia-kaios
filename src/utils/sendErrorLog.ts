@@ -1,8 +1,14 @@
-import { appVersion, gitHash, isProd } from 'utils'
+import { appVersion, gitHash, isProd } from './index'
 
 const intakeUrl = 'https://intake-logging.wikimedia.org/v1/events' + (isProd() ? '?hasty=true' : '')
 
-export const sendErrorLog = ({ message, stack = '', url = '' }) =>
+interface SendErrorLogProps {
+  message: string;
+  stack?: string;
+  url?: string;
+}
+
+export const sendErrorLog = ({ message, stack = '', url = '' }: SendErrorLogProps): boolean =>
   navigator.sendBeacon(intakeUrl, JSON.stringify({
     $schema: '/mediawiki/client/error/1.0.0',
     meta: {

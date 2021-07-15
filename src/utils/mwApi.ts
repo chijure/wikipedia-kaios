@@ -1,4 +1,4 @@
-import { canonicalizeTitle } from 'utils'
+import { canonicalizeTitle } from './index'
 
 const defautParams = {
   format: 'json',

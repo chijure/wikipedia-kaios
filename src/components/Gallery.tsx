@@ -1,12 +1,12 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
-import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from 'hooks'
+import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '../hooks/index'
 
 const MAX_DESCRIPTION_HEIGHT = 45
 
 const AboutContainer: FunctionalComponent = ({ lang, dir, title, caption, fromCommon, close }: any) => {
   const i18n = useI18n()
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const mediaInfo = useArticleMediaInfo(lang, title, fromCommon)
 
   useSoftkey('About', {
@@ -30,6 +30,7 @@ const AboutContainer: FunctionalComponent = ({ lang, dir, title, caption, fromCo
       return
     }
 
+    // @ts-ignore
     const descriptionNode = containerRef.current.querySelector('.description')
 
     if (descriptionNode && descriptionNode.getBoundingClientRect().height > MAX_DESCRIPTION_HEIGHT) {
@@ -83,7 +84,7 @@ const LoadingAbout: FunctionalComponent = () => {
 
 export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFileName, lang, dir }: any) => {
   const i18n = useI18n()
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const [
     currentIndex, onPrevImage, onNextImage
   ] = useRange(getInitialIndex(items, startFileName), items.length - 1)
@@ -94,10 +95,12 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     const galleryClasses = ['portrait', 'landscape']
 
     galleryClasses.forEach(galleryClass => {
+      // @ts-ignore
       galleryNode.classList.remove(galleryClass)
     })
 
     const orientationClass = img.height >= img.width ? 'portrait' : 'landscape'
+    // @ts-ignore
     galleryNode.classList.add(orientationClass)
   }
 
@@ -105,6 +108,7 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     left: i18n('softkey-close'),
     onKeyLeft: closeAll,
     center: i18n('softkey-about'),
+  // @ts-ignore
     onKeyCenter: () => showAboutPopup({ ...items[currentIndex], lang, dir }),
     [dir === 'rtl' ? 'onKeyFixedArrowLeft' : 'onKeyFixedArrowRight']: onNextImage,
     [dir === 'rtl' ? 'onKeyFixedArrowRight' : 'onKeyFixedArrowLeft']: onPrevImage,

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useSoftkey, usePopup, useI18n } from 'hooks'
-import { viewport, INTERWIKI_KEYS, normalizeTitle, getDirection } from 'utils'
-import { ArticlePreview } from 'components'
+import { useSoftkey, usePopup, useI18n } from './index'
+import { viewport, INTERWIKI_KEYS, normalizeTitle, getDirection } from '../utils/index'
+import { ArticlePreview } from '../components/index'
 
 const SELECTED_ATTRIBUTE = 'data-selected'
 
@@ -25,7 +25,7 @@ export const useArticleLinksNavigation = (
   contentRef,
   linkHandlers = {},
   dependencies = [],
-  source = {}
+  source: any = {}
 ) => {
   const i18n = useI18n()
   const [links, setLinks] = useState([])
@@ -187,7 +187,7 @@ const findVisibleLinks = (container, galleryItems) => {
 
 const isImageLink = link => {
   return ['FIGURE', 'FIGURE-INLINE'].includes(link.tagName) ||
-    Array.from(link.classList).some(classname => ['tsingle', 'image', 'gallerybox'].includes(classname))
+    Array.from(link.classList).some((classname: string) => ['tsingle', 'image', 'gallerybox'].includes(classname))
 }
 
 const isImageInGallery = (galleryItems = [], fileName) => {

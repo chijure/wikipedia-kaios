@@ -17,7 +17,7 @@ export const ListView = ({ items = [], header, containerRef, empty }: any) => {
                 { item.description && <bdi class={`description${item.imageUrl ? ' withImg' : ''}`} dangerouslySetInnerHTML={{ __html: item.description }} /> }
               </div>
               { item.imageUrl && <div class='img' style={{ backgroundImage: `url(${item.imageUrl})` }} /> }
-              { item.link && <div class='link'><img src='images/link.svg' /></div> }
+              { item.link && <div class='link'><img src='images/link.svg' alt='link' /></div> }
             </div>
           )) : <div class='empty'>{empty}</div>
         }

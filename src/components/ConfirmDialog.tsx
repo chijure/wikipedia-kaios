@@ -1,5 +1,5 @@
 import {FunctionalComponent, h} from 'preact'
-import { useI18n, useSoftkey } from 'hooks'
+import { useI18n, useSoftkey } from '../hooks/index'
 
 export const ConfirmDialog: FunctionalComponent = ({
   title, message, dir,

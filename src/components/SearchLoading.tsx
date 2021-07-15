@@ -1,6 +1,6 @@
 import {FunctionalComponent, h} from 'preact'
-import { Loading } from 'components'
-import { useI18n } from 'hooks'
+import { Loading } from './index'
+import { useI18n } from '../hooks/index'
 
 export const SearchLoading: FunctionalComponent = () => {
   const i18n = useI18n()

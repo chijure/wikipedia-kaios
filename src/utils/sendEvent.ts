@@ -1,4 +1,4 @@
-import { isProd } from 'utils'
+import { isProd } from './mode'
 
 const intakeUrl = 'https://intake-analytics.wikimedia.org/v1/events' + (isProd() ? '?hasty=true' : '')
 

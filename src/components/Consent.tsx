@@ -1,11 +1,11 @@
 import {FunctionalComponent, h} from 'preact'
 import { useRef } from 'preact/hooks'
-import { useI18n, useSoftkey, useScroll } from 'hooks'
-import { grantConsent, goto } from 'utils'
+import { useI18n, useSoftkey, useScroll } from '../hooks/index'
+import { grantConsent, goto } from '../utils/index'
 
 export const Consent: FunctionalComponent = ({ close }: any) => {
   const i18n = useI18n()
-  const bodyRef = useRef()
+  const bodyRef = useRef<HTMLDivElement>(undefined)
   const [scrollDown, scrollUp] = useScroll(bodyRef, 10, 'y')
 
   const onAgree = () => {

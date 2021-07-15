@@ -5,6 +5,8 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
     'standard',
     'standard-preact',
     "plugin:cypress/recommended"
@@ -20,7 +22,8 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
-  "plugins": [
+  plugins: [
+    "@typescript-eslint",
     "cypress",
     "no-only-tests"
   ],

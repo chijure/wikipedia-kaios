@@ -1,4 +1,4 @@
-import { buildMwOrgApiUrl, cachedFetch, sendErrorLog } from 'utils'
+import { buildMwOrgApiUrl, cachedFetch, sendErrorLog } from '../utils/index'
 
 export const getTrendingArticles = (lang: string, country: string) => {
   const title = `Wikipedia_for_KaiOS/engagement1/trending/${lang}/${country.toLowerCase()}`

@@ -1,9 +1,14 @@
 import {FunctionalComponent, h} from 'preact'
 import { useEffect, useState } from 'preact/hooks'
-import { useI18n, useOnlineStatus } from 'hooks'
+import { useI18n, useOnlineStatus } from '../hooks/index'
 
-export const OfflineIndicator: FunctionalComponent = ({ routeUrl }: any) => {
+interface OfflineIndicatorProps {
+  routeUrl: string;
+}
+
+export const OfflineIndicator: FunctionalComponent<OfflineIndicatorProps> = ({ routeUrl }: OfflineIndicatorProps) => {
   const i18n = useI18n()
+  // @ts-ignore
   const isOnline = useOnlineStatus()
   const [isVisible, setVisible] = useState<boolean>(false)
 

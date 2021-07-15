@@ -1,12 +1,12 @@
 import {FunctionalComponent, h} from 'preact'
 import { route } from 'preact-router'
 import { useRef, useEffect } from 'preact/hooks'
-import { useNavigation, useI18n, useSoftkey, usePopup } from 'hooks'
-import { ListView, AboutApp, AboutWikipedia, PrivacyTerms, Feedback } from 'components'
-import { goto } from 'utils'
+import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks/index'
+import { ListView, AboutApp, AboutWikipedia, PrivacyTerms, Feedback } from './index'
+import { goto } from '../utils/index'
 
 export const Settings: FunctionalComponent = () => {
-  const containerRef = useRef()
+  const containerRef = useRef<HTMLDivElement>(undefined)
   const listRef = useRef()
   const i18n = useI18n()
   const [showAboutApp] = usePopup(AboutApp, { mode: 'fullscreen' })
@@ -15,11 +15,14 @@ export const Settings: FunctionalComponent = () => {
   const [showPrivacyTerms] = usePopup(PrivacyTerms, { mode: 'fullscreen' })
 
   const onKeyCenter = () => {
+    // @ts-ignore
     const { index } = getCurrent()
     const item = items[index]
 
     // open link
+    // @ts-ignore
     if (item.link) {
+      // @ts-ignore
       window.open(item.link)
     } else if (item.path) {
       route(item.path)
@@ -29,18 +32,22 @@ export const Settings: FunctionalComponent = () => {
   }
 
   const onAboutAppSelected = () => {
+    // @ts-ignore
     showAboutApp()
   }
 
   const onAboutWikipediaSelected = () => {
+    // @ts-ignore
     showAboutWikipedia()
   }
 
   const onFeedbackSelected = () => {
+    // @ts-ignore
     showFeedback()
   }
 
   const onPrivacyTermsSelected = () => {
+    // @ts-ignore
     showPrivacyTerms()
   }
 
@@ -55,6 +62,7 @@ export const Settings: FunctionalComponent = () => {
   const [, setNavigation, getCurrent] = useNavigation('Settings', containerRef, listRef, 'y')
 
   useEffect(() => {
+    // @ts-ignore
     setNavigation(0)
   }, [])
 

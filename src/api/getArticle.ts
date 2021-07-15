@@ -1,4 +1,4 @@
-import { cachedFetch, buildPcsUrl, canonicalizeTitle, getDirection } from 'utils'
+import { cachedFetch, buildPcsUrl, canonicalizeTitle, getDirection } from '../utils/index'
 
 export const getArticle = (lang: string, title: string, { moreInformationText }: any) => {
   const url = buildPcsUrl(lang, title, 'mobile-sections')
@@ -63,6 +63,7 @@ export const getArticle = (lang: string, title: string, { moreInformationText }:
       if (s.isReferenceSection) {
         const sectionDoc = parser.parseFromString(s.text, 'text/html')
         const refNodes = sectionDoc.querySelectorAll('li[id^="cite_"]')
+        // @ts-ignore
         for (const refNode of refNodes) {
           const [id, ref] = extractReference(refNode)
           references[id] = ref
@@ -95,10 +96,10 @@ const fixImageUrl = (htmlString: string, lang: string) => {
 const fixTableCaption = (htmlString: string, moreInformationText) => {
   const hiddenClassName = 'hidden-in-table'
   const parser = new DOMParser()
-  const node = parser.parseFromString(htmlString, 'text/html')
-  const tableNodes = node.querySelectorAll('table')
+  const node: any = parser.parseFromString(htmlString, 'text/html')
+  const tableNodes: any = node.querySelectorAll('table')
   for (const tableNode of tableNodes) {
-    const thContent = Array.from(tableNode.querySelectorAll('th')).map(th => th.textContent).join(', ')
+    const thContent = Array.from(tableNode.querySelectorAll('th')).map((th: any) => th.textContent).join(', ')
     const normalizedThContent = thContent.replace(/\[\d+]/g, '')
     if (tableNode.caption && tableNode.caption.textContent) {
       tableNode.caption.innerHTML = `<b class='${hiddenClassName}'>${moreInformationText}:</b><p class='${hiddenClassName}'>${normalizedThContent}</p><span>${tableNode.caption.textContent}</span>`
@@ -139,13 +140,13 @@ const extractPreview = doc => {
     return ''
   }
 
-  Array.from(p.querySelectorAll('a')).forEach(link => {
+  Array.from(p.querySelectorAll('a')).forEach((link: any) => {
     const span = document.createElement('span')
     span.textContent = link.textContent
     link.parentNode.replaceChild(span, link)
   })
 
-  Array.from(p.querySelectorAll('.mw-ref')).forEach(ref => {
+  Array.from(p.querySelectorAll('.mw-ref')).forEach((ref: any) => {
     ref.parentNode.removeChild(ref)
   })
 
@@ -159,7 +160,7 @@ const extractInfobox = doc => {
     infoboxNode.style.width = ''
     infoboxNode.style.fontSize = ''
     const blackListedProps = ['minWidth', 'whiteSpace', 'width']
-    Array.from(infoboxNode.querySelectorAll('[style]')).forEach(n => {
+    Array.from(infoboxNode.querySelectorAll('[style]')).forEach((n: any) => {
       blackListedProps.forEach(propName => {
         if (n.style[propName]) {
           n.style[propName] = ''
@@ -168,10 +169,10 @@ const extractInfobox = doc => {
     })
 
     // Long URLs in content make the table too wide
-    Array.from(infoboxNode.querySelectorAll('a[href]')).forEach(a => {
+    Array.from(infoboxNode.querySelectorAll('a[href]')).forEach((a: any) => {
       if (a.href === a.textContent) {
         // Use a shorter text (strip protocol and path)
-        var u = new URL(a.href)
+        const u = new URL(a.href)
         a.textContent = u.hostname
 
         // Constrain the parent node and truncate if needed

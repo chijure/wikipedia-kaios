@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'preact/hooks'
-import { getExperimentConfig } from 'api'
-import { isConsentGranted, isTrendingArticlesGroup, getUserCountry } from 'utils'
+import { getExperimentConfig } from '../api/index'
+import { isConsentGranted, isTrendingArticlesGroup, getUserCountry } from '../utils/index'
 
 const STORAGE_KEY = '2021-KaiOS-app-engagement-config'
 
@@ -38,8 +38,8 @@ const isSameDay = (ts1: number, ts2: number) => {
   return formatDate(ts1) === formatDate(ts2)
 }
 
-export const useExperimentConfig = lang => {
-  const [isExperimentGroup, setIsExperimentGroup] = useState()
+export const useExperimentConfig = (lang: string): boolean => {
+  const [isExperimentGroup, setIsExperimentGroup] = useState(undefined)
   const consentGranted = isConsentGranted()
   const { timestamp, startDate, endDate, countries, languages } = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
   const hasRecordBefore = timestamp && isSameDay(Date.now(), timestamp)
@@ -51,12 +51,15 @@ export const useExperimentConfig = lang => {
     } else if (consentGranted && !hasRecordBefore) {
       // no record found or record found but expire
       const [promise] = getExperimentConfig()
-      promise.then(({ startDate, endDate, countries, languages }) => {
-        localStorage.setItem(STORAGE_KEY,
-          JSON.stringify({ timestamp: Date.now(), startDate, endDate, countries, languages })
-        )
-        setIsExperimentGroup(isUserUnderExperimentGroup(startDate, endDate, countries, languages, lang))
-      })
+
+      if (promise instanceof Promise) {
+        promise.then(({ startDate, endDate, countries, languages }) => {
+          localStorage.setItem(STORAGE_KEY,
+            JSON.stringify({ timestamp: Date.now(), startDate, endDate, countries, languages })
+          )
+          setIsExperimentGroup(isUserUnderExperimentGroup(startDate, endDate, countries, languages, lang))
+        })
+      }
     }
   }, [consentGranted])
 

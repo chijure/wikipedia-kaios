@@ -1,10 +1,10 @@
 import {FunctionalComponent, h} from 'preact'
-import { Loading } from 'components'
-import { useSoftkey, useI18n } from 'hooks'
-import { goto } from 'utils'
+import { Loading } from './index'
+import { useSoftkey, useI18n } from '../hooks/index'
+import { goto } from '../utils/goto'
 
 interface ArticleLoadingProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export const ArticleLoading: FunctionalComponent<ArticleLoadingProps> = ({ onClose }: ArticleLoadingProps) => {

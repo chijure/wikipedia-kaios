@@ -1,5 +1,5 @@
 import { useState, useEffect, useLayoutEffect } from 'preact/hooks'
-import { getLanglinks } from 'api'
+import { getLanglinks } from '../api/index'
 
 export interface LangLink {
   lang: string;
@@ -7,39 +7,47 @@ export interface LangLink {
   langname: string;
   autonym: string;
   title: string;
+  description: string;
+  isSelected?: boolean;
 }
 
-export const useSearchArticleLanguage = (lang: string, title: string) => {
-  const [items, setItems] = useState([])
-  const [query, setQuery] = useState()
-  const [allLanguages, setAllLanguages] = useState<LangLink[]>([])
+export const useSearchArticleLanguage: (lang: string, title: string) =>
+  [LangLink[], string, (value: string) => void, number] = (lang: string, title: string) => {
+    const [items, setItems] = useState<LangLink[]>([])
+    const [query, setQuery] = useState<string>('')
+    const [allLanguages, setAllLanguages] = useState<LangLink[]>([])
 
-  useEffect(() => {
-    const [promise, abort] = getLanglinks(lang, title)
-    promise.then((languages: LangLink[]) => {
-      setAllLanguages(languages)
-      setItems(getInitialLangList(languages))
-    })
-    return abort
-  }, [])
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    useEffect(() => {
+      const [promise, abort] = getLanglinks(lang, title)
+      if (promise instanceof Promise) {
+        promise.then((languages: LangLink[]) => {
+          setAllLanguages(languages)
+          setItems(getInitialLangList(languages))
+        })
 
-  useLayoutEffect(() => {
-    const filteredList = query ? filterFirst10Language(allLanguages, query) : getInitialLangList(allLanguages)
-    setItems(filteredList.map((item: any) => {
-      item.isSelected = item.lang === lang
-      return item
-    }))
-  }, [query])
+        return abort
+      }
+    }, [])
 
-  useLayoutEffect(() => {
-    setItems(items.map(item => {
-      item.isSelected = item.lang === lang
-      return item
-    }))
-  }, [lang])
+    useLayoutEffect(() => {
+      const filteredList = query ? filterFirst10Language(allLanguages, query) : getInitialLangList(allLanguages)
+      setItems(filteredList.map((item: any) => {
+        item.isSelected = item.lang === lang
+        return item
+      }))
+    }, [query])
 
-  return [items, query, setQuery, allLanguages.length]
-}
+    useLayoutEffect(() => {
+      setItems(items.map(item => {
+        item.isSelected = item.lang === lang
+        return item
+      }))
+    }, [lang])
+
+    return [items, query, setQuery, allLanguages.length]
+  }
 
 const filterFirst10Language = (languages, text) => {
   const lowerCaseText = text.toLowerCase().trim()

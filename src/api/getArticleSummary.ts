@@ -1,4 +1,4 @@
-import { cachedFetch, buildPcsUrl } from 'utils'
+import { cachedFetch, buildPcsUrl } from '../utils/index'
 
 export const getArticleSummary = (lang: string, title: string) => {
   const url = buildPcsUrl(lang, title, 'summary')

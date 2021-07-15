@@ -14,7 +14,8 @@ export const Popup: FunctionalComponent = ({ component, props, options, style }:
   }
 }
 
-export const PopupContainer: FunctionalComponent = ({ popups }: any) => {
+// @ts-ignore
+export const PopupContainer: FunctionalComponent<any> = ({ popups }: any) => {
   if (popups.length === 0) {
     return ''
   }

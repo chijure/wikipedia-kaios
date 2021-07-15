@@ -1,4 +1,4 @@
-import { buildMwApiUrl, cachedFetch } from 'utils'
+import { buildMwApiUrl, cachedFetch } from '../utils/index'
 
 export const getSuggestedArticles = (lang: string, title: string) => {
   const params = {
