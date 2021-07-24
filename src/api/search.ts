@@ -1,5 +1,6 @@
 import { cachedFetch, buildMwApiUrl } from '../utils/index'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const search = (lang: string, term: string) => {
   // fulltext search
   const params = {
@@ -22,12 +23,16 @@ export const search = (lang: string, term: string) => {
   }
 
   const url = buildMwApiUrl(lang, params)
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => {
     if (!data.query || !data.query.search) {
       return []
     }
 
     const { search, pages } = data.query
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     return Object.values(search).map((item: any) => {
       const page = pages && pages.find((page: any) => page.pageid === item.pageid)
       return {

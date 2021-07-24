@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useState, useRef, useEffect } from 'preact/hooks'
 import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from '../hooks/index'
 import { sendFeedback, confirmDialog } from '../utils/index'
@@ -22,10 +22,10 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
     const userMessage = message.trim()
     if (isOnline && userMessage) {
       sendFeedback(userMessage)
-      // @ts-ignore
       if (getCurrent().type === 'TEXTAREA') {
         blurTextarea()
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       showSuccessConfirmation()
     }
@@ -49,7 +49,6 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
   }
 
   const onKeyCenter = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     if (index > 0) {
       const item = items[index - 1]
@@ -59,7 +58,6 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
 
   const onKeyLeft = () => {
     if (message) {
-      // @ts-ignore
       if (isOnline && getCurrent().type === 'TEXTAREA') {
         blurTextarea()
       }
@@ -70,25 +68,19 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
   }
 
   const onKeyArrowRightHandler = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     if (items[index]) {
-      // @ts-ignore
       setNavigation(index + 1)
     } else {
-      // @ts-ignore
       setNavigation(1)
     }
   }
 
   const onKeyArrowLeftHandler = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     if (items[index - 2]) {
-      // @ts-ignore
       setNavigation(index - 1)
     } else {
-      // @ts-ignore
       setNavigation(items.length)
     }
   }
@@ -105,34 +97,30 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
     onKeyRight,
     left: i18n('softkey-cancel'),
     onKeyLeft,
-    // @ts-ignore
     onKeyBackspace: !(message && current.type === 'TEXTAREA') && (() => onKeyBackspaceHandler()),
     onKeyCenter,
-    // @ts-ignore
     onKeyArrowRight: !(current.type === 'TEXTAREA') && (() => onKeyArrowRightHandler()),
-    // @ts-ignore
     onKeyArrowLeft: !(current.type === 'TEXTAREA') && (() => onKeyArrowLeftHandler())
   }, [message, isOnline, current])
 
   useEffect(() => {
-    // @ts-ignore
     setNavigation(0)
   }, [isOnline])
 
   return (
-    <div class='feedback' ref={containerRef}>
-      <div class='header'>
+    <div className='feedback' ref={containerRef}>
+      <div className='header'>
         {i18n('feedback-header')}
       </div>
-      <div class='body'>
+      <div className='body'>
         { isOnline
           ? <div>
-            <div class='textarea-box'>
+            <div className='textarea-box'>
               <form>
                 <textarea value={message} placeholder={i18n('feedback-placeholder')} onChange={(e: any) => setMessage(e.target.value)} data-selectable />
               </form>
             </div>
-            <div class='explanation-box'>
+            <div className='explanation-box'>
               <p dangerouslySetInnerHTML={{ __html: i18n('feedback-explanation', ...hyperlinks) }}> </p>
             </div>
           </div>
@@ -153,9 +141,9 @@ const SuccessConfirmationPopup: FunctionalComponent = ({ closeAll }: any) => {
   }, [])
 
   return (
-    <div class='confirmation-popup'>
-      <div class='header'>{i18n('feedback-success-header')}</div>
-      <p class='preview-text'>{i18n('feedback-success')}</p>
+    <div className='confirmation-popup'>
+      <div className='header'>{i18n('feedback-success-header')}</div>
+      <p className='preview-text'>{i18n('feedback-success')}</p>
     </div>
   )
 }

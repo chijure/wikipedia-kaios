@@ -3,6 +3,7 @@
     "outDir": "./dist",
     "allowJs": true,
     "checkJs": false,
+    "target": "ES6",
     "jsx": "react",
     "jsxFactory": "h",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -20,11 +21,12 @@
       "@reducers/*": ["src/reducers/*"],
       "@api/*": ["src/api/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@utils/*": ["./src/utils/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": [
     "./src/**/*",
-    "typings/define-plugin-variables.d.ts"
+    "typings/define-plugin-variables.d.ts",
+    "typings/kaios.d.ts"
   ]
 }

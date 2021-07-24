@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { Router, route } from 'preact-router'
 import { createHashHistory } from 'history'
 import { Article, Search, Settings, Tips, Language, Onboarding } from './index'

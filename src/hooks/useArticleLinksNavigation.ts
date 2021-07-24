@@ -20,13 +20,15 @@ const SUPPORTED_LINKS = [
 ].join(',')
 
 export const useArticleLinksNavigation = (
-  origin,
-  lang,
-  contentRef,
+  origin: string,
+  lang: string,
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  contentRef: any,
   linkHandlers = {},
   dependencies = [],
   source: any = {}
-) => {
+): [unknown] => {
   const i18n = useI18n()
   const [links, setLinks] = useState([])
   const [currentLink, setCurrentLinkInternal] = useState(null)

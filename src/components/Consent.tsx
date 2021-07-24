@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
 import { useI18n, useSoftkey, useScroll } from '../hooks/index'
 import { grantConsent, goto } from '../utils/index'
@@ -26,13 +26,13 @@ export const Consent: FunctionalComponent = ({ close }: any) => {
   })
 
   return (
-    <div class='consent'>
-      <div class='header'>{i18n('consent-privacy-terms')}</div>
-      <div class='body' ref={bodyRef}>
-        <div class='messages' dir='auto'>
-          <div class='message'>{i18n('consent-message-policy')}</div>
-          <div class='message'>{i18n('consent-message-and')}</div>
-          <div class='message'>{i18n('consent-message-terms')}</div>
+    <div className='consent'>
+      <div className='header'>{i18n('consent-privacy-terms')}</div>
+      <div className='body' ref={bodyRef}>
+        <div className='messages' dir='auto'>
+          <div className='message'>{i18n('consent-message-policy')}</div>
+          <div className='message'>{i18n('consent-message-and')}</div>
+          <div className='message'>{i18n('consent-message-terms')}</div>
         </div>
       </div>
     </div>

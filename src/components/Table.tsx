@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
 import { useI18n, useSoftkey, useScroll } from '../hooks/index'
 
@@ -19,7 +19,7 @@ export const Table: FunctionalComponent = ({ dir, close, content }: any) => {
   })
 
   return (
-    <div class='table' dir={dir} ref={containerRef}>
+    <div className='table' dir={dir} ref={containerRef}>
       <table dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   )

@@ -1,5 +1,6 @@
 import { buildMwOrgApiUrl, cachedFetch, sendErrorLog } from '../utils/index'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getTrendingArticles = (lang: string, country: string) => {
   const title = `Wikipedia_for_KaiOS/engagement1/trending/${lang}/${country.toLowerCase()}`
   const params = {
@@ -10,6 +11,8 @@ export const getTrendingArticles = (lang: string, country: string) => {
     rvprop: 'content'
   }
   const url = buildMwOrgApiUrl(params)
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => {
     const page = data.query.pages[0]
     if (page.missing) {

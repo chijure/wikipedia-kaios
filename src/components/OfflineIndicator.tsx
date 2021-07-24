@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { useI18n, useOnlineStatus } from '../hooks/index'
 
@@ -8,8 +8,7 @@ interface OfflineIndicatorProps {
 
 export const OfflineIndicator: FunctionalComponent<OfflineIndicatorProps> = ({ routeUrl }: OfflineIndicatorProps) => {
   const i18n = useI18n()
-  // @ts-ignore
-  const isOnline = useOnlineStatus()
+  const isOnline = useOnlineStatus(undefined)
   const [isVisible, setVisible] = useState<boolean>(false)
 
   useEffect(() => {
@@ -20,6 +19,6 @@ export const OfflineIndicator: FunctionalComponent<OfflineIndicatorProps> = ({ r
   }, [isOnline, routeUrl])
 
   if (isVisible) {
-    return <div class='offline'>{i18n('offline-message')}</div>
+    return <div className='offline'>{i18n('offline-message')}</div>
   }
 }

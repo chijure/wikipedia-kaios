@@ -4,7 +4,10 @@ import { sendLegacyEvent, isInstrumentationEnabled } from '../utils/index'
 const SCHEMA_NAME = 'VirtualPageView'
 const SCHEMA_REV = 19883675
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useArticlePreviewTracking = (
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   page: any, source: any, language: string
 ) => {
   if (!isInstrumentationEnabled()) {

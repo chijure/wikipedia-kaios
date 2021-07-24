@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useI18n, useSoftkey } from '../hooks/index'
 
 export const ConfirmDialog: FunctionalComponent = ({
@@ -22,9 +22,9 @@ export const ConfirmDialog: FunctionalComponent = ({
   }, [])
 
   return (
-    <div class='confirm-dialog' dir={dir}>
-      { title && <div class='header'>{title}</div> }
-      <div class='info'>{message}</div>
+    <div className='confirm-dialog' dir={dir}>
+      { title && <div className='header'>{title}</div> }
+      <div className='info'>{message}</div>
     </div>
   )
 }

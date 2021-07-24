@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useState, useContext } from 'preact/hooks'
 import { useI18n, useSoftkey } from '../hooks/index'
 import { articleTextSize } from '../utils/index'
@@ -6,8 +6,10 @@ import { FontContext, DirectionContext } from '../contexts/index'
 
 export const TextSize: FunctionalComponent = ({ close, closeAll }: any) => {
   const i18n = useI18n()
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { dirState } = useContext(DirectionContext)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { textSize, setTextSize } = useContext(FontContext)
   const [localTextSize] = useState(textSize)
@@ -43,19 +45,19 @@ export const TextSize: FunctionalComponent = ({ close, closeAll }: any) => {
     onKeyArrowRight: () => { adjust(1) }
   }, [textSize])
 
-  return <div class='textsize'>
-    <div class='header'>{i18n('header-textsize')}</div>
-    <div class='content'>
-      <bdi class={`textsize-preview font-size-${textSize + 1}`}>
+  return <div className='textsize'>
+    <div className='header'>{i18n('header-textsize')}</div>
+    <div className='content'>
+      <bdi className={`textsize-preview font-size-${textSize + 1}`}>
         {i18n('textsize-preview')}
       </bdi>
-      <div class='slider-container'>
-        <div class='slider'>
-          <div class='filling' style={`width: ${sliderValue[textSize]}%`} />
-          <div class='circle' style={`${dirState === 'ltr' ? 'left' : 'right'}: ${sliderValue[textSize]}%`} />
+      <div className='slider-container'>
+        <div className='slider'>
+          <div className='filling' style={`width: ${sliderValue[textSize]}%`} />
+          <div className='circle' style={`${dirState === 'ltr' ? 'left' : 'right'}: ${sliderValue[textSize]}%`} />
         </div>
       </div>
-      <div class='labels'>
+      <div className='labels'>
         <p>{i18n('textsize-label-small')}</p>
         <p>{i18n('textsize-label-large')}</p>
       </div>

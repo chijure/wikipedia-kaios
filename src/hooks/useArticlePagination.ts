@@ -2,11 +2,9 @@ import { useState, useLayoutEffect } from 'preact/hooks'
 import { useSoftkey, useRange } from '../hooks/index'
 import { viewport, isAnchorIntroSkip } from '../utils/index'
 
-export const useArticlePagination = (
-  elementRef: any,
-  article: any,
-  anchor: string
-) => {
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const useArticlePagination = (elementRef: any, article: any, anchor: string): [number, ((newValue: number) => void), number] => {
   const [currentSection, showPrevSection, showNextSection, setCurrentSection] = useRange(findSection(article.toc, anchor), article.sections.length - 1)
   const [isLastPage, setIsLastPage] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
@@ -56,6 +54,7 @@ export const useArticlePagination = (
 
   useLayoutEffect(() => {
     if (anchor) {
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       const anchorElement: any = Array
         .from(elementRef.current.querySelectorAll('.title, h3, h4'))
         .find((e: any) => e.getAttribute('data-anchor') === anchor)
@@ -80,9 +79,11 @@ export const useArticlePagination = (
   return [currentSection, setCurrentSection, currentPage]
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const findSection = (toc: any[], anchor: string): number => {
   if (!anchor || isAnchorIntroSkip(anchor)) {
     return 0
   }
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return toc.find((item: any) => item.anchor === anchor).sectionIndex
 }

@@ -6,14 +6,18 @@ import {
 // todo: Implement a real cache that keeps
 // the last N requests to keep memory usage
 // under control.
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const requestCache: any = {}
-const noopAbort = () => {}
+let noopAbort: () => void
 
-export const cachedFetch = (url: string, transformFn: any, cache = true) => {
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const cachedFetch = (url: string, transformFn: any, cache = true): [Promise<unknown>, (() => void)] => {
   if (cache && requestCache[url]) {
     return [Promise.resolve(requestCache[url]), noopAbort]
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const xhr = new XMLHttpRequest({ mozSystem: true })
   const promise = new Promise((resolve, reject) => {
@@ -61,14 +65,23 @@ export const cachedFetch = (url: string, transformFn: any, cache = true) => {
   return [promise, abort]
 }
 
-const sendLogWhenError = ({ status, response }: any, url: string) => {
+const sendLogWhenError = ({
+  status,
+  response
+}: any, url: string) => {
   if (!isProd()) {
     return
   }
 
   if (response && response.error) {
-    sendErrorLog({ message: response.error.info, url })
+    sendErrorLog({
+      message: response.error.info,
+      url
+    })
   } else if (status >= 500 && status < 600) {
-    sendErrorLog({ message: `${status} ${url}`, url })
+    sendErrorLog({
+      message: `${status} ${url}`,
+      url
+    })
   }
 }

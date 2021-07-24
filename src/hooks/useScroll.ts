@@ -1,6 +1,9 @@
 import { useState } from 'preact/hooks'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useScroll = (
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   elementRef: any,
   step: number,
   axis: string

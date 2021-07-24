@@ -11,6 +11,7 @@ const getLangFromUrl = (url: string) => {
   return url.substr(prefixLength, url.indexOf('.') - prefixLength)
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getLanglinks = (lang: string, title: string) => {
   const params = {
     action: 'query',
@@ -20,10 +21,14 @@ export const getLanglinks = (lang: string, title: string) => {
     llprop: 'langname|autonym|url'
   }
   const url = buildMwApiUrl(lang, params)
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (response: any) => {
     const { pages } = response.query
     const langlinks = pages[0].langlinks
     const allLanguages = langlinks
+      // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       .map((item: any) => {
         return {
           title: item.autonym,

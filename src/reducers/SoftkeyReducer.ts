@@ -19,7 +19,9 @@
  *    Deregister the softkey item when the component being unmounted.
  *    It use the counter to determine whether the item is completely unmounted
  */
-export const SoftkeyReducer = (state: any, action: any) => {
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const SoftkeyReducer = (state: any, action: any): any => {
   let stack,
     current
   switch (action.type) {

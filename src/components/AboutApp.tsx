@@ -3,7 +3,7 @@ import { useI18n, useSoftkey } from '../hooks/index'
 import { appVersion, appInstallId } from '../utils/index'
 
 interface AboutAppProps {
-  close: any;
+  close?: () => void;
 }
 
 export const AboutApp: FunctionalComponent<AboutAppProps> = ({ close }: AboutAppProps) => {
@@ -18,19 +18,19 @@ export const AboutApp: FunctionalComponent<AboutAppProps> = ({ close }: AboutApp
   }, [])
 
   return (
-    <div class='aboutapp'>
-      <div class='header'>{i18n('about-header')}</div>
-      <div class='body'>
-        <div class='image'>
+    <div className='aboutapp'>
+      <div className='header'>{i18n('about-header')}</div>
+      <div className='body'>
+        <div className='image'>
           <img src='images/onboarding-0.png' alt='onBoarding' />
         </div>
-        <div class='image'>
+        <div className='image'>
           <img src='images/wikipedia-wordmark-en.png' alt='wikipedia-wordmark' />
         </div>
-        <div class='version'>
+        <div className='version'>
           <p>{appVersion()} ({appInstallId()})</p>
         </div>
-        <div class='message'>
+        <div className='message'>
           <p>{i18n('about-app-message')}</p>
         </div>
       </div>

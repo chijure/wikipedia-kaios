@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useEffect, useState } from 'preact/hooks'
 import { ListView } from './index'
 import { useI18n } from '../hooks/index'
@@ -11,6 +11,7 @@ export const Feed: FunctionalComponent<any> = ({ lang, isExpanded, setIsExpanded
   const i18n = useI18n()
   const userCountry = getUserCountry()
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => {
     setLoading(true)
@@ -38,8 +39,8 @@ export const Feed: FunctionalComponent<any> = ({ lang, isExpanded, setIsExpanded
   const showError = trendingArticles.length === 0 && !loading
 
   return (
-    <div class={`feed ${isExpanded ? 'expanded' : 'collapsed'}`}>
-      {!isExpanded && <div class='cue' />}
+    <div className={`feed ${isExpanded ? 'expanded' : 'collapsed'}`}>
+      {!isExpanded && <div className='cue' />}
       {loading && <Loading isExpanded={isExpanded} />}
       {showArticles && <ListView items={trendingArticles} header={i18n('feed-header')} containerRef={containerRef} />}
       {showError && <Error />}
@@ -56,20 +57,20 @@ const Loading: FunctionalComponent<LoadingProps> = ({ isExpanded }: LoadingProps
   const loadingExpanded = () => {
     const loadingItem = (selectable = false) => {
       return (
-        <div class='item' data-selectable={selectable}>
-          <div class='bars'>
-            <div class='bar' />
-            <div class='smaller bar' />
+        <div className='item' data-selectable={selectable}>
+          <div className='bars'>
+            <div className='bar' />
+            <div className='smaller bar' />
           </div>
-          <div class='rectangle' />
+          <div className='rectangle' />
         </div>
       )
     }
 
     return (
-      <div class='expanded'>
-        <div class='top'>
-          <div class='header'><span>{i18n('feed-header')}</span></div>
+      <div className='expanded'>
+        <div className='top'>
+          <div className='header'><span>{i18n('feed-header')}</span></div>
         </div>
         {loadingItem(true)}
         {loadingItem()}
@@ -79,7 +80,7 @@ const Loading: FunctionalComponent<LoadingProps> = ({ isExpanded }: LoadingProps
   }
 
   return (
-    <div class={`loading ${!isExpanded ? 'collapsed' : ''}`}>
+    <div className={`loading ${!isExpanded ? 'collapsed' : ''}`}>
       {isExpanded && loadingExpanded()}
     </div>
   )
@@ -88,9 +89,9 @@ const Loading: FunctionalComponent<LoadingProps> = ({ isExpanded }: LoadingProps
 const Error: FunctionalComponent = () => {
   const i18n = useI18n()
   return (
-    <div class='error'>
+    <div className='error'>
       <img src='images/article-error.png' alt='article-error' />
-      <p class='message' data-selectable>{i18n('feed-error-message')}</p>
+      <p className='message' data-selectable>{i18n('feed-error-message')}</p>
     </div>
   )
 }

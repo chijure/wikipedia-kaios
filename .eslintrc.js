@@ -15,6 +15,7 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly'
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -23,12 +24,12 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: [
-    "@typescript-eslint",
-    "cypress",
-    "no-only-tests"
+    '@typescript-eslint',
+    'cypress',
+    'no-only-tests'
   ],
-  "rules": {
-    "no-only-tests/no-only-tests": "error",
-    "cypress/no-unnecessary-waiting": "warn"
+  rules: {
+    'no-only-tests/no-only-tests': 'error',
+    'cypress/no-unnecessary-waiting': 'warn'
   }
 }

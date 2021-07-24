@@ -24,11 +24,11 @@ const getGroup = () => {
   return currentGroup
 }
 
-export const getExperiment = () => {
+export const getExperiment = (): {name, group} => {
   return {
     name: GROUP_STORAGE_KEY,
     group: getGroup()
   }
 }
 
-export const isTrendingArticlesGroup = () => getGroup() === GROUPS[1]
+export const isTrendingArticlesGroup = (): boolean => getGroup() === GROUPS[1]

@@ -1,6 +1,6 @@
 import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl } from '../utils/index'
 
-export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boolean) => {
+export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boolean): (Promise<unknown> | (() => void))[] => {
   const params = {
     action: 'query',
     prop: 'imageinfo',
@@ -12,6 +12,7 @@ export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boo
   }
 
   const url = fromCommon ? buildCommonsApiUrl(params) : buildMwApiUrl(lang, params)
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => {
     const pages = data.query.pages
     const imageInfo = pages[0].imageinfo
@@ -20,7 +21,11 @@ export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boo
       return {}
     }
 
-    const { Artist, ImageDescription, LicenseShortName } = imageInfo[0].extmetadata
+    const {
+      Artist,
+      ImageDescription,
+      LicenseShortName
+    } = imageInfo[0].extmetadata
     const author = Artist && strip(Artist.value)
     const description = ImageDescription && strip(
       (typeof ImageDescription.value === 'string' && ImageDescription.value) ||

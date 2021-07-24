@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { Loading } from './index'
 import { useI18n } from '../hooks/index'
 

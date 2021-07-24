@@ -5,6 +5,7 @@ export interface Languaje {
   title: string;
   canonicalName: string;
   dir: string;
+  isSelected?: boolean;
 }
 
 // json language file given by iOS team
@@ -1506,6 +1507,7 @@ const rtl = [
   'lrc'
 ]
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 const prioritizedLists: any = {
   default: ['en', 'nl', 'de', 'sv', 'fr', 'it', 'ru', 'es', 'pl', 'war'],
   jio: ['en', 'hi', 'ji', 'as', 'bn', 'gu', 'kn', 'ks', 'ml', 'mr', 'ne', 'or', 'pa', 'sa', 'sd', 'ta', 'te', 'und', 'mai', 'kok', 'mni', 'doi', 'ur']
@@ -1514,13 +1516,13 @@ const prioritizedLists: any = {
 const prioritizedList = prioritizedLists[prioritizedLanguageListName] ||
       prioritizedLists.default
 
-export const isPrioritized = (lang: string) => prioritizedList.indexOf(lang) > -1
+export const isPrioritized = (lang: string): boolean => prioritizedList.indexOf(lang) > -1
 
-export const getDirection = (langCode: string) => {
+export const getDirection = (langCode: string): 'rtl' | 'ltr' => {
   return rtl.includes(langCode) ? 'rtl' : 'ltr'
 }
 
-export const isSupportedForReading = (langCode: string) => {
+export const isSupportedForReading = (langCode: string): boolean => {
   if (!languages.find(language => language.code === langCode)) {
     return false
   }
@@ -1555,8 +1557,8 @@ export const allLanguages: Languaje[] = prioritizedLanguages.concat(
     })
 )
 
-export const loadAllLanguagesMessages = () => {
-  const messages: any = {}
+export const loadAllLanguagesMessages = (): unknown => {
+  const messages: unknown = {}
   allLanguages.forEach(language => {
     try {
       messages[language.lang] = require(`../../i18n/${language.lang}.json`)
@@ -1584,12 +1586,13 @@ export const getDeviceLanguage = (): string => {
   return (localStorage.getItem('language-device')) || 'en'
 }
 
-export const checkHasDeviceLanguageChanged = () => {
+export const checkHasDeviceLanguageChanged = (): boolean => {
   return getCurrentDeviceLanguage() !== localStorage.getItem('language-device')
 }
 
-const getAlias = (lang: string) => {
+const getAlias = (lang: string): string => {
   // Jio uses `kok-IN` for Konkani but Wikipedia uses `gom`
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const aliases: any = {
     'kok-IN': 'gom'
   }
@@ -1597,7 +1600,7 @@ const getAlias = (lang: string) => {
   return aliases[lang] || lang
 }
 
-const getCurrentDeviceLanguage = () => {
+const getCurrentDeviceLanguage = (): string => {
   const navigatorLang = getAlias(navigator.language)
   const code = navigatorLang.includes('-')
     ? navigatorLang.substr(0, navigatorLang.indexOf('-'))

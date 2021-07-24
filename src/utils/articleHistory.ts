@@ -1,19 +1,27 @@
 import { normalizeTitle } from './index'
 
-const MAX = 100
-const list: any[] = []
+export interface ArticleHistory {
+  lang: string;
+  title: string;
+}
 
-const add = (lang: string, title: string) => {
+const MAX = 100
+const list: ArticleHistory[] = []
+
+const add = (lang: string, title: string): void => {
   const normalizedTitle = normalizeTitle(title)
-  list.push({ lang, title: normalizedTitle })
+  list.push({
+    lang,
+    title: normalizedTitle
+  })
   if (list.length > MAX) {
     list.shift()
   }
 }
 
-const prev = () => {
+const prev = (): ArticleHistory => {
   if (isEmpty()) {
-    return false
+    return
   }
 
   // remove the current article
@@ -23,22 +31,27 @@ const prev = () => {
   return list.pop()
 }
 
-const clear = () => {
+const clear = (): void => {
   list.length = 0
 }
 
-const isEmpty = () => {
+const isEmpty = (): boolean => {
   return list.length === 0
 }
 
-const hasPrev = () => {
+const hasPrev = (): boolean => {
   return list.length > 1
 }
 
-const getPrev = () => {
+const getPrev = (): ArticleHistory => {
   return list[list.length - 2]
 }
 
 export const articleHistory = {
-  add, prev, clear, isEmpty, hasPrev, getPrev
+  add,
+  prev,
+  clear,
+  isEmpty,
+  hasPrev,
+  getPrev
 }

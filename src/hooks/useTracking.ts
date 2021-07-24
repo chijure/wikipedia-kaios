@@ -24,6 +24,7 @@ const getSessionId = () => {
   return [id, changed]
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useTracking = (
   pageName: string,
   language: string,
@@ -37,6 +38,7 @@ export const useTracking = (
   const userId = appInstallId()
   const isSearch = pageName === 'Search'
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const trackingRef: any = useRef()
   useEffect(() => {
     trackingRef.openedSectionCount = Object.keys(openedSections).length

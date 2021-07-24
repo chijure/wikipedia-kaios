@@ -1,46 +1,62 @@
-import {FunctionalComponent, h} from 'preact'
-import {useI18n} from '../hooks/index'
-import {buildWpMobileWebUrl, canonicalizeTitle} from '../utils/index'
+import { FunctionalComponent, h } from 'preact'
+import { useI18n } from '../hooks/index'
+import { buildWpMobileWebUrl, canonicalizeTitle } from '../utils/index'
+
+interface Thumbnail {
+  source: string;
+  width: number;
+  height: number;
+}
+
+interface ArticleFooterItem {
+  pageid: number;
+  ns: number;
+  title: string;
+  index: number;
+  thumbnail: Thumbnail;
+  description: string;
+  descriptionsource: string;
+}
 
 interface ArticleFooterProps {
   lang: string;
   title: string;
-  items: any[];
-  dir: "auto" | "rtl" | "ltr";
+  items: ArticleFooterItem[];
+  dir: 'auto' | 'rtl' | 'ltr';
 }
 
 export const ArticleFooter: FunctionalComponent<ArticleFooterProps> = ({
-                                                                         lang,
-                                                                         title,
-                                                                         items = [],
-                                                                         dir
-                                                                       }: ArticleFooterProps) => {
+  lang,
+  title,
+  items = [],
+  dir
+}: ArticleFooterProps) => {
   const contentI18n = useI18n(lang)
   const headerTitle = contentI18n('toc-footer')
 
   return (
-    <div class='article-footer'>
-      <div class='content'>
-        <h2 class='footer-title' data-anchor={canonicalizeTitle(headerTitle)}>{headerTitle}</h2>
-        <div class='list'>
+    <div className='article-footer'>
+      <div className='content'>
+        <h2 className='footer-title' data-anchor={canonicalizeTitle(headerTitle)}>{headerTitle}</h2>
+        <div className='list'>
           {items.map(item => {
             return (
-              <a class='item' dir={dir} title={item.title} key={item.title}>
-                <div class='info'>
-                  <div class='article-title'>{item.title}</div>
-                  <div class='description'>{item.description}</div>
+              <a className='item' dir={dir} title={item.title} key={item.title}>
+                <div className='info'>
+                  <div className='article-title'>{item.title}</div>
+                  <div className='description'>{item.description}</div>
                 </div>
-                {item.thumbnail && <div class='img'><img src={item.thumbnail.source}/></div>}
+                {item.thumbnail && <div className='img'><img src={item.thumbnail.source} alt={item.title} /></div>}
               </a>
             )
           })}
         </div>
-        <h2 class='img'>
-          <img src='images/wikipedia-wordmark-en.png' height='18' width='116' alt='wikipedia-wordmark'/>
+        <h2 className='img'>
+          <img src='images/wikipedia-wordmark-en.png' height='18' width='116' alt='wikipedia-wordmark' />
         </h2>
-        <p class='license' dangerouslySetInnerHTML={{__html: contentI18n('content-license')}}/>
-        <p class='browser'>
-          <a class='external' rel='mw:ExtLink' href={buildWpMobileWebUrl(lang, title)}>
+        <p className='license' dangerouslySetInnerHTML={{ __html: contentI18n('content-license') }} />
+        <p className='browser'>
+          <a className='external' rel='mw:ExtLink' href={buildWpMobileWebUrl(lang, title)}>
             {contentI18n('view-in-browser')}
           </a>
         </p>

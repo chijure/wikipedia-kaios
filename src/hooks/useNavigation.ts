@@ -1,8 +1,26 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useSoftkey } from './index'
+import { RefObject } from 'preact'
 
-export const useNavigation = (origin: string, containerRef: any, listRef: any, axis: string, elementsSelector = '[data-selectable]') => {
-  const [current, setCurrent] = useState({ type: null, index: 0, key: null })
+interface CurrentNavigation {
+  type: string;
+  index: number;
+  key: string;
+}
+
+export const useNavigation = (
+  origin: string,
+  containerRef: RefObject<HTMLElement>,
+  listRef: RefObject<HTMLElement>,
+  axis: string,
+  elementsSelector = '[data-selectable]'):
+  [CurrentNavigation,
+    ((index: number) => void),
+    (() => CurrentNavigation),
+    // eslint-disable-next-line no-undef
+    (() => NodeListOf<Element>),
+    (() => void), (() => void)] => {
+  const [current, setCurrent] = useState<CurrentNavigation>({ type: null, index: 0, key: null })
 
   const getAllElements = () => containerRef.current.querySelectorAll(elementsSelector)
 
@@ -13,7 +31,7 @@ export const useNavigation = (origin: string, containerRef: any, listRef: any, a
     return element ? parseInt(element.getAttribute('nav-index')) : 0
   }
 
-  const setNavigation = index => selectElement(getAllElements()[index] || document.body)
+  const setNavigation = (index: number) => selectElement(getAllElements()[index] || document.body)
 
   const navigatePrevious = () => {
     const allElements = getAllElements()
@@ -46,13 +64,17 @@ export const useNavigation = (origin: string, containerRef: any, listRef: any, a
           }
         }
       })
-      setCurrent({ type: selectElement.tagName, index: setIndex, key: selectElement.getAttribute('data-selected-key') })
+      setCurrent({
+        type: selectElement.tagName,
+        index: setIndex,
+        key: selectElement.getAttribute('data-selected-key')
+      })
     } else {
       setNavigation(0)
     }
   }
 
-  const getCurrent = () => {
+  const getCurrent = (): CurrentNavigation => {
     const element = getSelectedElement()
     return {
       type: element.tagName,

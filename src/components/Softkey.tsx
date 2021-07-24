@@ -1,9 +1,9 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { memo } from 'preact/compat'
 import { useEffect, useRef } from 'preact/hooks'
 
 const SoftkeyButton = memo(({ className, text, handler }: any) => {
-  return <label class={className} onClick={handler}>{text}</label>
+  return <label className={className} onClick={handler}>{text}</label>
 })
 
 export const Softkey: FunctionalComponent<any> = ({
@@ -57,7 +57,7 @@ export const Softkey: FunctionalComponent<any> = ({
   }, [])
 
   return (
-    <div class='softkey'>
+    <div className='softkey'>
       <SoftkeyButton key='left' className='left' text={left} handler={onKeyLeft} />
       <SoftkeyButton key='center' className='center' text={center} handler={onKeyCenter} />
       <SoftkeyButton key='right' className='right' text={right} handler={onKeyRight} />

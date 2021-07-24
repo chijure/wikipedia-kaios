@@ -1,9 +1,17 @@
 import { useState, useEffect } from 'preact/hooks'
 import { getArticleMediaInfo } from '../api/index'
 
-export const useArticleMediaInfo = (lang: string, title: string, fromCommon: boolean) => {
+interface ArticleMediaInfo {
+  author: string;
+  description: string;
+  filePage: string;
+  license: string;
+}
+
+export const useArticleMediaInfo = (lang: string, title: string, fromCommon: boolean): ArticleMediaInfo => {
   const [media, setMedia] = useState(undefined)
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   useEffect(() => {
     const [promise, abort] = getArticleMediaInfo(lang, title, fromCommon)

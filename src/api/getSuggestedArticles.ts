@@ -1,5 +1,6 @@
 import { buildMwApiUrl, cachedFetch } from '../utils/index'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSuggestedArticles = (lang: string, title: string) => {
   const params = {
     action: 'query',
@@ -16,5 +17,7 @@ export const getSuggestedArticles = (lang: string, title: string) => {
   }
 
   const url = buildMwApiUrl(lang, params)
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => data.query && data.query.pages)
 }

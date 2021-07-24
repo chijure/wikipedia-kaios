@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useSoftkey, useI18n } from '../hooks/index'
 import { onboarding, goto } from '../utils/index'
 
@@ -16,14 +16,14 @@ export const Onboarding: FunctionalComponent = () => {
   })
 
   return (
-    <div class='onboarding'>
-      <div class='image'>
-        <img src='images/onboarding-0.png' alt="OnBoarding" />
+    <div className='onboarding'>
+      <div className='image'>
+        <img src='images/onboarding-0.png' alt='OnBoarding' />
       </div>
-      <div class='title'>
+      <div className='title'>
         {i18n('onboarding-0-title')}
       </div>
-      <div class='description'>
+      <div className='description'>
         {i18n('onboarding-0-description')}
       </div>
     </div>

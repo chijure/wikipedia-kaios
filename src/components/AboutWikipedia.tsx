@@ -1,17 +1,17 @@
-import {FunctionalComponent, h} from 'preact'
-import {useSoftkey, useI18n, useRange} from '../hooks/index'
+import { FunctionalComponent, h } from 'preact'
+import { useSoftkey, useI18n, useRange } from '../hooks/index'
 
 interface AboutWikipediaProps {
-  close: any;
+  close: () => void;
 }
 
-export const AboutWikipedia: FunctionalComponent<AboutWikipediaProps> = ({close}: AboutWikipediaProps) => {
+export const AboutWikipedia: FunctionalComponent<AboutWikipediaProps> = ({ close }: AboutWikipediaProps) => {
   const i18n = useI18n()
   const [currentIndex, prevOnboard, nextOnboard] = useRange(0, 3)
 
   const getImageBackgroundStyle = (index: number) => {
     // only the first onboard image doesn't have background image
-    return index ? {backgroundImage: `url(images/onboarding-${index}-background.png)`} : {}
+    return index ? { backgroundImage: `url(images/onboarding-${index}-background.png)` } : {}
   }
 
   const softkeyConfig = [
@@ -44,16 +44,16 @@ export const AboutWikipedia: FunctionalComponent<AboutWikipediaProps> = ({close}
   useSoftkey('AboutWikipedia', softkeyConfig[currentIndex], [currentIndex], true)
 
   return (
-    <div class='about-wikipedia'>
-      <div class='header'>{i18n('about-wikipedia-header')}</div>
-      <div class='body'>
-        <div class='image' style={getImageBackgroundStyle(currentIndex) }>
-          <img src={`images/onboarding-${currentIndex}.png`} alt={`OnBoarding-${currentIndex}`}/>
+    <div className='about-wikipedia'>
+      <div className='header'>{i18n('about-wikipedia-header')}</div>
+      <div className='body'>
+        <div className='image' style={getImageBackgroundStyle(currentIndex)}>
+          <img src={`images/onboarding-${currentIndex}.png`} alt={`OnBoarding-${currentIndex}`} />
         </div>
-        <div class='title'>
+        <div className='title'>
           {i18n(`onboarding-${currentIndex}-title`)}
         </div>
-        <div class='description'>
+        <div className='description'>
           {i18n(`onboarding-${currentIndex}-description`)}
         </div>
       </div>

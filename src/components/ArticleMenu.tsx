@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef, useEffect } from 'preact/hooks'
 import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks/index'
 import { articleHistory, goto } from '../utils/index'
@@ -25,10 +25,9 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   isShareEnabled
 }: ArticleMenuProps) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef()
+  const listRef = useRef<HTMLElement>()
   const i18n = useI18n()
   const onKeyCenter = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     const enabledItems = items.filter(item => item.enabled)
     const item = enabledItems[index]
@@ -55,6 +54,7 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
 
   const onTextsizeSelected = () => {
     const [showTextSize] = usePopup(TextSize, { stack: true, hideOthers: true })
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     showTextSize()
   }
@@ -66,7 +66,6 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   }
 
   useEffect(() => {
-    // @ts-ignore
     setNavigation(0)
   }, [])
 
@@ -114,7 +113,7 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
     }
   ]
 
-  return <div class='menu' ref={containerRef}>
+  return <div className='menu' ref={containerRef}>
     <ListView
       header={i18n('header-menu')}
       items={items.filter(item => item.enabled)}

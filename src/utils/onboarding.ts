@@ -1,10 +1,10 @@
 const KEY = 'has-onboard-before'
 
-const isDone = () => {
+const isDone = (): boolean => {
   return !!localStorage.getItem(KEY)
 }
 
-const markAsDone = () => {
+const markAsDone = (): void => {
   localStorage.setItem(KEY, String(true))
 }
 

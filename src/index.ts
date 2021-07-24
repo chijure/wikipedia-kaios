@@ -4,8 +4,8 @@ import 'intl-pluralrules'
 import Banana from 'banana-i18n'
 import {
   setAppLanguage, getAppLanguage, setDeviceLanguage, getDeviceLanguage,
-  checkHasDeviceLanguageChanged, loadAllLanguagesMessages, consentMessages,
-  getDirection
+  checkHasDeviceLanguageChanged,
+  getDirection, loadAllLanguagesMessages, consentMessages
 } from './utils'
 
 import '../style/style.less'

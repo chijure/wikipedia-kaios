@@ -14,10 +14,11 @@ import {
 import { articleHistory, confirmDialog, goto, viewport, buildWpMobileWebUrl } from '../utils/index'
 import { FontContext } from '../contexts/index'
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const ArticleBody = memo(({ content }: any) => {
   return (
     <div
-      class='article-content'
+      className='article-content'
       dangerouslySetInnerHTML={{ __html: content }}
     />
   )
@@ -26,9 +27,9 @@ const ArticleBody = memo(({ content }: any) => {
 const ArticleActions = ({ actions, lang }) => {
   const contentI18n = useI18n(lang)
   return (
-    <div class='article-actions'>
+    <div className='article-actions'>
       { actions.filter(a => a.enabled).map(action => (
-        <div class='article-actions-button' data-action={action.name} key={action.name}>
+        <div className='article-actions-button' data-action={action.name} key={action.name}>
           <img src={`images/icon-${action.name}.svg`} alt={action.name} />
           <label>{contentI18n(`article-action-${action.name}`)}</label>
         </div>
@@ -43,6 +44,7 @@ const ArticleSection = ({
   articleTitle, suggestedArticles, showGallery,
   galleryItems, namespace, id
 }) => {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   const contentRef: any = useRef()
   const i18n = useI18n()
   const [showReferencePreview] = usePopup(ReferencePreview)
@@ -100,21 +102,21 @@ const ArticleSection = ({
 
   return (
     <div
-      class='article-section'
+      className='article-section'
       ref={contentRef}
       style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : {}}>
-      <div class='card' dir={dir}>
-        <div class='intro'>
-          <div class='title' data-anchor={anchor} dangerouslySetInnerHTML={{ __html: title }} />
+      <div className='card' dir={dir}>
+        <div className='intro'>
+          <div className='title' data-anchor={anchor} dangerouslySetInnerHTML={{ __html: title }} />
           { description && (
             <Fragment>
-              <div class='desc'>{description}</div>
+              <div className='desc'>{description}</div>
             </Fragment>
           ) }
           { actions && <ArticleActions actions={actions} lang={lang} /> }
           { imageUrl && (
-            <div class='indicator'>
-              <img src='images/icon-down-arrow.svg' />
+            <div className='indicator'>
+              <img src='images/icon-down-arrow.svg' alt='icon-down-arrow' />
             </div>
           ) }
         </div>
@@ -151,12 +153,9 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   const [showMenuPopup] = usePopup(ArticleMenu)
   const [showGalleryPopup] = usePopup(Gallery, { mode: 'fullscreen', stack: true })
   const [currentSection, setCurrentSection, currentPage] = useArticlePagination(containerRef, article, anchor)
-  // @ts-ignore
   const section = article.sections[currentSection]
-  // @ts-ignore
   const sharedEnabled = !!window.MozActivity // disabled on browsers (not supported)
   const goToArticleSubpage = ({ sectionIndex, anchor }) => {
-    // @ts-ignore
     setCurrentSection(
       sectionIndex !== undefined
         ? sectionIndex
@@ -184,8 +183,6 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   }
 
   const shareArticleUrl = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     // eslint-disable-next-line no-new
     new window.MozActivity({
       name: 'share',
@@ -233,7 +230,6 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
 
   useEffect(() => {
     if (currentSection !== 0) { // lead section doesn't count
-      // @ts-ignore
       const anchor = article.sections[currentSection].anchor
       setOpenedSections({ ...openedSections, [anchor]: true })
     }
@@ -247,7 +243,7 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   ] : null
 
   return (
-    <div class={'article' + (section.isFooter ? ' footer' : '')} ref={containerRef} dir='ltr'>
+    <div className={'article' + (section.isFooter ? ' footer' : '')} ref={containerRef} dir='ltr'>
       <ArticleSection
         key={currentSection}
         lang={lang}

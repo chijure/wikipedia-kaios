@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useSoftkey, useI18n } from '../hooks/index'
 import { goto } from '../utils/goto'
 
@@ -18,9 +18,9 @@ export const Error: FunctionalComponent<ErrorProps> = ({ message, onRefresh }: E
   })
 
   return (
-    <div class='error'>
+    <div className='error'>
       <img src='images/article-error.png' alt='article-error' />
-      <p class='message'>{message}</p>
+      <p className='message'>{message}</p>
     </div>
   )
 }

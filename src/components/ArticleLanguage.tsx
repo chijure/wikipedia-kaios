@@ -18,7 +18,7 @@ export const ArticleLanguage: FunctionalComponent<ArticleLanguageProps> = ({
   closeAll
 }: ArticleLanguageProps) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef()
+  const listRef = useRef<HTMLElement>()
   const i18n = useI18n()
   const [articleLang, setArticleLang] = useState(lang)
   const [items, query, setQuery, numOfLanglink] = useSearchArticleLanguage(articleLang, title)
@@ -29,7 +29,6 @@ export const ArticleLanguage: FunctionalComponent<ArticleLanguageProps> = ({
 
   const [, setNavigation, getCurrent] = useNavigation('ArticleLanguage', containerRef, listRef, 'y')
   const onKeyCenter = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     if (index > 0) {
       const itemIndex = index - 1
@@ -41,21 +40,17 @@ export const ArticleLanguage: FunctionalComponent<ArticleLanguageProps> = ({
   }
 
   const onKeyBackspace = () => {
-    // @ts-ignore
     if (query && getCurrent().type === 'INPUT') {
-      // @ts-ignore
       setQuery(query.slice(0, -1))
     } else {
       close()
     }
   }
 
-  // @ts-ignore
   useSoftkey('ArticleLanguage', {
     left: i18n('softkey-cancel'),
     onKeyLeft: () => closeAll(),
     right: i18n('softkey-search'),
-    // @ts-ignore
     onKeyRight: () => setNavigation(0),
     center: i18n('centerkey-select'),
     onKeyCenter,
@@ -63,14 +58,12 @@ export const ArticleLanguage: FunctionalComponent<ArticleLanguageProps> = ({
   }, [items])
 
   useEffect(() => {
-    // @ts-ignore
     setNavigation(0)
   }, [])
 
-  // @ts-ignore
-  return <div class='articlelanguage' ref={containerRef}>
+  return <div className='articlelanguage' ref={containerRef}>
     <input type='text' placeholder={i18n('search-language-placeholder')} value={query}
-      onInput={(e: any) => setQuery(e.target.value)} data-selectable />
+      onInput={(e: any) => setQuery(e.currentTarget.value)} data-selectable />
     <ListView header={i18n('article-language-available', numOfLanglink)} items={items} containerRef={listRef}
       empty={i18n('no-result-found')} />
   </div>

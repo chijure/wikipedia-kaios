@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
 import { ReferencePreview, Gallery } from './index'
 import {
@@ -52,7 +52,7 @@ export const QuickFacts: FunctionalComponent<any> = ({ article, goToArticleSubpa
 
   return (
     <div
-      class='quickfacts'
+      className='quickfacts'
       dir={dir}
       ref={containerRef}
       dangerouslySetInnerHTML={{ __html: article.infobox }}

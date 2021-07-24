@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 
 export const Popup: FunctionalComponent = ({ component, props, options, style }: any) => {
   if (component) {
@@ -7,13 +7,14 @@ export const Popup: FunctionalComponent = ({ component, props, options, style }:
       contentClasses += ' fullscreen'
     }
     return (
-      <div class={contentClasses} style={style}>
+      <div className={contentClasses} style={style}>
         { h(component, props) }
       </div>
     )
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const PopupContainer: FunctionalComponent<any> = ({ popups }: any) => {
   if (popups.length === 0) {
@@ -29,8 +30,8 @@ export const PopupContainer: FunctionalComponent<any> = ({ popups }: any) => {
   const lastIndex = popups.length - 1
   const hideOthers = popups[lastIndex].options.hideOthers
   return (
-    <div class='popup'>
-      <div class='shader' style={{ zIndex: shaderZIndex }} />
+    <div className='popup'>
+      <div className='shader' style={{ zIndex: shaderZIndex }} />
       { popups.map((popup, index) => {
         const style = {
           zIndex: nextZIndex(),

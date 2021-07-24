@@ -1,16 +1,15 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
 import { useNavigation, useI18n, useSoftkey } from '../hooks/index'
 import { ListView } from './index'
 
 export const ArticleToc: FunctionalComponent = ({ items, currentAnchor, onSelectItem, close, closeAll }: any) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef()
+  const listRef = useRef<HTMLElement>()
   const i18n = useI18n()
   const listItems = parseTocItems(items)
   const [, setNavigation, getCurrent] = useNavigation('ArticleToc', containerRef, listRef, 'y')
   const onKeyCenter = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     const item = listItems[index]
 
@@ -28,11 +27,12 @@ export const ArticleToc: FunctionalComponent = ({ items, currentAnchor, onSelect
   })
 
   useLayoutEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     setNavigation(listItems.findIndex(item => item.anchor === currentAnchor))
   }, [])
 
-  return <div class='toc' ref={containerRef}>
+  return <div className='toc' ref={containerRef}>
     <ListView header={i18n('header-sections')} items={listItems} containerRef={listRef} />
   </div>
 }

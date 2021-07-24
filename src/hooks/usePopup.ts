@@ -1,7 +1,10 @@
 import { useContext } from 'preact/hooks'
 import { PopupContext } from '../contexts/index'
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const usePopup = (component: any, options: any = {}) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { setPopupState } = useContext(PopupContext)
 

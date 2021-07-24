@@ -1,7 +1,8 @@
 import { cachedFetch, buildPcsUrl, canonicalizeTitle } from '../utils/index'
 
-export const getArticleMediaList = (lang: string, title: string) => {
+export const getArticleMediaList = (lang: string, title: string): [Promise<unknown>, (() => void)] => {
   const url = buildPcsUrl(lang, title, 'media-list')
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => data.items.reduce((mediaArray, item) => {
     if (item.showInGallery && item.type === 'image') {
       const source = item && item.srcset && `https:${item.srcset[0].src}`

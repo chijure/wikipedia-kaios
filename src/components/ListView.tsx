@@ -6,20 +6,20 @@ import { h } from 'preact'
  */
 export const ListView = ({ items = [], header, containerRef, empty }: any) => {
   return (
-    <div class='listview'>
-      { header && <div class='header'>{header}</div> }
-      <div class='list' ref={containerRef}>
+    <div className='listview'>
+      { header && <div className='header'>{header}</div> }
+      <div className='list' ref={containerRef}>
         {
           items.length ? items.map(item => (
-            <div class='item' dir={item.dir} data-selectable data-title={item.title} data-selected-key={item.title} key={item.title}>
-              <div class='info'>
-                <bdi class='title' dangerouslySetInnerHTML={{ __html: item.displayTitle || item.title }} />
-                { item.description && <bdi class={`description${item.imageUrl ? ' withImg' : ''}`} dangerouslySetInnerHTML={{ __html: item.description }} /> }
+            <div className='item' dir={item.dir} data-selectable data-title={item.title} data-selected-key={item.title} key={item.title}>
+              <div className='info'>
+                <bdi className='title' dangerouslySetInnerHTML={{ __html: item.displayTitle || item.title }} />
+                { item.description && <bdi className={`description${item.imageUrl ? ' withImg' : ''}`} dangerouslySetInnerHTML={{ __html: item.description }} /> }
               </div>
-              { item.imageUrl && <div class='img' style={{ backgroundImage: `url(${item.imageUrl})` }} /> }
-              { item.link && <div class='link'><img src='images/link.svg' alt='link' /></div> }
+              { item.imageUrl && <div className='img' style={{ backgroundImage: `url(${item.imageUrl})` }} /> }
+              { item.link && <div className='link'><img src='images/link.svg' alt='link' /></div> }
             </div>
-          )) : <div class='empty'>{empty}</div>
+          )) : <div className='empty'>{empty}</div>
         }
       </div>
     </div>

@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
 import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '../hooks/index'
 
@@ -30,7 +30,6 @@ const AboutContainer: FunctionalComponent = ({ lang, dir, title, caption, fromCo
       return
     }
 
-    // @ts-ignore
     const descriptionNode = containerRef.current.querySelector('.description')
 
     if (descriptionNode && descriptionNode.getBoundingClientRect().height > MAX_DESCRIPTION_HEIGHT) {
@@ -39,16 +38,16 @@ const AboutContainer: FunctionalComponent = ({ lang, dir, title, caption, fromCo
   })
 
   return (
-    <div class='gallery-about' ref={containerRef}>
-      <div class='header'>{i18n('about-header')}</div>
+    <div className='gallery-about' ref={containerRef}>
+      <div className='header'>{i18n('about-header')}</div>
       <div>
-        <div class='sub-header'>{i18n('gallery-description')}</div>
-        <p class='description' dir={dir}>
+        <div className='sub-header'>{i18n('gallery-description')}</div>
+        <p className='description' dir={dir}>
           <bdi>{mediaInfo.description || caption || title}</bdi>
         </p>
       </div>
       <div>
-        <div class='sub-header'>{i18n('gallery-author-license')}</div>
+        <div className='sub-header'>{i18n('gallery-author-license')}</div>
         <p dir={dir}>
           <bdi>
             {mediaInfo.author || i18n('gallery-unknown-author')}<br />
@@ -63,19 +62,19 @@ const AboutContainer: FunctionalComponent = ({ lang, dir, title, caption, fromCo
 const LoadingAbout: FunctionalComponent = () => {
   const i18n = useI18n()
   return (
-    <div class='gallery-about loading'>
-      <div class='header'>{i18n('about-header')}</div>
+    <div className='gallery-about loading'>
+      <div className='header'>{i18n('about-header')}</div>
       <div>
-        <div class='sub-header'>{i18n('gallery-description')}</div>
+        <div className='sub-header'>{i18n('gallery-description')}</div>
         <p>
-          <div class='loading-block full' />
+          <div className='loading-block full' />
         </p>
       </div>
       <div>
-        <div class='sub-header'>{i18n('gallery-author-license')}</div>
+        <div className='sub-header'>{i18n('gallery-author-license')}</div>
         <p>
-          <div class='loading-block full' />
-          <div class='loading-block full last' />
+          <div className='loading-block full' />
+          <div className='loading-block full last' />
         </p>
       </div>
     </div>
@@ -95,12 +94,10 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     const galleryClasses = ['portrait', 'landscape']
 
     galleryClasses.forEach(galleryClass => {
-      // @ts-ignore
       galleryNode.classList.remove(galleryClass)
     })
 
     const orientationClass = img.height >= img.width ? 'portrait' : 'landscape'
-    // @ts-ignore
     galleryNode.classList.add(orientationClass)
   }
 
@@ -108,7 +105,6 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     left: i18n('softkey-close'),
     onKeyLeft: closeAll,
     center: i18n('softkey-about'),
-  // @ts-ignore
     onKeyCenter: () => showAboutPopup({ ...items[currentIndex], lang, dir }),
     [dir === 'rtl' ? 'onKeyFixedArrowLeft' : 'onKeyFixedArrowRight']: onNextImage,
     [dir === 'rtl' ? 'onKeyFixedArrowRight' : 'onKeyFixedArrowLeft']: onPrevImage,
@@ -116,18 +112,18 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
   }, [currentIndex])
 
   return (
-    <div class='gallery-view' ref={containerRef}>
+    <div className='gallery-view' ref={containerRef}>
       {
         currentIndex !== 0 && (
-          <img src='images/arrow.svg' class={`arrow ${dir === 'rtl' ? 'right' : 'left'}`} />
+          <img src='images/arrow.svg' alt='arrow' className={`arrow ${dir === 'rtl' ? 'right' : 'left'}`} />
         )
       }
       {
         currentIndex < items.length - 1 && (
-          <img src='images/arrow.svg' class={`arrow ${dir === 'rtl' ? 'left' : 'right'}`} />
+          <img src='images/arrow.svg' alt='arrow' className={`arrow ${dir === 'rtl' ? 'left' : 'right'}`} />
         )
       }
-      <div class='img'>
+      <div className='img'>
         <img onLoad={onImageLoad} src={items[currentIndex].thumbnail} />
       </div>
     </div>

@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef, useEffect } from 'preact/hooks'
 import { useNavigation, useI18n, useSoftkey } from '../hooks/index'
 import { ListView } from './index'
@@ -6,11 +6,10 @@ import { goto } from '../utils/index'
 
 export const PrivacyTerms: FunctionalComponent<any> = ({ close }: any) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef()
+  const listRef = useRef<HTMLElement>()
   const i18n = useI18n()
 
   const onKeyCenter = () => {
-    // @ts-ignore
     const { index } = getCurrent()
     const item = items[index]
 
@@ -30,7 +29,6 @@ export const PrivacyTerms: FunctionalComponent<any> = ({ close }: any) => {
   const [, setNavigation, getCurrent] = useNavigation('PrivacyTerms', containerRef, listRef, 'y')
 
   useEffect(() => {
-    // @ts-ignore
     setNavigation(0)
   }, [])
 
@@ -40,7 +38,7 @@ export const PrivacyTerms: FunctionalComponent<any> = ({ close }: any) => {
   ]
 
   return (
-    <div class='privacyterms' ref={containerRef}>
+    <div className='privacyterms' ref={containerRef}>
       <ListView
         header={i18n('privacy-terms-header')}
         items={items}

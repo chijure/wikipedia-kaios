@@ -17,8 +17,6 @@ export const useSearchArticleLanguage: (lang: string, title: string) =>
     const [query, setQuery] = useState<string>('')
     const [allLanguages, setAllLanguages] = useState<LangLink[]>([])
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     useEffect(() => {
       const [promise, abort] = getLanglinks(lang, title)
       if (promise instanceof Promise) {
@@ -33,6 +31,7 @@ export const useSearchArticleLanguage: (lang: string, title: string) =>
 
     useLayoutEffect(() => {
       const filteredList = query ? filterFirst10Language(allLanguages, query) : getInitialLangList(allLanguages)
+      /* eslint-disable  @typescript-eslint/no-explicit-any */
       setItems(filteredList.map((item: any) => {
         item.isSelected = item.lang === lang
         return item

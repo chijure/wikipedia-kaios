@@ -1,5 +1,5 @@
 export const skipIntroAnchor = 'wpSkipIntro'
 
-export const isAnchorIntroSkip = (anchor: string) => {
+export const isAnchorIntroSkip = (anchor: string): boolean => {
   return anchor === skipIntroAnchor
 }

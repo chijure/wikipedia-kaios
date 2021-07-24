@@ -1,4 +1,4 @@
-import {FunctionalComponent, h} from 'preact'
+import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
 import { useI18n, useSoftkey, useArticleLinksNavigation } from '../hooks/index'
 
@@ -13,9 +13,9 @@ export const ReferencePreview: FunctionalComponent = ({ reference, lang, dir, cl
   }, [])
 
   return (
-    <div class='reference-preview' dir={dir} ref={contentRef}>
-      <div class='ref-title'>{i18n('reference-title', reference.number)}</div>
-      <div class='ref-content'>
+    <div className='reference-preview' dir={dir} ref={contentRef}>
+      <div className='ref-title'>{i18n('reference-title', reference.number)}</div>
+      <div className='ref-content'>
         <bdi dangerouslySetInnerHTML={{ __html: reference.content }} />
       </div>
     </div>

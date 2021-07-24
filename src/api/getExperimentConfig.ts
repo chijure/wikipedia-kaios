@@ -1,5 +1,6 @@
 import { buildMwOrgApiUrl, cachedFetch } from '../utils/index'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getExperimentConfig = () => {
   const titles = 'Wikipedia_for_KaiOS/engagement1'
   const params = {
@@ -11,6 +12,8 @@ export const getExperimentConfig = () => {
   }
 
   const url = buildMwOrgApiUrl(params)
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => {
     const page = data.query.pages[0]
     if (page.missing) {

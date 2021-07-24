@@ -6,7 +6,7 @@ const defautParams = {
   origin: '*'
 }
 
-export const buildMwApiUrl = (lang: string, params: any): string => {
+export const buildMwApiUrl = (lang: string, params: unknown): string => {
   params = Object.assign({}, defautParams, params)
   const baseUrl = `https://${lang}.wikipedia.org/w/api.php`
   return baseUrl + '?' + Object.keys(params).map(p => {
@@ -14,7 +14,7 @@ export const buildMwApiUrl = (lang: string, params: any): string => {
   }).join('&')
 }
 
-export const buildMwOrgApiUrl = (params: any): string => {
+export const buildMwOrgApiUrl = (params: unknown): string => {
   params = Object.assign({}, defautParams, params)
   const baseUrl = 'https://www.mediawiki.org/w/api.php'
   return baseUrl + '?' + Object.keys(params).map(p => {
@@ -22,7 +22,7 @@ export const buildMwOrgApiUrl = (params: any): string => {
   }).join('&')
 }
 
-export const buildCommonsApiUrl = (params: any): string => {
+export const buildCommonsApiUrl = (params: unknown): string => {
   params = Object.assign({}, defautParams, params)
   const baseUrl = 'https://commons.wikimedia.org/w/api.php'
   return baseUrl + '?' + Object.keys(params).map(p => {

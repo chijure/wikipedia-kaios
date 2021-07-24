@@ -1,10 +1,80 @@
 import { cachedFetch, buildPcsUrl, canonicalizeTitle, getDirection } from '../utils/index'
 
-export const getArticle = (lang: string, title: string, { moreInformationText }: any) => {
+interface Lastmodifier {
+  anon: boolean;
+  user: string;
+  gender: string;
+}
+
+interface Protection {
+  edit: string[];
+  move: string[];
+}
+
+interface Urls {
+  320: string;
+  640: string;
+  800: string;
+  1024: string;
+}
+
+interface Image {
+  file: string;
+  urls: Urls;
+}
+
+interface Section {
+  id: number;
+  text: string;
+  toclevel?: number;
+  anchor: string;
+  line: string;
+}
+
+interface Lead {
+  ns: number;
+  id: number;
+  revision: string;
+  lastmodified: Date;
+  lastmodifier: Lastmodifier;
+  displaytitle: string;
+  normalizedtitle: string;
+  // eslint-disable-next-line camelcase
+  wikibase_item: string;
+  description: string;
+  // eslint-disable-next-line camelcase
+  description_source: string;
+  protection: Protection;
+  editable: boolean;
+  languagecount: number;
+  image: Image;
+  sections: Section[];
+}
+
+interface SectionRemaining {
+  id: number;
+  text: string;
+  toclevel: number;
+  line: string;
+  anchor: string;
+  isReferenceSection?: boolean;
+}
+
+export interface Remaining {
+  sections: SectionRemaining[];
+}
+
+interface ArticleDTO {
+  lead: Lead;
+  remaining: Remaining;
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const getArticle = (lang: string, title: string, moreInformationText: string) => {
   const url = buildPcsUrl(lang, title, 'mobile-sections')
   const dir = getDirection(lang)
 
-  return cachedFetch(url, (data: any) => {
+  return cachedFetch(url, (data: ArticleDTO) => {
     const parser = new DOMParser()
     const imageUrl = data.lead.image && data.lead.image.urls['320']
     const toc = []
@@ -17,7 +87,7 @@ export const getArticle = (lang: string, title: string, { moreInformationText }:
     const preview = extractPreview(doc)
 
     // parse lead as the first section
-    const sections: any[] = []
+    const sections = []
     sections.push({
       imageUrl,
       title: data.lead.displaytitle,
@@ -63,7 +133,6 @@ export const getArticle = (lang: string, title: string, { moreInformationText }:
       if (s.isReferenceSection) {
         const sectionDoc = parser.parseFromString(s.text, 'text/html')
         const refNodes = sectionDoc.querySelectorAll('li[id^="cite_"]')
-        // @ts-ignore
         for (const refNode of refNodes) {
           const [id, ref] = extractReference(refNode)
           references[id] = ref
@@ -93,13 +162,13 @@ const fixImageUrl = (htmlString: string, lang: string) => {
     .replace(/src="\/w\/extensions\//gi, `src="https://${lang}.wikipedia.org/w/extensions/`)
 }
 
-const fixTableCaption = (htmlString: string, moreInformationText) => {
+const fixTableCaption = (htmlString: string, moreInformationText: string) => {
   const hiddenClassName = 'hidden-in-table'
   const parser = new DOMParser()
-  const node: any = parser.parseFromString(htmlString, 'text/html')
-  const tableNodes: any = node.querySelectorAll('table')
+  const node = parser.parseFromString(htmlString, 'text/html')
+  const tableNodes = node.querySelectorAll('table')
   for (const tableNode of tableNodes) {
-    const thContent = Array.from(tableNode.querySelectorAll('th')).map((th: any) => th.textContent).join(', ')
+    const thContent = Array.from(tableNode.querySelectorAll('th')).map(th => th.textContent).join(', ')
     const normalizedThContent = thContent.replace(/\[\d+]/g, '')
     if (tableNode.caption && tableNode.caption.textContent) {
       tableNode.caption.innerHTML = `<b class='${hiddenClassName}'>${moreInformationText}:</b><p class='${hiddenClassName}'>${normalizedThContent}</p><span>${tableNode.caption.textContent}</span>`
@@ -108,10 +177,10 @@ const fixTableCaption = (htmlString: string, moreInformationText) => {
       caption.className = hiddenClassName
       caption.innerHTML = `<b class='${hiddenClassName}'>${moreInformationText}:</b><p class='${hiddenClassName}'>${normalizedThContent}</p>Table`
     }
-    tableNode.style = ''
+    tableNode.setAttribute('style', '')
   }
 
-  return node.childNodes[0].innerHTML
+  return (node.childNodes[0] as HTMLElement).innerHTML
 }
 
 const modifyHtmlText = (text, moreInformationText, lang) => {
@@ -140,13 +209,13 @@ const extractPreview = doc => {
     return ''
   }
 
-  Array.from(p.querySelectorAll('a')).forEach((link: any) => {
+  Array.from(p.querySelectorAll('a')).forEach((link: HTMLLinkElement) => {
     const span = document.createElement('span')
     span.textContent = link.textContent
     link.parentNode.replaceChild(span, link)
   })
 
-  Array.from(p.querySelectorAll('.mw-ref')).forEach((ref: any) => {
+  Array.from(p.querySelectorAll('.mw-ref')).forEach((ref: HTMLElement) => {
     ref.parentNode.removeChild(ref)
   })
 

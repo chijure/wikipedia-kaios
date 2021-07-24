@@ -7,6 +7,7 @@ import { articleTextSize } from '../utils/index'
 import { useErrorLogging } from '../hooks/index'
 
 export interface AppProps {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   i18n: any;
   dir: 'rtl' | 'ltr';
 }

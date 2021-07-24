@@ -2,11 +2,11 @@ import { appVersion, appInstallId, sendEvent, getDeviceLanguage } from './index'
 
 const KEY = 'usage-data-consent'
 
-export const isConsentGranted = () => {
+export const isConsentGranted = (): boolean => {
   return localStorage.getItem(KEY) !== null
 }
 
-export const grantConsent = () => {
+export const grantConsent = (): void => {
   const version = appVersion()
   sendEvent(
     '/analytics/legacy/kaiosappfirstrun/1.0.0',
