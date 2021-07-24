@@ -1,4 +1,4 @@
-import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl } from '../utils/index'
+import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl, viewport } from '../utils/index'
 
 export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boolean): (Promise<unknown> | (() => void))[] => {
   const params = {
@@ -7,6 +7,8 @@ export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boo
     iiextmetadatafilter: 'License|LicenseShortName|ImageDescription|Artist',
     iiextmetadatalanguage: lang,
     iiextmetadatamultilang: 1,
+    iiurlwidth: viewport().width,
+    iiurlheight: viewport().height,
     iiprop: 'url|extmetadata',
     titles: title
   }
@@ -36,7 +38,8 @@ export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boo
       author,
       description,
       license: LicenseShortName && LicenseShortName.value,
-      filePage: convertUrlToMobile(imageInfo[0].descriptionshorturl)
+      filePage: convertUrlToMobile(imageInfo[0].descriptionshorturl),
+      source: imageInfo[0].thumburl
     }
   })
 }

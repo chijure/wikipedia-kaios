@@ -4,10 +4,9 @@ import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '..
 
 const MAX_DESCRIPTION_HEIGHT = 45
 
-const AboutContainer: FunctionalComponent = ({ lang, dir, title, caption, fromCommon, close }: any) => {
+const AboutContainer: FunctionalComponent = ({ mediaInfo, dir, title, caption, close }: any) => {
   const i18n = useI18n()
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const mediaInfo = useArticleMediaInfo(lang, title, fromCommon)
 
   useSoftkey('About', {
     left: i18n('softkey-close'),
@@ -88,6 +87,7 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     currentIndex, onPrevImage, onNextImage
   ] = useRange(getInitialIndex(items, startFileName), items.length - 1)
   const [showAboutPopup] = usePopup(AboutContainer, { stack: true })
+  const mediaInfo = useArticleMediaInfo(lang, items[currentIndex].title, items[currentIndex].fromCommon, currentIndex)
 
   const onImageLoad = ({ target: img }) => {
     const galleryNode = containerRef.current
@@ -105,7 +105,7 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     left: i18n('softkey-close'),
     onKeyLeft: closeAll,
     center: i18n('softkey-about'),
-    onKeyCenter: () => showAboutPopup({ ...items[currentIndex], lang, dir }),
+    onKeyCenter: () => showAboutPopup({ ...items[currentIndex], mediaInfo, dir }),
     [dir === 'rtl' ? 'onKeyFixedArrowLeft' : 'onKeyFixedArrowRight']: onNextImage,
     [dir === 'rtl' ? 'onKeyFixedArrowRight' : 'onKeyFixedArrowLeft']: onPrevImage,
     onKeyBackspace: close
@@ -124,7 +124,7 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
         )
       }
       <div className='img'>
-        <img onLoad={onImageLoad} src={items[currentIndex].thumbnail} />
+        <img onLoad={onImageLoad} src={mediaInfo && mediaInfo.source} />
       </div>
     </div>
   )
