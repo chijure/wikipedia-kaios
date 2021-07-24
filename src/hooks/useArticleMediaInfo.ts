@@ -8,7 +8,7 @@ interface ArticleMediaInfo {
   license: string;
 }
 
-export const useArticleMediaInfo = (lang: string, title: string, fromCommon: boolean): ArticleMediaInfo => {
+export const useArticleMediaInfo = (lang: string, title: string, fromCommon: boolean, currentIndex: number): ArticleMediaInfo => {
   const [media, setMedia] = useState(undefined)
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -19,7 +19,7 @@ export const useArticleMediaInfo = (lang: string, title: string, fromCommon: boo
       promise.then(setMedia)
       return abort
     }
-  }, [])
+  }, [currentIndex])
 
   return media
 }
