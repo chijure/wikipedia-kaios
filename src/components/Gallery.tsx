@@ -124,8 +124,6 @@ export const Gallery: FunctionalComponent<GalleryProps> = ({
   lang,
   dir
 }: GalleryProps) => {
-  // eslint-disable-next-line no-debugger
-  debugger
   const i18n = useI18n()
   const containerRef = useRef<HTMLDivElement>(undefined)
   const [

@@ -1508,8 +1508,7 @@ const rtl = [
   'lrc'
 ]
 
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-const prioritizedLists: any = {
+const prioritizedLists = {
   default: ['en', 'nl', 'de', 'sv', 'fr', 'it', 'ru', 'es', 'pl', 'war'],
   jio: ['en', 'hi', 'ji', 'as', 'bn', 'gu', 'kn', 'ks', 'ml', 'mr', 'ne', 'or', 'pa', 'sa', 'sd', 'ta', 'te', 'und', 'mai', 'kok', 'mni', 'doi', 'ur']
 }
@@ -1593,8 +1592,7 @@ export const checkHasDeviceLanguageChanged = (): boolean => {
 
 const getAlias = (lang: string): string => {
   // Jio uses `kok-IN` for Konkani but Wikipedia uses `gom`
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  const aliases: any = {
+  const aliases = {
     'kok-IN': 'gom'
   }
 

@@ -14,8 +14,11 @@ import {
 import { articleHistory, confirmDialog, goto, viewport, buildWpMobileWebUrl } from '../utils/index'
 import { FontContext, FontContextModel } from '../contexts/index'
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-const ArticleBody = memo(({ content }: any) => {
+interface ArticleBodyProp {
+  content: string;
+}
+
+const ArticleBody = memo(({ content }: ArticleBodyProp) => {
   return (
     <div
       className='article-content'
@@ -162,9 +165,6 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }: ArticleInnerProps) 
   const section = article.sections[currentSection]
   const sharedEnabled = !!window.MozActivity // disabled on browsers (not supported)
   const goToArticleSubpage = ({ sectionIndex, anchor }) => {
-    // eslint-disable-next-line no-debugger
-    debugger
-
     setCurrentSection(
       sectionIndex !== undefined
         ? sectionIndex

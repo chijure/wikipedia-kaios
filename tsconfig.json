@@ -21,7 +21,7 @@
       "@reducers/*": ["src/reducers/*"],
       "@api/*": ["src/api/*"],
       "@contexts/*": ["src/contexts/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": [

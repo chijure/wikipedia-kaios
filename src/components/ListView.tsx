@@ -3,8 +3,9 @@ import { Ref } from 'preact/hooks'
 
 export interface ListViewItem {
   title: string;
-  action: () => void;
-  link: boolean;
+  action?: () => void;
+  path?: string;
+  link?: boolean;
   dir?: 'rtl' | 'ltr';
   description?: string;
   imageUrl?: string;

@@ -84,7 +84,8 @@ module.exports = {
                     hooks: './src/hooks',
                     api: './src/api',
                     contexts: './src/contexts',
-                    i18n: './i18n'
+                    i18n: './i18n',
+                    utils: './utils'
                   }
                 }
               ]

@@ -18,7 +18,7 @@ export const ArticleLanguage: FunctionalComponent<ArticleLanguageProps> = ({
   closeAll
 }: ArticleLanguageProps) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef<HTMLElement>()
+  const listRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
   const [articleLang, setArticleLang] = useState(lang)
   const [items, query, setQuery, numOfLanglink] = useSearchArticleLanguage(articleLang, title)

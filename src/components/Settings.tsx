@@ -2,20 +2,12 @@ import { FunctionalComponent, h } from 'preact'
 import { route } from 'preact-router'
 import { useRef, useEffect } from 'preact/hooks'
 import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks/index'
-import { ListView, AboutApp, AboutWikipedia, PrivacyTerms, Feedback } from './index'
+import { ListView, AboutApp, AboutWikipedia, PrivacyTerms, Feedback, ListViewItem } from './index'
 import { goto } from '../utils/index'
-
-interface Item {
-  title: string;
-  path?: string;
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  action?: any;
-  link?: string;
-}
 
 export const Settings: FunctionalComponent = () => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef<HTMLElement>()
+  const listRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
   const [showAboutApp] = usePopup(AboutApp, { mode: 'fullscreen' })
   const [showAboutWikipedia] = usePopup(AboutWikipedia, { mode: 'fullscreen' })
@@ -28,7 +20,7 @@ export const Settings: FunctionalComponent = () => {
 
     // open link
     if (item.link) {
-      window.open(item.link)
+      window.open(item.path)
     } else if (item.path) {
       route(item.path)
     } else if (item.action) {
@@ -66,7 +58,7 @@ export const Settings: FunctionalComponent = () => {
     setNavigation(0)
   }, [])
 
-  const items: Item[] = [
+  const items: ListViewItem[] = [
     { title: i18n('settings-language'), path: '/language' },
     { title: i18n('settings-help-feedback'), action: onFeedbackSelected },
     { title: i18n('settings-about-wikipedia'), action: onAboutWikipediaSelected },
