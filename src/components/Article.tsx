@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useLayoutEffect, useContext } from 'preact
 import {
   ReferencePreview, ArticleToc, ArticleLanguage,
   ArticleMenu, ArticleFooter, ArticleLoading, QuickFacts,
-  Error, Gallery, Table
+  Error, Gallery, Table, TextSize
 } from './index'
 import {
   useArticle, useI18n, useSoftkey,
@@ -12,7 +12,7 @@ import {
   usePopup, useTracking
 } from '../hooks/index'
 import { articleHistory, confirmDialog, goto, viewport, buildWpMobileWebUrl } from '../utils/index'
-import { FontContext } from '../contexts/index'
+import { FontContext, FontContextModel } from '../contexts/index'
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const ArticleBody = memo(({ content }: any) => {
@@ -44,12 +44,11 @@ const ArticleSection = ({
   articleTitle, suggestedArticles, showGallery,
   galleryItems, namespace, id
 }) => {
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  const contentRef: any = useRef()
+  const contentRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
   const [showReferencePreview] = usePopup(ReferencePreview)
   const [showTable] = usePopup(Table, { mode: 'fullscreen' })
-  const { textSize } = useContext<any>(FontContext)
+  const { textSize } = useContext<FontContextModel>(FontContext)
   const linkHandlers = {
     action: ({ action }) => {
       const targetAction = actions.find(a => a.name === action)
@@ -86,9 +85,9 @@ const ArticleSection = ({
       titleNode.classList.add('clamp')
     }
     if (imageUrl) {
-      const cardNode = contentRef.current.querySelector('.card')
+      const cardNode: HTMLElement = contentRef.current.querySelector('.card')
       // Ensure .intro is completely visible to calculate its size
-      cardNode.style.marginTop = 0
+      cardNode.style.marginTop = String(0)
 
       const introNode = contentRef.current.querySelector('.intro')
       let introHeight = introNode.getBoundingClientRect().height
@@ -129,7 +128,13 @@ const ArticleSection = ({
   )
 }
 
-const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
+interface ArticleInnerProps {
+  lang: string;
+  articleTitle: string;
+  initialAnchor: string;
+}
+
+const ArticleInner = ({ lang, articleTitle, initialAnchor }: ArticleInnerProps) => {
   const i18n = useI18n()
   const containerRef = useRef<HTMLDivElement>(undefined)
   const [article, loadArticle] = useArticle(lang, articleTitle)
@@ -150,12 +155,16 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   const [showTocPopup] = usePopup(ArticleToc, { mode: 'fullscreen', stack: true })
   const [showQuickFactsPopup] = usePopup(QuickFacts, { mode: 'fullscreen', stack: true })
   const [showLanguagePopup] = usePopup(ArticleLanguage, { mode: 'fullscreen', stack: true })
+  const [showTextSizePopup] = usePopup(TextSize, { stack: true, hideOthers: true })
   const [showMenuPopup] = usePopup(ArticleMenu)
   const [showGalleryPopup] = usePopup(Gallery, { mode: 'fullscreen', stack: true })
   const [currentSection, setCurrentSection, currentPage] = useArticlePagination(containerRef, article, anchor)
   const section = article.sections[currentSection]
   const sharedEnabled = !!window.MozActivity // disabled on browsers (not supported)
   const goToArticleSubpage = ({ sectionIndex, anchor }) => {
+    // eslint-disable-next-line no-debugger
+    debugger
+
     setCurrentSection(
       sectionIndex !== undefined
         ? sectionIndex
@@ -172,6 +181,10 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
 
   const showArticleLanguagePopup = () => {
     showLanguagePopup({ lang, title: articleTitle })
+  }
+
+  const showArticleTextSizePopup = () => {
+    showTextSizePopup({})
   }
 
   const showQuickFacts = () => {
@@ -197,6 +210,7 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
     showMenuPopup({
       onTocSelected: showArticleTocPopup,
       onLanguageSelected: showArticleLanguagePopup,
+      onTextSizeSelected: showArticleTextSizePopup,
       onQuickFactsSelected: showQuickFacts,
       onGallerySelected: showGallery,
       onShareArticleUrl: shareArticleUrl,
@@ -264,7 +278,13 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }) => {
   )
 }
 
-export const Article: FunctionalComponent<any> = ({ lang, title: articleTitle, anchor: initialAnchor }) => {
+interface ArticleProp {
+  lang?: string;
+  title?: string;
+  anchor?: string;
+}
+
+export const Article: FunctionalComponent<ArticleProp> = ({ lang, title: articleTitle, anchor: initialAnchor }) => {
   return (
     <ArticleInner lang={lang} articleTitle={articleTitle} initialAnchor={initialAnchor} key={lang + articleTitle} />
   )
@@ -273,7 +293,7 @@ export const Article: FunctionalComponent<any> = ({ lang, title: articleTitle, a
 const findCurrentLocatedAnchor = ref => {
   let element
   Array.from(ref.current.querySelectorAll('.title, h3, h4'))
-    .find((ref: any) => {
+    .find((ref: Element) => {
       if (ref.getBoundingClientRect().left < viewport().width) {
         element = ref
       }

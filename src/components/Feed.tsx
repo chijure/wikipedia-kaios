@@ -1,18 +1,25 @@
 import { FunctionalComponent, h } from 'preact'
-import { useEffect, useState } from 'preact/hooks'
+import { Ref, StateUpdater, useEffect, useState } from 'preact/hooks'
 import { ListView } from './index'
 import { useI18n } from '../hooks/index'
 import { getTrendingArticles } from '../api/index'
 import { getUserCountry } from '../utils/index'
 
-export const Feed: FunctionalComponent<any> = ({ lang, isExpanded, setIsExpanded, lastIndex, setNavigation, containerRef }: any) => {
+interface FeedProps {
+  lang: string;
+  isExpanded: boolean;
+  setIsExpanded: StateUpdater<boolean>;
+  lastIndex: number;
+  setNavigation: (index: number) => void;
+  containerRef: Ref<HTMLDivElement>
+}
+
+export const Feed: FunctionalComponent<FeedProps> = ({ lang, isExpanded, setIsExpanded, lastIndex, setNavigation, containerRef }: FeedProps) => {
   const [trendingArticles, setTrendingArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const i18n = useI18n()
   const userCountry = getUserCountry()
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   useEffect(() => {
     setLoading(true)
     const [request, abort] = getTrendingArticles(lang, userCountry)

@@ -1,16 +1,31 @@
 import { FunctionalComponent, h } from 'preact'
+import { Ref } from 'preact/hooks'
+import { Languaje } from '@utils/languages'
 
-export const RadioListView: FunctionalComponent<any> = ({ items = [], header, containerRef, empty }: any) => {
+interface RadioListViewProps {
+  items: Languaje[];
+  header: string;
+  containerRef: Ref<HTMLDivElement>;
+  empty: string;
+}
+
+export const RadioListView: FunctionalComponent<RadioListViewProps> = ({
+  items = [],
+  header,
+  containerRef,
+  empty
+}: RadioListViewProps) => {
   return (
     <div className='radiolistview'>
-      { header && <div className='header'>{header}</div> }
+      {header && <div className='header'>{header}</div>}
       <div className='list' ref={containerRef}>
         {
           items.length ? items.map(item => (
-            <div className='item' dir={item.dir} data-selectable data-title={item.title} data-selected-key={item.title} key={item.title}>
+            <div className='item' dir={item.dir} data-selectable='true' data-title={item.title}
+              data-selected-key={item.title} key={item.title}>
               <div className='info'>
                 <div className='title'>{item.title}</div>
-                { item.description && <div className='description'>{item.description}</div> }
+                {item.description && <div className='description'>{item.description}</div>}
               </div>
               <div className='radio-container'>
                 <div className={`radio ${item.isSelected ? 'selected' : ''}`} />

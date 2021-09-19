@@ -68,7 +68,7 @@ export const cachedFetch = (url: string, transformFn: any, cache = true): [Promi
 const sendLogWhenError = ({
   status,
   response
-}: any, url: string) => {
+}: XMLHttpRequest, url: string) => {
   if (!isProd()) {
     return
   }

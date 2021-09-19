@@ -2,8 +2,23 @@ import { FunctionalComponent, h } from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
 import { useNavigation, useI18n, useSoftkey } from '../hooks/index'
 import { ListView } from './index'
+import { TopModel } from '@api/getArticle'
 
-export const ArticleToc: FunctionalComponent = ({ items, currentAnchor, onSelectItem, close, closeAll }: any) => {
+export interface ArticleTocProps {
+  items: TopModel[];
+  currentAnchor: string;
+  onSelectItem: (item) => void;
+  close: () => void;
+  closeAll: () => void;
+}
+
+export const ArticleToc: FunctionalComponent<ArticleTocProps> = ({
+  items,
+  currentAnchor,
+  onSelectItem,
+  close,
+  closeAll
+}: ArticleTocProps) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
   const listRef = useRef<HTMLElement>()
   const i18n = useI18n()
@@ -27,8 +42,6 @@ export const ArticleToc: FunctionalComponent = ({ items, currentAnchor, onSelect
   })
 
   useLayoutEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     setNavigation(listItems.findIndex(item => item.anchor === currentAnchor))
   }, [])
 
@@ -42,6 +55,11 @@ const parseTocItems = items => {
     const anchor = item.anchor
     const sectionIndex = item.sectionIndex
     const displayTitle = item.level > 1 ? `<span class="subheader${item.level}">${item.line}</span>` : item.line
-    return { anchor, title: anchor, sectionIndex, displayTitle }
+    return {
+      anchor,
+      title: anchor,
+      sectionIndex,
+      displayTitle
+    }
   })
 }

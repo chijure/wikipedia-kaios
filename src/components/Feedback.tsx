@@ -4,7 +4,11 @@ import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from '.
 import { sendFeedback, confirmDialog } from '../utils/index'
 import { OfflinePanel } from './index'
 
-export const Feedback: FunctionalComponent = ({ close }: any) => {
+interface FeedbackProps {
+  close: () => void;
+}
+
+export const Feedback: FunctionalComponent<FeedbackProps> = ({ close }: FeedbackProps) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
   const i18n = useI18n()
   const [message, setMessage] = useState(undefined)
@@ -13,8 +17,14 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
   const isOnline = useOnlineStatus(undefined)
 
   const items = [
-    { text: `<a data-selectable>${i18n('feedback-privacy-policy')}</a>`, link: 'https://foundation.m.wikimedia.org/wiki/Privacy_policy' },
-    { text: `<a data-selectable>${i18n('feedback-terms-of-use')}</a>`, link: 'https://foundation.m.wikimedia.org/wiki/Terms_of_Use/en' }
+    {
+      text: `<a data-selectable>${i18n('feedback-privacy-policy')}</a>`,
+      link: 'https://foundation.m.wikimedia.org/wiki/Privacy_policy'
+    },
+    {
+      text: `<a data-selectable>${i18n('feedback-terms-of-use')}</a>`,
+      link: 'https://foundation.m.wikimedia.org/wiki/Terms_of_Use/en'
+    }
   ]
   const hyperlinks = items.map(i => i.text)
 
@@ -25,9 +35,8 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
       if (getCurrent().type === 'TEXTAREA') {
         blurTextarea()
       }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      showSuccessConfirmation()
+
+      showSuccessConfirmation({})
     }
   }
 
@@ -113,15 +122,17 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
         {i18n('feedback-header')}
       </div>
       <div className='body'>
-        { isOnline
+        {isOnline
           ? <div>
             <div className='textarea-box'>
               <form>
-                <textarea value={message} placeholder={i18n('feedback-placeholder')} onChange={(e: any) => setMessage(e.target.value)} data-selectable />
+                <textarea value={message} placeholder={i18n('feedback-placeholder')}
+                  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+                  onChange={(e: any) => setMessage(e.target.value)} data-selectable='true' />
               </form>
             </div>
             <div className='explanation-box'>
-              <p dangerouslySetInnerHTML={{ __html: i18n('feedback-explanation', ...hyperlinks) }}> </p>
+              <p dangerouslySetInnerHTML={{ __html: i18n('feedback-explanation', ...hyperlinks) }} />
             </div>
           </div>
           : <OfflinePanel />
@@ -131,7 +142,11 @@ export const Feedback: FunctionalComponent = ({ close }: any) => {
   )
 }
 
-const SuccessConfirmationPopup: FunctionalComponent = ({ closeAll }: any) => {
+interface SuccessConfirmationPopupProps {
+  closeAll: () => void;
+}
+
+const SuccessConfirmationPopup: FunctionalComponent<SuccessConfirmationPopupProps> = ({ closeAll }: SuccessConfirmationPopupProps) => {
   const i18n = useI18n()
 
   useSoftkey('FeedbackSuccessMessage', {

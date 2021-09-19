@@ -6,6 +6,7 @@ interface ArticleMediaInfo {
   description: string;
   filePage: string;
   license: string;
+  source: string;
 }
 
 export const useArticleMediaInfo = (lang: string, title: string, fromCommon: boolean, currentIndex: number): ArticleMediaInfo => {

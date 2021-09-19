@@ -4,7 +4,7 @@ import { goto } from '../utils/goto'
 
 interface ErrorProps {
   message: string;
-  onRefresh: any;
+  onRefresh: () => void;
 }
 
 export const Error: FunctionalComponent<ErrorProps> = ({ message, onRefresh }: ErrorProps) => {

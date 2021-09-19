@@ -4,6 +4,17 @@ import { useNavigation, useI18n, useSoftkey, usePopup, useOnlineStatus, useScrol
 import { ListView, goToRandomArticle } from './index'
 import { goto, articleHistory } from '../utils/index'
 
+interface TipItem {
+  title: string;
+  action: (props?) => void;
+}
+
+interface TipContent {
+  image: string;
+  header: string;
+  message: string;
+}
+
 export const Tips: FunctionalComponent = () => {
   const containerRef = useRef<HTMLDivElement>(undefined)
   const listRef = useRef<HTMLElement>()
@@ -17,7 +28,7 @@ export const Tips: FunctionalComponent = () => {
 
   const onKeyCenter = () => {
     const { index } = getCurrent()
-    const item: any = items[index]
+    const item: TipItem = items[index]
     item.action()
   }
 
@@ -45,11 +56,23 @@ export const Tips: FunctionalComponent = () => {
     setNavigation(0)
   }, [])
 
-  const items = [
-    { title: i18n('tips-read'), action: onReadPopupSelected },
-    { title: i18n('tips-search'), action: onSearchPopupSelected },
-    { title: i18n('tips-switch'), action: onSwitchPopupSelected },
-    { title: i18n('tips-about'), action: showAboutWikipediaPopup }
+  const items: TipItem[] = [
+    {
+      title: i18n('tips-read'),
+      action: onReadPopupSelected
+    },
+    {
+      title: i18n('tips-search'),
+      action: onSearchPopupSelected
+    },
+    {
+      title: i18n('tips-switch'),
+      action: onSwitchPopupSelected
+    },
+    {
+      title: i18n('tips-about'),
+      action: showAboutWikipediaPopup
+    }
   ]
 
   return (
@@ -63,12 +86,10 @@ export const Tips: FunctionalComponent = () => {
   )
 }
 
-const tip = (origi: string, content: any, close, onNext, onTry) => {
+const tip = (origi: string, content: TipContent, close, onNext, onTry) => {
   const i18n = useI18n()
   const aboutTip = origin === 'AboutPopup'
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const isOnline = useOnlineStatus()
+  const isOnline = useOnlineStatus(undefined)
   const textRef = useRef<HTMLDivElement>(undefined)
   const [scrollDown, scrollUp] = useScroll(textRef, 10, 'y')
 
@@ -102,7 +123,8 @@ const tip = (origi: string, content: any, close, onNext, onTry) => {
   return (
     <div className={'tip'}>
       <div className='tip-media'>
-        <div className={`${aboutTip ? 'tip-image' : 'tip-animation'}`} style={{ backgroundImage: `url(${content.image})` }} />
+        <div className={`${aboutTip ? 'tip-image' : 'tip-animation'}`}
+          style={{ backgroundImage: `url(${content.image})` }} />
       </div>
       <div className={'tip-header'}>{i18n(content.header)}</div>
       <div className={'tip-text'} ref={textRef} dangerouslySetInnerHTML={{ __html: i18n(content.message) }} />
@@ -111,12 +133,15 @@ const tip = (origi: string, content: any, close, onNext, onTry) => {
 }
 
 interface ReadPopupProps {
-  close: any;
-  onSearchPopupSelected: any;
+  close: () => void;
+  onSearchPopupSelected: () => void;
 }
 
-const ReadPopup: FunctionalComponent<ReadPopupProps> = ({ close, onSearchPopupSelected }: ReadPopupProps) => {
-  const content = {
+const ReadPopup: FunctionalComponent<ReadPopupProps> = ({
+  close,
+  onSearchPopupSelected
+}: ReadPopupProps) => {
+  const content: TipContent = {
     image: 'images/tip-read-animation.gif',
     header: 'tip-read-header',
     message: 'tip-read-message'
@@ -125,12 +150,15 @@ const ReadPopup: FunctionalComponent<ReadPopupProps> = ({ close, onSearchPopupSe
 }
 
 interface SearchPopupProps {
-  close: any;
-  onSwitchPopupSelected: any;
+  close: () => void;
+  onSwitchPopupSelected: () => void;
 }
 
-const SearchPopup: FunctionalComponent<SearchPopupProps> = ({ close, onSwitchPopupSelected }: SearchPopupProps) => {
-  const content = {
+const SearchPopup: FunctionalComponent<SearchPopupProps> = ({
+  close,
+  onSwitchPopupSelected
+}: SearchPopupProps) => {
+  const content: TipContent = {
     image: 'images/tip-search-animation.gif',
     header: 'tip-search-header',
     message: 'tip-search-message'
@@ -139,12 +167,15 @@ const SearchPopup: FunctionalComponent<SearchPopupProps> = ({ close, onSwitchPop
 }
 
 interface SwitchPopupProps {
-  close: any;
-  showAboutWikipediaPopup: any;
+  close: () => void;
+  showAboutWikipediaPopup: () => void;
 }
 
-const SwitchPopup: FunctionalComponent<SwitchPopupProps> = ({ close, showAboutWikipediaPopup }: SwitchPopupProps) => {
-  const content = {
+const SwitchPopup: FunctionalComponent<SwitchPopupProps> = ({
+  close,
+  showAboutWikipediaPopup
+}: SwitchPopupProps) => {
+  const content: TipContent = {
     image: 'images/tip-switch-animation.gif',
     header: 'tip-switch-header',
     message: 'tip-switch-message'
@@ -153,11 +184,11 @@ const SwitchPopup: FunctionalComponent<SwitchPopupProps> = ({ close, showAboutWi
 }
 
 interface AboutPopupProps {
-  close: any;
+  close: () => void;
 }
 
 const AboutPopup: FunctionalComponent<AboutPopupProps> = ({ close }: AboutPopupProps) => {
-  const content = {
+  const content: TipContent = {
     image: 'images/onboarding-0.png',
     header: 'tip-about-header',
     message: 'tip-about-message'

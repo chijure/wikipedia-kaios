@@ -44,11 +44,11 @@ export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boo
   })
 }
 
-const convertUrlToMobile = (url: string) => {
+const convertUrlToMobile = (url: string): string => {
   return url.replace(/https:\/\/(.*?)\./, subDomain => subDomain + 'm.')
 }
 
-const strip = (html: string) => {
+const strip = (html: string): string => {
   const doc = new DOMParser().parseFromString(html, 'text/html')
   return doc.body.textContent || ''
 }

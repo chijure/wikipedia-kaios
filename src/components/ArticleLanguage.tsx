@@ -63,7 +63,7 @@ export const ArticleLanguage: FunctionalComponent<ArticleLanguageProps> = ({
 
   return <div className='articlelanguage' ref={containerRef}>
     <input type='text' placeholder={i18n('search-language-placeholder')} value={query}
-      onInput={(e: any) => setQuery(e.currentTarget.value)} data-selectable />
+      onInput={e => setQuery(e.currentTarget.value)} data-selectable />
     <ListView header={i18n('article-language-available', numOfLanglink)} items={items} containerRef={listRef}
       empty={i18n('no-result-found')} />
   </div>

@@ -1,11 +1,23 @@
 import { FunctionalComponent, h } from 'preact'
 import { useI18n, useSoftkey } from '../hooks/index'
 
-export const ConfirmDialog: FunctionalComponent = ({
+interface ConfirmDialogProps {
+  title: string;
+  message: string;
+  dir: 'ltr' | 'rtl';
+  onSubmitText: string;
+  onSubmit: () => void;
+  onDiscardText: string;
+  onDiscard: () => void;
+  close: () => void;
+  closeAll: () => void;
+}
+
+export const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = ({
   title, message, dir,
   onSubmitText, onSubmit, onDiscardText, onDiscard,
   close, closeAll
-}: any) => {
+}: ConfirmDialogProps) => {
   const i18n = useI18n()
 
   const onDiscardFn = () => {

@@ -1,13 +1,14 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef, useEffect } from 'preact/hooks'
-import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks/index'
-import { articleHistory, goto } from '../utils/index'
-import { ListView, TextSize } from './index'
+import { useNavigation, useI18n, useSoftkey } from '../hooks'
+import { articleHistory, goto } from '../utils'
+import { ListView } from '../components'
 
 interface ArticleMenuProps {
   close: () => void;
   onTocSelected: () => void;
   onLanguageSelected: () => void;
+  onTextSizeSelected: () => void;
   onQuickFactsSelected: () => void;
   onGallerySelected: () => void;
   onShareArticleUrl: () => void;
@@ -19,13 +20,14 @@ interface ArticleMenuProps {
 
 export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   close, onTocSelected, onLanguageSelected,
+  onTextSizeSelected,
   onQuickFactsSelected, onGallerySelected,
   onShareArticleUrl,
   hasLanguages, hasInfobox, hasGallery,
   isShareEnabled
 }: ArticleMenuProps) => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef<HTMLElement>()
+  const listRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
   const onKeyCenter = () => {
     const { index } = getCurrent()
@@ -50,13 +52,6 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   const onSearchSelected = () => {
     close()
     goto.search()
-  }
-
-  const onTextsizeSelected = () => {
-    const [showTextSize] = usePopup(TextSize, { stack: true, hideOthers: true })
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    showTextSize()
   }
 
   const onPreviousSelected = () => {
@@ -88,7 +83,7 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
     },
     {
       title: i18n('menu-textsize'),
-      action: onTextsizeSelected,
+      action: onTextSizeSelected,
       enabled: true
     },
     {

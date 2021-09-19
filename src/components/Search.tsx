@@ -16,7 +16,7 @@ import { getRandomArticleTitle } from '../api/index'
 export const Search: FunctionalComponent = () => {
   const containerRef = useRef<HTMLDivElement>(undefined)
   const inputRef = useRef<HTMLInputElement>(undefined)
-  const listRef = useRef<HTMLElement>()
+  const listRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
   const [isFeedExpanded, setIsFeedExpanded] = useState(false)
   const [lastFeedIndex, setLastFeedIndex] = useHistoryState('lastFeedIndex', null)
@@ -47,8 +47,6 @@ export const Search: FunctionalComponent = () => {
       if (index) {
         goto.article(lang, key)
       } else if (isRandomEnabled() && !inputText) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         goToRandomArticle()
       }
     }
@@ -147,13 +145,9 @@ export const Search: FunctionalComponent = () => {
   useEffect(() => {
     articleHistory.clear()
     if (!consentGranted && isOnline) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      showConsentPopup()
+      showConsentPopup({})
     } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      closeConsentPopup()
+      closeConsentPopup({})
       setNavigation(0)
     }
   }, [consentGranted, isOnline])
@@ -169,6 +163,7 @@ export const Search: FunctionalComponent = () => {
     <div className='search' ref={containerRef}>
       <img className='double-u' src='images/w.svg' style={{ display: (hideW ? 'none' : 'block') }} alt='wikipedia logo' />
       {showSearchBar &&
+      /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
       <input ref={inputRef} type='text' placeholder={i18n('search-placeholder')} value={inputText} onInput={(e: any) => onInput(e)}
         data-selectable='true' maxLength={255} />}
       {showResultsList && <ListView header={i18n('header-search')} items={searchResults} containerRef={listRef}
@@ -176,15 +171,13 @@ export const Search: FunctionalComponent = () => {
       {showLoading && <SearchLoading />}
       {showOfflinePanel && <OfflinePanel />}
       {showFeed &&
-      <Feed lang={lang} isExpanded={isFeedExpanded} setIsExpanded={setIsFeedExpanded} lastIndex={lastFeedIndex}
+      <Feed lang={lang} isExpanded={isFeedExpanded} setIsExpanded={setIsFeedExpanded} lastIndex={+lastFeedIndex}
         setNavigation={setNavigation} containerRef={listRef} />}
     </div>
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const goToRandomArticle: FunctionalComponent<any> = (closePopup, skipIntro = false) => {
+export const goToRandomArticle = (closePopup?: () => void, skipIntro = false): void => {
   const lang = getAppLanguage()
   const [promise] = getRandomArticleTitle(lang)
 

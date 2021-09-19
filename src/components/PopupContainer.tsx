@@ -1,6 +1,21 @@
 import { FunctionalComponent, h } from 'preact'
 
-export const Popup: FunctionalComponent = ({ component, props, options, style }: any) => {
+interface PopupProp {
+  component: FunctionalComponent;
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  props: any;
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  options: any;
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  style: any;
+}
+
+export const Popup: FunctionalComponent<PopupProp> = ({
+  component,
+  props,
+  options,
+  style
+}: PopupProp) => {
   if (component) {
     let contentClasses = 'popup-content'
     if (options && options.mode === 'fullscreen') {
@@ -8,15 +23,18 @@ export const Popup: FunctionalComponent = ({ component, props, options, style }:
     }
     return (
       <div className={contentClasses} style={style}>
-        { h(component, props) }
+        {h(component, props)}
       </div>
     )
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-export const PopupContainer: FunctionalComponent<any> = ({ popups }: any) => {
+interface PopupContainerProps {
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  popups: any[];
+}
+
+export const PopupContainer: FunctionalComponent<PopupContainerProps> = ({ popups }: PopupContainerProps) => {
   if (popups.length === 0) {
     return ''
   }
@@ -32,13 +50,13 @@ export const PopupContainer: FunctionalComponent<any> = ({ popups }: any) => {
   return (
     <div className='popup'>
       <div className='shader' style={{ zIndex: shaderZIndex }} />
-      { popups.map((popup, index) => {
+      {popups.map((popup, index) => {
         const style = {
           zIndex: nextZIndex(),
           visibility: (hideOthers && index < lastIndex) ? 'hidden' : 'visible'
         }
         return <Popup {...popup} key={popup.id} style={style} />
-      }) }
+      })}
     </div>
   )
 }

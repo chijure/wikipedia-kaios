@@ -1,3 +1,8 @@
 import { createContext } from 'preact'
 
-export const FontContext = createContext({})
+export interface FontContextModel {
+  textSize: number;
+  setTextSize?: (textSize: number) => void;
+}
+
+export const FontContext = createContext<FontContextModel>({ textSize: 2 })

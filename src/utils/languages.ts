@@ -4,8 +4,9 @@ export interface Languaje {
   lang: string;
   title: string;
   canonicalName: string;
-  dir: string;
+  dir: 'ltr' | 'rtl';
   isSelected?: boolean;
+  description?: string;
 }
 
 // json language file given by iOS team

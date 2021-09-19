@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
-import { Router, route } from 'preact-router'
+import { Router, route, RouterOnChangeArgs } from 'preact-router'
 import { createHashHistory } from 'history'
 import { Article, Search, Settings, Tips, Language, Onboarding } from './index'
 import { onboarding } from '../utils/index'
@@ -9,7 +9,7 @@ interface RoutesProps {
 }
 
 export const Routes: FunctionalComponent<RoutesProps> = ({ onRouteChange }: RoutesProps) => {
-  const onChange = ({ url }: any) => {
+  const onChange = ({ url }: RouterOnChangeArgs) => {
     if (!onboarding.isDone()) {
       route('/onboarding')
     }

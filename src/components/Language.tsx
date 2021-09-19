@@ -7,9 +7,7 @@ import { setAppLanguage, getAppLanguage, getDirection, goto } from '../utils/ind
 
 export const Language: FunctionalComponent = () => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef<HTMLElement>()
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  const listRef = useRef<HTMLDivElement>()
   const { setDirState } = useContext(DirectionContext)
 
   const i18n = useI18n()
@@ -48,16 +46,30 @@ export const Language: FunctionalComponent = () => {
   }, [])
 
   return <div className='language' ref={containerRef}>
-    <input type='text' placeholder={i18n('search-language-placeholder')} value={query} onInput={(e: any) => setQuery(e.target.value)} data-selectable />
-    <RadioListView header={i18n('language-change')} items={items} containerRef={listRef} empty={i18n('no-result-found')} />
+    <input type='text' placeholder={i18n('search-language-placeholder')} value={query}
+      onInput={e => setQuery(e.currentTarget.value)} data-selectable='true' />
+    <RadioListView header={i18n('language-change')} items={items} containerRef={listRef}
+      empty={i18n('no-result-found')} />
   </div>
 }
 
-const LanguagePopup: FunctionalComponent = ({ close, i18n }: any) => {
+interface LanguagePopupProps {
+  close: () => void;
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  i18n: any;
+}
+
+const LanguagePopup: FunctionalComponent<LanguagePopupProps> = ({
+  close,
+  i18n
+}: LanguagePopupProps) => {
   useSoftkey('LanguageMessage', {
     center: i18n('softkey-ok'),
     onKeyCenter: close,
-    onKeyBackspace: () => { close(); goto.back() }
+    onKeyBackspace: () => {
+      close()
+      goto.back()
+    }
   }, [])
 
   return <div className='language-message'>

@@ -2,11 +2,35 @@ import { FunctionalComponent, h } from 'preact'
 import { memo } from 'preact/compat'
 import { useEffect, useRef } from 'preact/hooks'
 
-const SoftkeyButton = memo(({ className, text, handler }: any) => {
+interface SoftkeyButtonProps {
+  className: string;
+  text: string;
+  handler: () => void;
+}
+
+const SoftkeyButton = memo(({ className, text, handler }: SoftkeyButtonProps) => {
   return <label className={className} onClick={handler}>{text}</label>
 })
 
-export const Softkey: FunctionalComponent<any> = ({
+interface SoftkeyProps {
+  left: string;
+  center: string;
+  right: string;
+  onKeyLeft: () => void;
+  onKeyCenter: () => void;
+  onKeyRight: () => void;
+  onKeyArrowDown: () => void;
+  onKeyArrowUp: () => void;
+  onKeyArrowLeft: () => void;
+  onKeyArrowRight: () => void;
+  onKeyBackspace: () => void;
+  // direction related prop
+  dir: 'ltr' | 'rtl';
+  onKeyFixedArrowLeft: () => void;
+  onKeyFixedArrowRight: () => void;
+}
+
+export const Softkey: FunctionalComponent<SoftkeyProps> = ({
   left,
   center,
   right,
@@ -18,12 +42,10 @@ export const Softkey: FunctionalComponent<any> = ({
   onKeyArrowLeft,
   onKeyArrowRight,
   onKeyBackspace,
-
-  // direction related prop
   dir = 'ltr',
   onKeyFixedArrowLeft,
   onKeyFixedArrowRight
-}) => {
+}: SoftkeyProps) => {
   const handlersRef = useRef()
 
   if (dir === 'rtl') {

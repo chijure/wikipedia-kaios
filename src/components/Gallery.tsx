@@ -4,7 +4,29 @@ import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '..
 
 const MAX_DESCRIPTION_HEIGHT = 45
 
-const AboutContainer: FunctionalComponent = ({ mediaInfo, dir, title, caption, close }: any) => {
+export interface MediaInfoModel {
+  filePage: string;
+  description: string;
+  author: string;
+  license: string;
+  source: string;
+}
+
+interface AboutContainerProps {
+  mediaInfo: MediaInfoModel;
+  dir: 'ltr' | 'rtl';
+  title: string;
+  caption: string;
+  close: () => void;
+}
+
+const AboutContainer: FunctionalComponent<AboutContainerProps> = ({
+  mediaInfo,
+  dir,
+  title,
+  caption,
+  close
+}: AboutContainerProps) => {
   const i18n = useI18n()
   const containerRef = useRef<HTMLDivElement>(undefined)
 
@@ -80,7 +102,30 @@ const LoadingAbout: FunctionalComponent = () => {
   )
 }
 
-export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFileName, lang, dir }: any) => {
+export interface GalleryItem {
+  title: string;
+  fromCommon: boolean;
+}
+
+interface GalleryProps {
+  close: () => void;
+  closeAll: () => void;
+  items: GalleryItem[];
+  startFileName: string;
+  lang: string;
+  dir: 'ltr' | 'rtl';
+}
+
+export const Gallery: FunctionalComponent<GalleryProps> = ({
+  close,
+  closeAll,
+  items,
+  startFileName,
+  lang,
+  dir
+}: GalleryProps) => {
+  // eslint-disable-next-line no-debugger
+  debugger
   const i18n = useI18n()
   const containerRef = useRef<HTMLDivElement>(undefined)
   const [
@@ -105,7 +150,11 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
     left: i18n('softkey-close'),
     onKeyLeft: closeAll,
     center: i18n('softkey-about'),
-    onKeyCenter: () => showAboutPopup({ ...items[currentIndex], mediaInfo, dir }),
+    onKeyCenter: () => showAboutPopup({
+      ...items[currentIndex],
+      mediaInfo,
+      dir
+    }),
     [dir === 'rtl' ? 'onKeyFixedArrowLeft' : 'onKeyFixedArrowRight']: onNextImage,
     [dir === 'rtl' ? 'onKeyFixedArrowRight' : 'onKeyFixedArrowLeft']: onPrevImage,
     onKeyBackspace: close
@@ -124,7 +173,7 @@ export const Gallery: FunctionalComponent = ({ close, closeAll, items, startFile
         )
       }
       <div className='img'>
-        <img onLoad={onImageLoad} src={mediaInfo && mediaInfo.source} />
+        <img onLoad={onImageLoad} src={mediaInfo && mediaInfo.source} alt={mediaInfo && mediaInfo.description} />
       </div>
     </div>
   )
