@@ -1,6 +1,6 @@
-import { cachedFetch, buildMwApiUrl, buildCommonsApiUrl, viewport } from '../utils/index'
+import { cachedFetch, buildMwApiUrl, viewport } from '../utils/index'
 
-export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boolean): (Promise<unknown> | (() => void))[] => {
+export const getArticleMediaInfo = (lang: string, title: string): (Promise<unknown> | (() => void))[] => {
   const params = {
     action: 'query',
     prop: 'imageinfo',
@@ -13,7 +13,7 @@ export const getArticleMediaInfo = (lang: string, title: string, fromCommon: boo
     titles: title
   }
 
-  const url = fromCommon ? buildCommonsApiUrl(params) : buildMwApiUrl(lang, params)
+  const url = buildMwApiUrl(lang, params)
   /* eslint-disable  @typescript-eslint/no-explicit-any */
   return cachedFetch(url, (data: any) => {
     const pages = data.query.pages

@@ -1,7 +1,7 @@
 import { FunctionalComponent, h } from 'preact'
 import { useState, useRef, useEffect } from 'preact/hooks'
-import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from '../hooks/index'
-import { sendFeedback, confirmDialog } from '../utils/index'
+import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from '../hooks'
+import { sendFeedback, confirmDialog, openExternal } from '../utils'
 import { OfflinePanel } from './index'
 
 interface FeedbackProps {
@@ -61,7 +61,7 @@ export const Feedback: FunctionalComponent<FeedbackProps> = ({ close }: Feedback
     const { index } = getCurrent()
     if (index > 0) {
       const item = items[index - 1]
-      window.open(item.link)
+      openExternal(item.link)
     }
   }
 

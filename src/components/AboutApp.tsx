@@ -1,6 +1,6 @@
 import { FunctionalComponent, h } from 'preact'
 import { useI18n, useSoftkey } from '../hooks/index'
-import { appVersion, appInstallId } from '../utils/index'
+import { appVersion, appInstallId, openExternal } from '../utils/index'
 
 interface AboutAppProps {
   close?: () => void;
@@ -11,7 +11,7 @@ export const AboutApp: FunctionalComponent<AboutAppProps> = ({ close }: AboutApp
 
   useSoftkey('AboutApp', {
     right: i18n('softkey-read-more'),
-    onKeyRight: () => window.open('https://wikimediafoundation.org/'),
+    onKeyRight: () => openExternal('https://wikimediafoundation.org/'),
     left: i18n('softkey-close'),
     onKeyLeft: close,
     onKeyBackspace: close

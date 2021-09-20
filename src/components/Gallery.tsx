@@ -1,6 +1,7 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
-import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '../hooks/index'
+import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '../hooks'
+import { openExternal } from '../utils'
 
 const MAX_DESCRIPTION_HEIGHT = 45
 
@@ -37,7 +38,7 @@ const AboutContainer: FunctionalComponent<AboutContainerProps> = ({
     right: mediaInfo && mediaInfo.filePage ? i18n('softkey-more-info') : '',
     onKeyRight: () => {
       if (mediaInfo && mediaInfo.filePage) {
-        window.open(mediaInfo.filePage)
+        openExternal(mediaInfo.filePage)
       }
     }
   }, [mediaInfo])
@@ -130,7 +131,7 @@ export const Gallery: FunctionalComponent<GalleryProps> = ({
     currentIndex, onPrevImage, onNextImage
   ] = useRange(getInitialIndex(items, startFileName), items.length - 1)
   const [showAboutPopup] = usePopup(AboutContainer, { stack: true })
-  const mediaInfo = useArticleMediaInfo(lang, items[currentIndex].title, items[currentIndex].fromCommon, currentIndex)
+  const mediaInfo = useArticleMediaInfo(lang, items[currentIndex].title, currentIndex)
 
   const onImageLoad = ({ target: img }) => {
     const galleryNode = containerRef.current
@@ -156,7 +157,7 @@ export const Gallery: FunctionalComponent<GalleryProps> = ({
     [dir === 'rtl' ? 'onKeyFixedArrowLeft' : 'onKeyFixedArrowRight']: onNextImage,
     [dir === 'rtl' ? 'onKeyFixedArrowRight' : 'onKeyFixedArrowLeft']: onPrevImage,
     onKeyBackspace: close
-  }, [currentIndex])
+  }, [currentIndex, mediaInfo])
 
   return (
     <div className='gallery-view' ref={containerRef}>

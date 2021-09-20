@@ -1,9 +1,9 @@
 import { FunctionalComponent, h } from 'preact'
 import { route } from 'preact-router'
 import { useRef, useEffect } from 'preact/hooks'
-import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks/index'
-import { ListView, AboutApp, AboutWikipedia, PrivacyTerms, Feedback, ListViewItem } from './index'
-import { goto } from '../utils/index'
+import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks'
+import { ListView, ListViewItem, AboutApp, AboutWikipedia, PrivacyTerms, Feedback } from '../components'
+import { goto, openExternal } from '../utils'
 
 export const Settings: FunctionalComponent = () => {
   const containerRef = useRef<HTMLDivElement>(undefined)
@@ -20,7 +20,7 @@ export const Settings: FunctionalComponent = () => {
 
     // open link
     if (item.link) {
-      window.open(item.path)
+      openExternal(item.path)
     } else if (item.path) {
       route(item.path)
     } else if (item.action) {

@@ -1,5 +1,5 @@
 import { route } from 'preact-router'
-import { canonicalizeTitle, getAppLanguage } from './index'
+import { canonicalizeTitle, getAppLanguage, openExternal } from './index'
 
 const article = (lang: string, title: string | string[], replace = false): void => {
   if (!Array.isArray(title)) {
@@ -17,11 +17,11 @@ const tips = (): boolean => route('/tips')
 
 const termsOfUse = (): void => {
   const lang = getAppLanguage()
-  window.open(`https://foundation.m.wikimedia.org/wiki/Terms_of_Use/${lang}`)
+  openExternal(`https://foundation.m.wikimedia.org/wiki/Terms_of_Use/${lang}`)
 }
 
 const privacyPolicy = (): void => {
-  window.open('https://foundation.m.wikimedia.org/wiki/Privacy_policy')
+  openExternal('https://foundation.m.wikimedia.org/wiki/Privacy_policy')
 }
 
 const back = (): void => window.history.back()
