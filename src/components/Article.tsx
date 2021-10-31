@@ -9,9 +9,9 @@ import {
 import {
   useArticle, useI18n, useSoftkey,
   useArticlePagination, useArticleLinksNavigation,
-  usePopup, useTracking
+  usePopup, useTracking, useConfirmDialog
 } from '../hooks/index'
-import { articleHistory, confirmDialog, goto, viewport, buildWpMobileWebUrl } from '../utils/index'
+import { articleHistory, goto, viewport, buildWpMobileWebUrl } from '../utils/index'
 import { FontContext, FontContextModel } from '../contexts/index'
 
 interface ArticleBodyProp {
@@ -27,7 +27,7 @@ const ArticleBody = memo(({ content }: ArticleBodyProp) => {
   )
 })
 
-const ArticleActions = ({ actions, lang }) => {
+const ArticleActions = memo(({ actions, lang }: any) => {
   const contentI18n = useI18n(lang)
   return (
     <div className='article-actions'>
@@ -39,7 +39,7 @@ const ArticleActions = ({ actions, lang }) => {
       )) }
     </div>
   )
-}
+})
 
 const ArticleSection = ({
   lang, dir, imageUrl, anchor, title, description, actions,
@@ -52,6 +52,7 @@ const ArticleSection = ({
   const [showReferencePreview] = usePopup(ReferencePreview)
   const [showTable] = usePopup(Table, { mode: 'fullscreen' })
   const { textSize } = useContext<FontContextModel>(FontContext)
+  const showConfirmDialog = useConfirmDialog()
   const linkHandlers = {
     action: ({ action }) => {
       const targetAction = actions.find(a => a.name === action)
@@ -66,7 +67,7 @@ const ArticleSection = ({
     },
     section: ({ text, anchor }) => {
       // @todo styling to be confirmed with design
-      confirmDialog({ message: i18n('confirm-section', text), dir, onSubmit: () => goToSubpage({ anchor }) })
+      showConfirmDialog({ message: i18n('confirm-section', text), dir, onSubmit: () => goToSubpage({ anchor }) })
     },
     image: ({ fileName }) => {
       showGallery(fileName)
@@ -249,12 +250,14 @@ const ArticleInner = ({ lang, articleTitle, initialAnchor }: ArticleInnerProps) 
     }
   }, [currentSection])
 
-  const actions = currentSection === 0 ? [
-    { name: 'sections', enabled: true, handler: showArticleTocPopup },
-    { name: 'gallery', enabled: !!article.media.length, handler: showGallery },
-    { name: 'languages', enabled: article.languageCount, handler: showArticleLanguagePopup },
-    { name: 'share', enabled: sharedEnabled, handler: shareArticleUrl }
-  ] : null
+  const actions = currentSection === 0
+    ? [
+        { name: 'sections', enabled: true, handler: showArticleTocPopup },
+        { name: 'gallery', enabled: !!article.media.length, handler: showGallery },
+        { name: 'languages', enabled: article.languageCount, handler: showArticleLanguagePopup },
+        { name: 'share', enabled: sharedEnabled, handler: shareArticleUrl }
+      ]
+    : null
 
   return (
     <div className={'article' + (section.isFooter ? ' footer' : '')} ref={containerRef} dir='ltr'>
@@ -284,11 +287,11 @@ interface ArticleProp {
   anchor?: string;
 }
 
-export const Article: FunctionalComponent<ArticleProp> = ({ lang, title: articleTitle, anchor: initialAnchor }) => {
+export const Article: FunctionalComponent<ArticleProp> = memo(({ lang, title: articleTitle, anchor: initialAnchor }) => {
   return (
     <ArticleInner lang={lang} articleTitle={articleTitle} initialAnchor={initialAnchor} key={lang + articleTitle} />
   )
-}
+})
 
 const findCurrentLocatedAnchor = ref => {
   let element
@@ -296,7 +299,10 @@ const findCurrentLocatedAnchor = ref => {
     .find((ref: Element) => {
       if (ref.getBoundingClientRect().left < viewport().width) {
         element = ref
+        return element
       }
+
+      return null
     })
   return element.getAttribute('data-anchor')
 }

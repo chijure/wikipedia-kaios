@@ -1,8 +1,9 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 import { useSoftkey, useI18n } from '../hooks/index'
 import { onboarding, goto } from '../utils/index'
 
-export const Onboarding: FunctionalComponent = () => {
+export const Onboarding: FunctionalComponent = memo(() => {
   const i18n = useI18n()
 
   const exitOnboard = () => {
@@ -28,4 +29,4 @@ export const Onboarding: FunctionalComponent = () => {
       </div>
     </div>
   )
-}
+})

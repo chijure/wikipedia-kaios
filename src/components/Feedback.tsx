@@ -1,7 +1,8 @@
 import { FunctionalComponent, h } from 'preact'
 import { useState, useRef, useEffect } from 'preact/hooks'
-import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus } from '../hooks'
-import { sendFeedback, confirmDialog, openExternal } from '../utils'
+import { memo } from 'preact/compat'
+import { useI18n, useSoftkey, useNavigation, usePopup, useOnlineStatus, useConfirmDialog } from '../hooks'
+import { sendFeedback, openExternal } from '../utils'
 import { OfflinePanel } from './index'
 
 interface FeedbackProps {
@@ -15,6 +16,7 @@ export const Feedback: FunctionalComponent<FeedbackProps> = ({ close }: Feedback
   const [showSuccessConfirmation] = usePopup(SuccessConfirmationPopup, { stack: true })
   const [current, setNavigation, getCurrent] = useNavigation('Feedback', containerRef, containerRef, 'y')
   const isOnline = useOnlineStatus(undefined)
+  const showConfirmDialog = useConfirmDialog()
 
   const items = [
     {
@@ -41,7 +43,7 @@ export const Feedback: FunctionalComponent<FeedbackProps> = ({ close }: Feedback
   }
 
   const showCancelConfirmation = () => {
-    confirmDialog({
+    showConfirmDialog({
       title: i18n('feedback-cancel-header'),
       message: i18n('feedback-cancel'),
       onDiscardText: i18n('softkey-no'),
@@ -146,7 +148,7 @@ interface SuccessConfirmationPopupProps {
   closeAll: () => void;
 }
 
-const SuccessConfirmationPopup: FunctionalComponent<SuccessConfirmationPopupProps> = ({ closeAll }: SuccessConfirmationPopupProps) => {
+const SuccessConfirmationPopup: FunctionalComponent<SuccessConfirmationPopupProps> = memo(({ closeAll }: SuccessConfirmationPopupProps) => {
   const i18n = useI18n()
 
   useSoftkey('FeedbackSuccessMessage', {
@@ -161,4 +163,4 @@ const SuccessConfirmationPopup: FunctionalComponent<SuccessConfirmationPopupProp
       <p className='preview-text'>{i18n('feedback-success')}</p>
     </div>
   )
-}
+})

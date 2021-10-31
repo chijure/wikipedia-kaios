@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 
 interface PopupProp {
   component: FunctionalComponent;
@@ -10,7 +11,7 @@ interface PopupProp {
   style: any;
 }
 
-export const Popup: FunctionalComponent<PopupProp> = ({
+export const Popup: FunctionalComponent<PopupProp> = memo(({
   component,
   props,
   options,
@@ -27,14 +28,14 @@ export const Popup: FunctionalComponent<PopupProp> = ({
       </div>
     )
   }
-}
+})
 
 interface PopupContainerProps {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   popups: any[];
 }
 
-export const PopupContainer: FunctionalComponent<PopupContainerProps> = ({ popups }: PopupContainerProps) => {
+export const PopupContainer: FunctionalComponent<PopupContainerProps> = memo(({ popups }: PopupContainerProps) => {
   if (popups.length === 0) {
     return ''
   }
@@ -59,4 +60,4 @@ export const PopupContainer: FunctionalComponent<PopupContainerProps> = ({ popup
       })}
     </div>
   )
-}
+})

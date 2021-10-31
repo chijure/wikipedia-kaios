@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 import { useSoftkey, useI18n } from '../hooks/index'
 import { goto } from '../utils/goto'
 
@@ -7,7 +8,7 @@ interface ErrorProps {
   onRefresh: () => void;
 }
 
-export const Error: FunctionalComponent<ErrorProps> = ({ message, onRefresh }: ErrorProps) => {
+export const Error: FunctionalComponent<ErrorProps> = memo(({ message, onRefresh }: ErrorProps) => {
   const i18n = useI18n()
 
   useSoftkey('Error', {
@@ -23,4 +24,4 @@ export const Error: FunctionalComponent<ErrorProps> = ({ message, onRefresh }: E
       <p className='message'>{message}</p>
     </div>
   )
-}
+})

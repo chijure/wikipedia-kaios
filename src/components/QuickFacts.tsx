@@ -2,10 +2,9 @@ import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
 import { ReferencePreview, Gallery } from './index'
 import {
-  useScroll, usePopup,
+  useScroll, usePopup, useConfirmDialog,
   useI18n, useSoftkey, useArticleLinksNavigation, ArticleModel
 } from '../hooks/index'
-import { confirmDialog } from '../utils/index'
 
 interface ArticleSubpage {
   sectionIndex?: number;
@@ -35,6 +34,7 @@ export const QuickFacts: FunctionalComponent<QuickFactsProps> = ({
     mode: 'fullscreen',
     stack: true
   })
+  const showSectionConfirmDialog = useConfirmDialog()
   const source = {
     galleryItems: article.media,
     articleTitle: article.title,
@@ -64,7 +64,7 @@ export const QuickFacts: FunctionalComponent<QuickFactsProps> = ({
       anchor
     }) => {
       // @todo styling to be confirmed with design
-      confirmDialog({
+      showSectionConfirmDialog({
         message: i18n('confirm-section', text),
         dir,
         onSubmit: () => goToArticleSubpage({ anchor })

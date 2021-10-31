@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
+import { memo } from 'preact/compat'
 import { useI18n, useSoftkey, useScroll } from '../hooks/index'
 
 interface TableProps {
@@ -8,7 +9,7 @@ interface TableProps {
   content: string;
 }
 
-export const Table: FunctionalComponent<TableProps> = ({
+export const Table: FunctionalComponent<TableProps> = memo(({
   dir,
   close,
   content
@@ -33,4 +34,4 @@ export const Table: FunctionalComponent<TableProps> = ({
       <table dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   )
-}
+})

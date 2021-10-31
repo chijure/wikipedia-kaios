@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 import { useI18n, useSoftkey } from '../hooks/index'
 
 interface ConfirmDialogProps {
@@ -13,7 +14,7 @@ interface ConfirmDialogProps {
   closeAll: () => void;
 }
 
-export const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = ({
+export const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = memo(({
   title, message, dir,
   onSubmitText, onSubmit, onDiscardText, onDiscard,
   close, closeAll
@@ -39,4 +40,4 @@ export const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = ({
       <div className='info'>{message}</div>
     </div>
   )
-}
+})

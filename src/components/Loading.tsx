@@ -1,11 +1,12 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 
 interface LoadingProps {
   message: string;
   onClose?: () => void
 }
 
-export const Loading: FunctionalComponent<LoadingProps> = ({ message }: LoadingProps) => {
+export const Loading: FunctionalComponent<LoadingProps> = memo(({ message }: LoadingProps) => {
   return (
     <div className='loading-planet'>
       <img className='moon' src='images/loading-moon.svg' alt='loading-moon' />
@@ -14,4 +15,4 @@ export const Loading: FunctionalComponent<LoadingProps> = ({ message }: LoadingP
       <p className='message'>{message}</p>
     </div>
   )
-}
+})

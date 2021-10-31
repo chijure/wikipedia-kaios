@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef, useEffect } from 'preact/hooks'
+import { memo } from 'preact/compat'
 import { useNavigation, useI18n, useSoftkey, usePopup, useOnlineStatus, useScroll } from '../hooks/index'
 import { ListView, goToRandomArticle } from './index'
 import { goto, articleHistory } from '../utils/index'
@@ -17,7 +18,7 @@ interface TipContent {
 
 export const Tips: FunctionalComponent = () => {
   const containerRef = useRef<HTMLDivElement>(undefined)
-  const listRef = useRef<HTMLElement>()
+  const listRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
   const [, setNavigation, getCurrent] = useNavigation('Tips', containerRef, listRef, 'y')
 
@@ -111,10 +112,12 @@ const tip = (origi: string, content: TipContent, close, onNext, onTry) => {
     center: !aboutTip && isOnline ? i18n('softkey-try') : '',
     onKeyCenter: !aboutTip && isOnline ? onTryHandler : null,
     right: !aboutTip ? i18n('softkey-next') : '',
-    onKeyRight: !aboutTip ? () => {
-      close()
-      onNext()
-    } : null,
+    onKeyRight: !aboutTip
+      ? () => {
+          close()
+          onNext()
+        }
+      : null,
     onKeyArrowUp: scrollUp,
     onKeyArrowDown: scrollDown,
     onKeyBackspace: close
@@ -137,7 +140,7 @@ interface ReadPopupProps {
   onSearchPopupSelected: () => void;
 }
 
-const ReadPopup: FunctionalComponent<ReadPopupProps> = ({
+const ReadPopup: FunctionalComponent<ReadPopupProps> = memo(({
   close,
   onSearchPopupSelected
 }: ReadPopupProps) => {
@@ -147,14 +150,14 @@ const ReadPopup: FunctionalComponent<ReadPopupProps> = ({
     message: 'tip-read-message'
   }
   return tip('ReadPopup', content, close, onSearchPopupSelected, goToRandomArticle)
-}
+})
 
 interface SearchPopupProps {
   close: () => void;
   onSwitchPopupSelected: () => void;
 }
 
-const SearchPopup: FunctionalComponent<SearchPopupProps> = ({
+const SearchPopup: FunctionalComponent<SearchPopupProps> = memo(({
   close,
   onSwitchPopupSelected
 }: SearchPopupProps) => {
@@ -164,14 +167,14 @@ const SearchPopup: FunctionalComponent<SearchPopupProps> = ({
     message: 'tip-search-message'
   }
   return tip('SearchPopup', content, close, onSwitchPopupSelected, goto.search)
-}
+})
 
 interface SwitchPopupProps {
   close: () => void;
   showAboutWikipediaPopup: () => void;
 }
 
-const SwitchPopup: FunctionalComponent<SwitchPopupProps> = ({
+const SwitchPopup: FunctionalComponent<SwitchPopupProps> = memo(({
   close,
   showAboutWikipediaPopup
 }: SwitchPopupProps) => {
@@ -181,17 +184,17 @@ const SwitchPopup: FunctionalComponent<SwitchPopupProps> = ({
     message: 'tip-switch-message'
   }
   return tip('SwitchPopup', content, close, showAboutWikipediaPopup, goToRandomArticle)
-}
+})
 
 interface AboutPopupProps {
   close: () => void;
 }
 
-const AboutPopup: FunctionalComponent<AboutPopupProps> = ({ close }: AboutPopupProps) => {
+const AboutPopup: FunctionalComponent<AboutPopupProps> = memo(({ close }: AboutPopupProps) => {
   const content: TipContent = {
     image: 'images/onboarding-0.png',
     header: 'tip-about-header',
     message: 'tip-about-message'
   }
   return tip('AboutPopup', content, close, null, null)
-}
+})

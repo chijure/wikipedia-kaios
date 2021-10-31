@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef, useLayoutEffect } from 'preact/hooks'
+import { memo } from 'preact/compat'
 import { useI18n, useSoftkey, usePopup, useRange, useArticleMediaInfo } from '../hooks'
 import { openExternal } from '../utils'
 
@@ -81,7 +82,7 @@ const AboutContainer: FunctionalComponent<AboutContainerProps> = ({
   )
 }
 
-const LoadingAbout: FunctionalComponent = () => {
+const LoadingAbout: FunctionalComponent = memo(() => {
   const i18n = useI18n()
   return (
     <div className='gallery-about loading'>
@@ -101,7 +102,7 @@ const LoadingAbout: FunctionalComponent = () => {
       </div>
     </div>
   )
-}
+})
 
 export interface GalleryItem {
   title: string;

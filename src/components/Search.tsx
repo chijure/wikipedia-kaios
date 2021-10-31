@@ -4,11 +4,11 @@ import { ListView, OfflinePanel, Consent, SearchLoading, Feed } from './index'
 import {
   useNavigation, useSearch, useI18n, useSoftkey,
   useOnlineStatus, useTracking, usePopup, useHistoryState,
-  useExperimentConfig
+  useExperimentConfig, useConfirmDialog
 } from '../hooks/index'
 import {
   articleHistory, goto, getAppLanguage,
-  isRandomEnabled, confirmDialog, isConsentGranted,
+  isRandomEnabled, isConsentGranted,
   skipIntroAnchor
 } from '../utils/index'
 import { getRandomArticleTitle } from '../api/index'
@@ -27,6 +27,7 @@ export const Search: FunctionalComponent = () => {
   const [setQuery, searchResults, loading] = useSearch(lang, inputText)
   const [showConsentPopup, closeConsentPopup] = usePopup(Consent)
   const consentGranted = isConsentGranted()
+  const showConfirmDialog = useConfirmDialog()
   const isOnline = useOnlineStatus(online => {
     if (online && inputRef.current) {
       setQuery(inputRef.current.value)
@@ -110,7 +111,7 @@ export const Search: FunctionalComponent = () => {
     if (isInputType) {
       setNavigation(-1)
     }
-    confirmDialog({
+    showConfirmDialog({
       title: i18n('confirm-app-close-title'),
       message: i18n('confirm-app-close-message'),
       onDiscardText: i18n('softkey-cancel'),
@@ -147,7 +148,7 @@ export const Search: FunctionalComponent = () => {
     if (!consentGranted && isOnline) {
       showConsentPopup({})
     } else {
-      closeConsentPopup({})
+      closeConsentPopup()
       setNavigation(0)
     }
   }, [consentGranted, isOnline])

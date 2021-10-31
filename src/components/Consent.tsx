@@ -1,5 +1,6 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef } from 'preact/hooks'
+import { memo } from 'preact/compat'
 import { useI18n, useSoftkey, useScroll } from '../hooks/index'
 import { grantConsent, goto } from '../utils/index'
 
@@ -7,7 +8,7 @@ interface ConsentProps {
   close: () => void;
 }
 
-export const Consent: FunctionalComponent<ConsentProps> = ({ close }: ConsentProps) => {
+export const Consent: FunctionalComponent<ConsentProps> = memo(({ close }: ConsentProps) => {
   const i18n = useI18n()
   const bodyRef = useRef<HTMLDivElement>(undefined)
   const [scrollDown, scrollUp] = useScroll(bodyRef, 10, 'y')
@@ -41,4 +42,4 @@ export const Consent: FunctionalComponent<ConsentProps> = ({ close }: ConsentPro
       </div>
     </div>
   )
-}
+})

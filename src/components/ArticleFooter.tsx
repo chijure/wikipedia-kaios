@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 import { useI18n } from '../hooks/index'
 import { buildWpMobileWebUrl, canonicalizeTitle } from '../utils/index'
 
@@ -25,7 +26,7 @@ interface ArticleFooterProps {
   dir: 'auto' | 'rtl' | 'ltr';
 }
 
-export const ArticleFooter: FunctionalComponent<ArticleFooterProps> = ({
+export const ArticleFooter: FunctionalComponent<ArticleFooterProps> = memo(({
   lang,
   title,
   items = [],
@@ -63,4 +64,4 @@ export const ArticleFooter: FunctionalComponent<ArticleFooterProps> = ({
       </div>
     </div>
   )
-}
+})

@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 import { Ref, StateUpdater, useEffect, useState } from 'preact/hooks'
 import { ListView } from './index'
 import { useI18n } from '../hooks/index'
@@ -14,7 +15,7 @@ interface FeedProps {
   containerRef: Ref<HTMLDivElement>
 }
 
-export const Feed: FunctionalComponent<FeedProps> = ({ lang, isExpanded, setIsExpanded, lastIndex, setNavigation, containerRef }: FeedProps) => {
+export const Feed: FunctionalComponent<FeedProps> = memo(({ lang, isExpanded, setIsExpanded, lastIndex, setNavigation, containerRef }: FeedProps) => {
   const [trendingArticles, setTrendingArticles] = useState([])
   const [loading, setLoading] = useState(true)
   const i18n = useI18n()
@@ -53,13 +54,13 @@ export const Feed: FunctionalComponent<FeedProps> = ({ lang, isExpanded, setIsEx
       {showError && <Error />}
     </div>
   )
-}
+})
 
 interface LoadingProps {
   isExpanded: boolean;
 }
 
-const Loading: FunctionalComponent<LoadingProps> = ({ isExpanded }: LoadingProps) => {
+const Loading: FunctionalComponent<LoadingProps> = memo(({ isExpanded }: LoadingProps) => {
   const i18n = useI18n()
   const loadingExpanded = () => {
     const loadingItem = (selectable = false) => {
@@ -91,9 +92,9 @@ const Loading: FunctionalComponent<LoadingProps> = ({ isExpanded }: LoadingProps
       {isExpanded && loadingExpanded()}
     </div>
   )
-}
+})
 
-const Error: FunctionalComponent = () => {
+const Error: FunctionalComponent = memo(() => {
   const i18n = useI18n()
   return (
     <div className='error'>
@@ -101,4 +102,4 @@ const Error: FunctionalComponent = () => {
       <p className='message' data-selectable>{i18n('feed-error-message')}</p>
     </div>
   )
-}
+})

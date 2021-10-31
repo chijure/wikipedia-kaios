@@ -1,9 +1,51 @@
 import { FunctionalComponent, h } from 'preact'
+import { memo } from 'preact/compat'
 import {
   useArticleSummary, useI18n, useSoftkey,
   useArticlePreviewTracking
 } from '../hooks/index'
 import { goto } from '../utils/goto'
+
+interface ArticlePreviewLoadingProps {
+  title: string;
+  dir: 'auto' | 'ltr' | 'rtl';
+}
+
+export const ArticlePreviewLoading: FunctionalComponent<ArticlePreviewLoadingProps> = memo(({ title, dir }) => (
+  <div className='article-preview loading' dir={dir}>
+    <div className='item'>
+      <div class='preview-title'>{title}</div>
+      <div class='loading-block img' />
+    </div>
+
+    <div className='preview-text'>
+      <div class='loading-block full' />
+      <div class='loading-block full' />
+      <div class='loading-block full' />
+    </div>
+  </div>
+))
+
+interface ArticlePreviewContentProps {
+  dir: 'auto' | 'ltr' | 'rtl';
+  titleHtml: string;
+  imageUrl: string;
+  previewHtml: string;
+}
+
+export const ArticlePreviewContent: FunctionalComponent<ArticlePreviewContentProps> = memo(({ dir, titleHtml, imageUrl, previewHtml }) => (
+  <div className='article-preview' dir={dir}>
+    <div className='item'>
+      <div className='preview-title' dangerouslySetInnerHTML={{ __html: titleHtml }} />
+
+      {imageUrl &&
+        <img className='img' src={imageUrl} />
+      }
+    </div>
+
+    <div className='preview-text' dangerouslySetInnerHTML={{ __html: previewHtml }} />
+  </div>
+))
 
 interface ArticlePreviewProps {
   lang: string;
@@ -14,7 +56,7 @@ interface ArticlePreviewProps {
   closeAll: () => void;
 }
 
-export const ArticlePreview: FunctionalComponent<ArticlePreviewProps> = ({
+export const ArticlePreview: FunctionalComponent<ArticlePreviewProps> = memo(({
   lang,
   title,
   source,
@@ -40,32 +82,19 @@ export const ArticlePreview: FunctionalComponent<ArticlePreviewProps> = ({
 
   useArticlePreviewTracking(summary, source, lang)
 
-  return summary ? (
-    <div className='article-preview' dir={dir}>
-      <div className='item'>
-        <div className='preview-title' dangerouslySetInnerHTML={{ __html: summary.titles.display }} />
-        {summary.imageUrl && <img className='img' src={summary.imageUrl} />}
-      </div>
-      <div className='preview-text' dangerouslySetInnerHTML={{ __html: summary.preview }} />
-    </div>
-  ) : <LoadingPreview title={title} dir={dir} />
-}
-
-interface LoadingPreviewProps {
-  title: string;
-  dir: 'auto' | 'rtl' | 'ltr';
-}
-
-const LoadingPreview: FunctionalComponent<LoadingPreviewProps> = ({ title, dir }: LoadingPreviewProps) => (
-  <div className='article-preview loading' dir={dir}>
-    <div className='item'>
-      <div className='preview-title'>{title}</div>
-      <div className='loading-block img' />
-    </div>
-    <div className='preview-text'>
-      <div className='loading-block full' />
-      <div className='loading-block full' />
-      <div className='loading-block full' />
-    </div>
-  </div>
-)
+  return summary
+    ? (
+      <ArticlePreviewContent
+        dir={dir}
+        titleHtml={summary.titles.canonical}
+        imageUrl={summary.imageUrl}
+        previewHtml={summary.previewHtml}
+    />
+      )
+    : (
+      <ArticlePreviewLoading
+        title={title}
+        dir={dir}
+    />
+      )
+})

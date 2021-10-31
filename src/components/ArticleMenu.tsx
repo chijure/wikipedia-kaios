@@ -1,14 +1,13 @@
 import { FunctionalComponent, h } from 'preact'
 import { useRef, useEffect } from 'preact/hooks'
-import { useNavigation, useI18n, useSoftkey } from '../hooks'
+import { useNavigation, useI18n, useSoftkey, usePopup } from '../hooks'
 import { articleHistory, goto } from '../utils'
-import { ListView } from '../components'
+import { ListView, TextSize } from '../components'
 
 interface ArticleMenuProps {
   close: () => void;
   onTocSelected: () => void;
   onLanguageSelected: () => void;
-  onTextSizeSelected: () => void;
   onQuickFactsSelected: () => void;
   onGallerySelected: () => void;
   onShareArticleUrl: () => void;
@@ -20,7 +19,6 @@ interface ArticleMenuProps {
 
 export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   close, onTocSelected, onLanguageSelected,
-  onTextSizeSelected,
   onQuickFactsSelected, onGallerySelected,
   onShareArticleUrl,
   hasLanguages, hasInfobox, hasGallery,
@@ -29,6 +27,9 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
   const containerRef = useRef<HTMLDivElement>(undefined)
   const listRef = useRef<HTMLDivElement>()
   const i18n = useI18n()
+  const [, setNavigation, getCurrent] = useNavigation('Menu', containerRef, listRef, 'y')
+  const [showTextSize] = usePopup(TextSize, { stack: true, hideOthers: true })
+
   const onKeyCenter = () => {
     const { index } = getCurrent()
     const enabledItems = items.filter(item => item.enabled)
@@ -47,11 +48,13 @@ export const ArticleMenu: FunctionalComponent<ArticleMenuProps> = ({
     onKeyBackspace: close
   })
 
-  const [, setNavigation, getCurrent] = useNavigation('Menu', containerRef, listRef, 'y')
-
   const onSearchSelected = () => {
     close()
     goto.search()
+  }
+
+  const onTextSizeSelected = () => {
+    showTextSize({})
   }
 
   const onPreviousSelected = () => {
